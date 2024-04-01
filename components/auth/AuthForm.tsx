@@ -1,18 +1,9 @@
-"use client";
-import { useState } from "react";
-import Image from "next/image";
+'use client';
+import Image from 'next/image';
+import Link from 'next/link';
 
-import { Button } from "@/components/ui/button";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
     Form,
     FormControl,
@@ -21,13 +12,12 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from "@/components/ui/form";
-import { useToast } from "../ui/use-toast";
+} from '@/components/ui/form';
+import { useToast } from '../ui/use-toast';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import Link from "next/link";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 interface IAuthFormProps {
     label: string;
@@ -42,8 +32,8 @@ const formSchema = z.object({
     email: z.string().email(),
     password: z
         .string()
-        .min(7, "Churan 7 character se jyada daal")
-        .max(21, "Churan 21 character se kam daal"),
+        .min(7, 'Churan 7 character se jyada daal')
+        .max(21, 'Churan 21 character se kam daal'),
 });
 
 export default function AuthForm({
@@ -59,8 +49,8 @@ export default function AuthForm({
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            email: "",
-            password: "",
+            email: '',
+            password: '',
         },
     });
 
@@ -70,7 +60,7 @@ export default function AuthForm({
         // ✅ This will be type-safe and validated.
         console.log(values);
         toast({
-            title: "Values Submitted",
+            title: 'Values Submitted',
         });
     }
 

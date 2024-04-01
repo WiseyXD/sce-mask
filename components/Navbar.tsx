@@ -1,6 +1,6 @@
-"use client";
-import React from "react";
-import { Separator } from "./ui/separator";
+'use client';
+import React from 'react';
+import { Separator } from './ui/separator';
 
 export default function Navbar() {
     const isAuthorized = false;
