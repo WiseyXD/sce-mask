@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -15,9 +16,12 @@ import {
 import { Input } from '@/components/ui/input';
 import { useToast } from '../ui/use-toast';
 
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { FormError } from '../form-error';
+import { FormSuccess } from '../form-success';
+
+import { loginSchema, signupSchema } from '@/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export interface IAuthFormProps {
     label: string;
@@ -26,15 +30,8 @@ export interface IAuthFormProps {
     backButtonHref: string;
     backButtonLabel: string;
     submitButton: string;
+    schema: 'login' | 'register';
 }
-
-const formSchema = z.object({
-    email: z.string().email(),
-    password: z
-        .string()
-        .min(7, 'Churan 7 character se jyada daal')
-        .max(21, 'Churan 21 character se kam daal'),
-});
 
 export default function AuthForm({
     label,
@@ -43,9 +40,10 @@ export default function AuthForm({
     backButtonHref,
     backButtonLabel,
     submitButton,
+    schema,
 }: IAuthFormProps) {
     const { toast } = useToast();
-
+    const formSchema = schema === 'register' ? signupSchema : loginSchema;
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -118,6 +116,9 @@ export default function AuthForm({
                                 </FormItem>
                             )}
                         />
+                        <FormError message="" />
+                        <FormSuccess message="" />
+
                         <Button type="submit">{submitButton}</Button>
                         <div className="mt-4 text-sm flex gap-1 justify-center">
                             {backButtonLabel}

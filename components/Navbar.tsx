@@ -1,8 +1,11 @@
 'use client';
-import React from 'react';
 import { Separator } from './ui/separator';
 
-export default function Navbar() {
+export interface INavbarProps {
+    props: null;
+}
+
+export default function Navbar({ props }: INavbarProps) {
     const isAuthorized = false;
     return (
         <>

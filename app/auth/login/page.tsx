@@ -1,5 +1,4 @@
 import AuthForm from '@/components/auth/AuthForm';
-import React from 'react';
 
 export default function page() {
     return (
@@ -10,6 +9,7 @@ export default function page() {
             backButtonText="Register"
             backButtonLabel="Don't have an account ?"
             submitButton="Login"
+            schema="login"
         />
     );
 }
