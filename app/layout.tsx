@@ -1,4 +1,5 @@
 import Navbar from '@/components/Navbar';
+import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -19,11 +20,18 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={inter.className + 'min-h-[100vh] flex flex-col'}>
-                <div className="basis-1/5">
-                    <Navbar props={null} />
-                </div>
-                <div className="basis-4/5">{children}</div>
-                <Toaster />
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <div className="basis-1/5">
+                        <Navbar props={null} />
+                    </div>
+                    <div className="basis-4/5">{children}</div>
+                    <Toaster />
+                </ThemeProvider>
             </body>
         </html>
     );

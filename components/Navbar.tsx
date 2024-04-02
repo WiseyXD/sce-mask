@@ -1,4 +1,5 @@
 'use client';
+import { ModeToggle } from './mode-toggle';
 import { Separator } from './ui/separator';
 
 export interface INavbarProps {
@@ -6,7 +7,7 @@ export interface INavbarProps {
 }
 
 export default function Navbar({ props }: INavbarProps) {
-    const isAuthorized = false;
+    const isAuthorized = true;
     return (
         <>
             <div className="px-2 py-3">
@@ -17,8 +18,8 @@ export default function Navbar({ props }: INavbarProps) {
                             <h3>User Status</h3>
                             <h3>User Pic</h3>
                             <h3>username</h3>
-
                             <h3>Logout</h3>
+                            <ModeToggle />
                         </div>
                     )}
                 </div>
