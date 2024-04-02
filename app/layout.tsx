@@ -20,7 +20,7 @@ export default function RootLayout({
         <html lang="en">
             <body className={inter.className + 'min-h-[100vh] flex flex-col'}>
                 <div className="basis-1/5">
-                    <Navbar />
+                    <Navbar props={null} />
                 </div>
                 <div className="basis-4/5">{children}</div>
                 <Toaster />
