@@ -1,4 +1,6 @@
 'use client';
+import { useState, useTransition } from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { z } from 'zod';
@@ -43,6 +45,10 @@ export default function AuthForm({
     submitButton,
     schema,
 }: IAuthFormProps) {
+    const [isPending, startTransisiton] = useTransition();
+    const [error, setError] = useState<string | undefined>('');
+    const [success, setSuccess] = useState<string | undefined>('');
+
     const { toast } = useToast();
     const formSchema = schema === 'register' ? signupSchema : loginSchema;
     const form = useForm<z.infer<typeof formSchema>>({
@@ -57,10 +63,20 @@ export default function AuthForm({
     function onSubmit(values: z.infer<typeof formSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        console.log(values);
-        login(values);
-        toast({
-            title: 'Values Submitted',
+
+        setSuccess('');
+        setError('');
+
+        startTransisiton(() => {
+            console.log(values);
+            login(values).then((data) => {
+                setError(data.error);
+                setSuccess(data.success);
+            });
+            toast({
+                title: 'Values Submitted',
+                description: 'Values are in terminal',
+            });
         });
     }
     // git fuck up
@@ -90,6 +106,8 @@ export default function AuthForm({
                                         <Input
                                             placeholder="shadcn"
                                             {...field}
+                                            disabled={isPending}
+                                            type="email"
                                         />
                                     </FormControl>
                                     <FormDescription>
@@ -107,8 +125,10 @@ export default function AuthForm({
                                     <FormLabel>Password</FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder="shadcn"
+                                            placeholder="******"
                                             {...field}
+                                            disabled={isPending}
+                                            type="password"
                                         />
                                     </FormControl>
                                     <FormDescription>
@@ -118,10 +138,12 @@ export default function AuthForm({
                                 </FormItem>
                             )}
                         />
-                        <FormError message="" />
-                        <FormSuccess message="" />
+                        <FormError message={error} />
+                        <FormSuccess message={success} />
 
-                        <Button type="submit">{submitButton}</Button>
+                        <Button type="submit" disabled={isPending}>
+                            {submitButton}
+                        </Button>
                         <div className="mt-4 text-sm flex gap-1 justify-center">
                             {backButtonLabel}
                             <Link
