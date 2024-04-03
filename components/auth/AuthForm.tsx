@@ -16,7 +16,6 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useToast } from '../ui/use-toast';
 
 import { useForm } from 'react-hook-form';
 import { FormError } from '../form-error';
@@ -52,8 +51,6 @@ export default function AuthForm({
     const [error, setError] = useState<string | undefined>('');
     const [success, setSuccess] = useState<string | undefined>('');
 
-    const { toast } = useToast();
-
     const formSchema = isRegister ? signupSchema : loginSchema;
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -72,7 +69,6 @@ export default function AuthForm({
         setError('');
 
         startTransisiton(() => {
-            console.log(values);
             isRegister
                 ? register(values).then((data) => {
                       setError(data.error);
@@ -82,10 +78,6 @@ export default function AuthForm({
                       setError(data.error);
                       setSuccess(data.success);
                   });
-            toast({
-                title: 'Values Submitted',
-                description: 'Values are in terminal',
-            });
         });
     }
     // git fuck up
