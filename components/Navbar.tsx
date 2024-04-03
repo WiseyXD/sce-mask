@@ -8,6 +8,7 @@ export interface INavbarProps {
 
 export default function Navbar({ props }: INavbarProps) {
     const isAuthorized = true;
+
     return (
         <>
             <div className="px-2 py-3">
