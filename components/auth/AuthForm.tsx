@@ -20,6 +20,7 @@ import { useForm } from 'react-hook-form';
 import { FormError } from '../form-error';
 import { FormSuccess } from '../form-success';
 
+import { login } from '@/actions/login';
 import { loginSchema, signupSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -57,6 +58,7 @@ export default function AuthForm({
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         console.log(values);
+        login(values);
         toast({
             title: 'Values Submitted',
         });
