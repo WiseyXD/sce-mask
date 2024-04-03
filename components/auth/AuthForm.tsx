@@ -23,6 +23,7 @@ import { FormError } from '../form-error';
 import { FormSuccess } from '../form-success';
 
 import { login } from '@/actions/login';
+import { register } from '@/actions/register';
 import { loginSchema, signupSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -33,7 +34,7 @@ export interface IAuthFormProps {
     backButtonHref: string;
     backButtonLabel: string;
     submitButton: string;
-    schema: 'login' | 'register';
+    formType: 'login' | 'register';
 }
 
 export default function AuthForm({
@@ -43,14 +44,17 @@ export default function AuthForm({
     backButtonHref,
     backButtonLabel,
     submitButton,
-    schema,
+    formType,
 }: IAuthFormProps) {
+    const isRegister = formType === 'register' ? true : false;
+
     const [isPending, startTransisiton] = useTransition();
     const [error, setError] = useState<string | undefined>('');
     const [success, setSuccess] = useState<string | undefined>('');
 
     const { toast } = useToast();
-    const formSchema = schema === 'register' ? signupSchema : loginSchema;
+
+    const formSchema = isRegister ? signupSchema : loginSchema;
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -69,10 +73,15 @@ export default function AuthForm({
 
         startTransisiton(() => {
             console.log(values);
-            login(values).then((data) => {
-                setError(data.error);
-                setSuccess(data.success);
-            });
+            isRegister
+                ? register(values).then((data) => {
+                      setError(data.error);
+                      setSuccess(data.success);
+                  })
+                : login(values).then((data) => {
+                      setError(data.error);
+                      setSuccess(data.success);
+                  });
             toast({
                 title: 'Values Submitted',
                 description: 'Values are in terminal',

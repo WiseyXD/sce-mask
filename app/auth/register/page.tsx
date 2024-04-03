@@ -8,7 +8,7 @@ export default function page() {
             backButtonText="Login"
             backButtonLabel=" Already have an account ?"
             submitButton="Register"
-            schema="register"
+            formType="register"
         />
     );
 }
