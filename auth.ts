@@ -5,13 +5,6 @@ import { UserRole } from '@prisma/client';
 import NextAuth from 'next-auth';
 import { getUserById } from './data/user';
 
-declare module 'next-auth' {
-    interface User {
-        /** The user's postal address. */
-        role: 'ADMIN' | 'USER';
-    }
-}
-
 export const {
     handlers: { GET, POST },
     auth,
@@ -38,6 +31,7 @@ export const {
             }
 
             if (token.role) {
+                // @ts-ignore
                 session.user.role = token.role as UserRole;
             }
 
