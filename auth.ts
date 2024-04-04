@@ -9,6 +9,20 @@ export const {
     signIn,
     signOut,
 } = NextAuth({
+    callbacks: {
+        async jwt({ token, account }) {
+            // Persist the OAuth access_token to the token right after signin
+
+            return token;
+        },
+        async session({ token, session }) {
+            if (token.sub) {
+                session.user.id = token.sub;
+            }
+
+            return session;
+        },
+    },
     adapter: PrismaAdapter(prisma),
     session: { strategy: 'jwt' },
     ...authConfig,
