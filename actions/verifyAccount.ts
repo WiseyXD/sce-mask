@@ -1,8 +1,7 @@
-"use server";
+'use server';
 
-import db from "@/lib/db";
-import jwt from "jsonwebtoken";
-import { redirect } from "next/navigation";
+import db from '@/lib/db';
+import jwt from 'jsonwebtoken';
 
 export async function verifyAccount({
     userId,
@@ -13,7 +12,7 @@ export async function verifyAccount({
 }) {
     const code = Math.random().toString(36).substring(2, 8);
     const token = jwt.sign({ email, userId, code }, process.env.JWT_SECRET!, {
-        expiresIn: "5m",
+        expiresIn: '5m',
     });
 
     const newEmailVerificationToken = await db.emailVerification.create({
@@ -27,5 +26,6 @@ export async function verifyAccount({
 
     console.log(url);
 
+    return;
     // send mail
 }
