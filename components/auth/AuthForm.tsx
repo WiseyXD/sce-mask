@@ -72,6 +72,7 @@ export default function AuthForm({
             isRegister
                 ? register(values).then((data) => {
                       setError(data.error);
+
                       setSuccess(data.success);
                   })
                 : login(values).then((data) => {
