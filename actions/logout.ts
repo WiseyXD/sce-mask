@@ -22,7 +22,7 @@ export async function logout(): Promise<ActionResult> {
             sessionCookie.value,
             sessionCookie.attributes
         );
-        return redirect('/singup');
+        return redirect('/auth/login');
     } catch (error: any) {
         console.log(error);
         return {
