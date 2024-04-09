@@ -1,19 +1,14 @@
-import { auth, signOut } from '@/auth';
+import { logout } from '@/actions/logout';
+import { validateRequest } from '@/actions/validateRequests';
 import { Button } from '@/components/ui/button';
 
 export default async function page() {
-    const sessionData = await auth();
-    console.log(sessionData);
+    const { user } = await validateRequest();
     return (
         <div>
-            {JSON.stringify(sessionData)}
-            <form
-                action={async () => {
-                    'use server';
-                    await signOut();
-                }}
-            >
-                <Button type="submit">Logout</Button>
+            {JSON.stringify(user)}
+            <form action={logout}>
+                <Button>Logout</Button>
             </form>
         </div>
     );
