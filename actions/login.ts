@@ -58,6 +58,12 @@ export async function login({
         };
     }
 
+    if (!existingUser.isEmailVerified) {
+        return {
+            error: 'Please verify your email',
+        };
+    }
+
     await verifyAccount({ email: existingUser.email, userId: existingUser.id });
 
     return { success: 'Check Mail' };

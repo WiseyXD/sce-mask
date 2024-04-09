@@ -44,17 +44,23 @@ export async function register({
 
     const hashedPassword = await new Argon2id().hash(password);
 
-    // TODO: check if username is already used
     const userAlredayExists = await db.user.findUnique({
         where: {
             email,
         },
     });
 
-    if (userAlredayExists)
-        return {
-            error: 'User Alredy Existis in DB',
-        };
+    if (userAlredayExists) {
+        if (!userAlredayExists.isEmailVerified) {
+            return {
+                error: 'Please verify your mail',
+            };
+        } else {
+            return {
+                error: 'User already exists in DB',
+            };
+        }
+    }
 
     const newUser = await db.user.create({
         data: {
@@ -62,7 +68,6 @@ export async function register({
             password: hashedPassword,
         },
     });
-    // generate a random 6 character long string
 
     await verifyAccount({ email: newUser.email, userId: newUser.id });
 
