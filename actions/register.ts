@@ -4,43 +4,20 @@ import { ActionResult } from '@/lib/auth';
 import { Argon2id } from 'oslo/password';
 
 import db from '@/lib/db';
+import { signupSchema } from '@/schemas';
 import { verifyAccount } from './verifyAccount';
 
-export async function register({
-    email,
-    password,
-}: {
+export async function register(values: {
     email: string;
     password: string;
 }): Promise<ActionResult> {
-    // username must be between 4 ~ 31 characters, and only consists of lowercase letters, 0-9, -, and _
-    // keep in mind some database (e.g. mysql) are case insensitive
-    if (typeof email !== 'string') {
+    const validInputs = signupSchema.safeParse(values);
+    if (!validInputs.success) {
         return {
-            error: 'Invalid email',
+            error: 'Invlaid Inputs',
         };
     }
-
-    // if (
-    //     typeof username !== 'string' ||
-    //     username.length < 3 ||
-    //     username.length > 31 ||
-    //     !/^[a-z0-9_-]+$/.test(username)
-    // ) {
-    //     return {
-    //         error: 'Invalid username',
-    //     };
-    // }
-
-    if (
-        typeof password !== 'string' ||
-        password.length < 6 ||
-        password.length > 255
-    ) {
-        return {
-            error: 'Invalid password',
-        };
-    }
+    const { email, password } = validInputs.data;
 
     const hashedPassword = await new Argon2id().hash(password);
 

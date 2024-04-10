@@ -31,7 +31,7 @@ export async function GET(req: NextRequest) {
 
         await db.emailVerification.deleteMany({
             where: {
-                code: code,
+                userId,
             },
         });
 

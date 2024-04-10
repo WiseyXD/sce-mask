@@ -1,70 +1,76 @@
 'use server';
 
-import { ActionResult } from '@/lib/auth';
+import { ActionResult, lucia } from '@/lib/auth';
 import db from '@/lib/db';
+import { loginSchema } from '@/schemas';
+import { cookies } from 'next/headers';
 import { Argon2id } from 'oslo/password';
-import { verifyAccount } from './verifyAccount';
 
-export async function login({
-    email,
-    password,
-}: {
+export async function login(values: {
     email: string;
     password: string;
 }): Promise<ActionResult> {
-    if (typeof email !== 'string') {
+    const validInputs = loginSchema.safeParse(values);
+    if (!validInputs.success) {
         return {
-            error: 'Invalid username',
+            error: 'Invlaid Inputs',
         };
     }
+    const { email, password } = validInputs.data;
 
-    if (
-        typeof password !== 'string' ||
-        password.length < 6 ||
-        password.length > 255
-    ) {
+    try {
+        const existingUser = await db.user.findUnique({
+            where: {
+                email,
+            },
+        });
+        if (!existingUser) {
+            // NOTE:
+            // Returning immediately allows malicious actors to figure out valid usernames from response times,
+            // allowing them to only focus on guessing passwords in brute-force attacks.
+            // As a preventive measure, you may want to hash passwords even for invalid usernames.
+            // However, valid usernames can be already be revealed with the signup page among other methods.
+            // It will also be much more resource intensive.
+            // Since protecting against this is non-trivial,
+            // it is crucial your implementation is protected against brute-force attacks with login throttling etc.
+            // If usernames are public, you may outright tell the user that the username is invalid.
+            return {
+                error: 'Incorrect username or password',
+            };
+        }
+
+        const validPassword = await new Argon2id().verify(
+            existingUser.password,
+            password
+        );
+        if (!validPassword) {
+            return {
+                error: 'Incorrect username or password',
+            };
+        }
+
+        if (!existingUser.isEmailVerified) {
+            return {
+                error: 'Please verify your email',
+            };
+        }
+
+        // await verifyAccount({ email: existingUser.email, userId: existingUser.id });
+
+        const session = await lucia.createSession(existingUser.id, {});
+        const sessionCookie = lucia.createSessionCookie(session.id);
+        cookies().set(
+            sessionCookie.name,
+            sessionCookie.value,
+            sessionCookie.attributes
+        );
+
+        const baseUrl = new URL(process.env.NEXT_BASE_URL!);
+
         return {
-            error: 'Invalid password',
+            success: 'Logging in',
         };
+    } catch (error: any) {
+        return { error: error.message };
     }
-
-    const existingUser = await db.user.findUnique({
-        where: {
-            email,
-        },
-    });
-    if (!existingUser) {
-        // NOTE:
-        // Returning immediately allows malicious actors to figure out valid usernames from response times,
-        // allowing them to only focus on guessing passwords in brute-force attacks.
-        // As a preventive measure, you may want to hash passwords even for invalid usernames.
-        // However, valid usernames can be already be revealed with the signup page among other methods.
-        // It will also be much more resource intensive.
-        // Since protecting against this is non-trivial,
-        // it is crucial your implementation is protected against brute-force attacks with login throttling etc.
-        // If usernames are public, you may outright tell the user that the username is invalid.
-        return {
-            error: 'Incorrect username or password',
-        };
-    }
-
-    const validPassword = await new Argon2id().verify(
-        existingUser.password,
-        password
-    );
-    if (!validPassword) {
-        return {
-            error: 'Incorrect username or password',
-        };
-    }
-
-    if (!existingUser.isEmailVerified) {
-        return {
-            error: 'Please verify your email',
-        };
-    }
-
-    await verifyAccount({ email: existingUser.email, userId: existingUser.id });
-
-    return { success: 'Check Mail' };
 }
