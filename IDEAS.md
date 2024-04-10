@@ -9,3 +9,9 @@
 [] - Logo of the project
 [] - Ui/Ux of the project
 [] - teammates for the project
+
+# Working on Auth
+
+[] - username input while registring
+[] - mails by resend and react-email
+[] - timer for resend email

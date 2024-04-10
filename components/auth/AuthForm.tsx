@@ -4,6 +4,8 @@ import { useEffect, useState, useTransition } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { useCountdown } from 'usehooks-ts';
 import { z } from 'zod';
 
 import nextLogo from '@/public/next.svg';
@@ -20,7 +22,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
-import { useForm } from 'react-hook-form';
 import { FormError } from '../form-error';
 import { FormSuccess } from '../form-success';
 
@@ -58,6 +59,12 @@ export default function AuthForm({
     const [error, setError] = useState<string | undefined>('');
     const [success, setSuccess] = useState<string | undefined>('');
 
+    const [count, { startCountdown, stopCountdown, resetCountdown }] =
+        useCountdown({
+            countStart: 60,
+            intervalMs: 1000,
+        });
+
     const formSchema = isRegister ? signupSchema : loginSchema;
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -71,7 +78,16 @@ export default function AuthForm({
         if (error == 'Please verify your email') {
             setResendVerificationEmail(true);
         }
-    }, [error]);
+        if (success == 'Email Sent') {
+            startCountdown();
+        }
+    }, [error, success]);
+
+    useEffect(() => {
+        if (count == 0) {
+            resetCountdown();
+        }
+    }, [count]);
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         setSuccess('');
@@ -99,7 +115,6 @@ export default function AuthForm({
         setSuccess('');
         const data = await resendEmailVerificationLink(form.getValues('email'));
         console.log(data);
-
         setSuccess(data.success);
         setError(data.error);
     }
@@ -169,9 +184,16 @@ export default function AuthForm({
                         </Button>
                     </form>
                     {resendVerificationEmail && (
-                        <Button variant={'link'} onClick={onResendEmail}>
-                            Resend Verification Email
-                        </Button>
+                        <div className="flex gap-3">
+                            <Button
+                                variant={'link'}
+                                onClick={onResendEmail}
+                                disabled={count < 60 && count > 0}
+                            >
+                                Resend Verification Email
+                            </Button>
+                            {count}
+                        </div>
                     )}
                     <div className="mt-4 text-sm flex gap-1 justify-center">
                         {backButtonLabel}
