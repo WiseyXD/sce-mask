@@ -62,4 +62,5 @@ model EmailVerification {
   userId String
   user   User   @relation(references: [id], fields: [userId], onDelete: Cascade)
   code   String
+  createdAt DateTime @default(now())
 }

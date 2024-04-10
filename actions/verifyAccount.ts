@@ -15,12 +15,40 @@ export async function verifyAccount({
         expiresIn: '5m',
     });
 
-    const newEmailVerificationToken = await db.emailVerification.create({
-        data: {
-            code: code,
-            user: { connect: { id: userId } },
+    const existingToken = await db.emailVerification.findFirst({
+        where: {
+            userId,
         },
     });
+
+    if (existingToken) {
+        const sentAt = new Date(existingToken.createdAt);
+        const hasOneMinutePassed =
+            new Date().getTime() - sentAt.getTime() > 60000;
+
+        if (!hasOneMinutePassed) {
+            return {
+                error: 'Email already sent , wait for countdown',
+            };
+        }
+
+        await db.emailVerification.update({
+            where: {
+                id: existingToken.id,
+            },
+            data: {
+                code,
+                createdAt: new Date(),
+            },
+        });
+    } else {
+        await db.emailVerification.create({
+            data: {
+                code: code,
+                user: { connect: { id: userId } },
+            },
+        });
+    }
 
     const url = `${process.env.NEXT_BASE_URL}/api/verify-email?token=${token}`;
 
