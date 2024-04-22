@@ -15,3 +15,5 @@
 [] - username input while registring
 [] - mails by resend and react-email
 [] - timer for resend email
+
+<!-- Will work on this -->
