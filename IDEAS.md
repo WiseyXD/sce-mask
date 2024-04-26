@@ -17,3 +17,6 @@
 [] - timer for resend email
 
 <!-- Will work on this -->
+
+26/4
+[] - Resend working only for test emails (get a free domain)
