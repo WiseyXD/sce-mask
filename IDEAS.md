@@ -12,12 +12,12 @@
 
 # Working on Auth
 
-[] - username input while registring
-[] - mails by resend and react-email
-[] - timer for resend email
+[] - username input after registring
+[x] - mails by nodemailer and brevo
+[x] - timer for resend email
 
 <!-- Will work on this -->
 
 26/4
 [x] - Nodemailer with Brevo for mail
-[] - React email for templates
+[x] - Email Template done
