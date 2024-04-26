@@ -19,4 +19,5 @@
 <!-- Will work on this -->
 
 26/4
-[] - Resend working only for test emails (get a free domain)
+[x] - Nodemailer with Brevo for mail
+[] - React email for templates

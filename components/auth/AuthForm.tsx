@@ -50,6 +50,7 @@ export default function AuthForm({
     const router = useRouter();
     const isRegister = formType === 'register' ? true : false;
 
+    const [verificationCounter, setVerificationCounter] = useState<number>(0);
     const [isPending, startTransisiton] = useTransition();
     const [resendVerificationEmail, setResendVerificationEmail] =
         useState(false);
@@ -108,10 +109,15 @@ export default function AuthForm({
     }
 
     async function onResendEmail() {
+        if (verificationCounter >= 3) {
+            setError('Check Spam Folder');
+            return;
+        }
         setError('');
         setSuccess('');
         const data = await resendEmailVerificationLink(form.getValues('email'));
         console.log(data);
+        setVerificationCounter((prev) => prev + 1);
         setSuccess(data.success);
         setError(data.error);
     }
