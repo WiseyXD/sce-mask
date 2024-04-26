@@ -2,6 +2,7 @@
 
 import db from '@/lib/db';
 import jwt from 'jsonwebtoken';
+import { Resend } from 'resend';
 
 export async function verifyAccount({
     userId,
@@ -10,6 +11,7 @@ export async function verifyAccount({
     email: string;
     userId: string;
 }) {
+    const resend = new Resend(process.env.RESEND_API_KEY);
     const code = Math.random().toString(36).substring(2, 8);
     const token = jwt.sign({ email, userId, code }, process.env.JWT_SECRET!, {
         expiresIn: '5m',
@@ -53,6 +55,13 @@ export async function verifyAccount({
     const url = `${process.env.NEXT_BASE_URL}/api/verify-email?token=${token}`;
 
     console.log(url);
+
+    const { data } = await resend.emails.send({
+        from: 'onboarding@resend.dev',
+        to: email,
+        subject: 'Resend Mail',
+        html: url,
+    });
 
     return;
     // send mail
