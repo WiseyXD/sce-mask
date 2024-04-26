@@ -1,14 +1,11 @@
 'use client';
 import { useEffect, useState, useTransition } from 'react';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { useCountdown } from 'usehooks-ts';
 import { z } from 'zod';
-
-import nextLogo from '@/public/next.svg';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -120,100 +117,94 @@ export default function AuthForm({
     }
 
     return (
-        // <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
-        <div className="w-full lg:grid  lg:grid-cols-2 min-h-[100vh]">
+        <div className="w-full lg:grid lg:min-h-[600px] xl:min-h-[800px]">
+            {/* <div className="w-full lg:grid min-h-[100vh] "> */}
             <div className="flex flex-col items-center justify-center py-12">
-                <Form {...form}>
-                    <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className="mx-auto grid w-[350px] gap-6"
-                    >
-                        <div className="grid gap-2 text-center">
-                            <h1 className="text-3xl font-bold">{label}</h1>
-                            <p className="text-balance text-muted-foreground">
-                                {labelText}
-                            </p>
-                        </div>
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Email</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            placeholder="shadcn"
-                                            {...field}
-                                            disabled={isPending}
-                                            type="email"
-                                        />
-                                    </FormControl>
-                                    <FormDescription>
-                                        This is should be your college mail-id.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="password"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Password</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            placeholder="******"
-                                            {...field}
-                                            disabled={isPending}
-                                            type="password"
-                                        />
-                                    </FormControl>
-                                    <FormDescription>
-                                        This is your mask key.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormError message={error} />
-                        <FormSuccess message={success} />
-
-                        <Button type="submit" disabled={isPending}>
-                            {submitButton}
-                        </Button>
-                    </form>
-                    {resendVerificationEmail && (
-                        <div className="flex gap-3">
-                            <Button
-                                variant={'link'}
-                                onClick={onResendEmail}
-                                disabled={count < 60 && count > 0}
-                            >
-                                Resend Verification Email
-                            </Button>
-                            {count}
-                        </div>
-                    )}
-                    <div className="mt-4 text-sm flex gap-1 justify-center">
-                        {backButtonLabel}
-                        <Link
-                            href={backButtonHref}
-                            className="underline text-blue-500"
+                <div className="flex flex-col px-8 py-10 rounded-md border ">
+                    <Form {...form}>
+                        <form
+                            onSubmit={form.handleSubmit(onSubmit)}
+                            className="mx-auto grid w-[350px] gap-6 "
                         >
-                            {backButtonText}
-                        </Link>
-                    </div>
-                </Form>
-            </div>
-            <div className="hidden bg-muted lg:block">
-                <Image
-                    src={nextLogo}
-                    alt="Image"
-                    width="1920"
-                    height="1080"
-                    className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-                />
+                            <div className="grid gap-2 text-center">
+                                <h1 className="text-3xl font-bold">{label}</h1>
+                                <p className="text-balance text-muted-foreground">
+                                    {labelText}
+                                </p>
+                            </div>
+                            <FormField
+                                control={form.control}
+                                name="email"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Email</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                placeholder="shadcn"
+                                                {...field}
+                                                disabled={isPending}
+                                                type="email"
+                                            />
+                                        </FormControl>
+                                        <FormDescription>
+                                            This is should be your college
+                                            mail-id.
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="password"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Password</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                placeholder="******"
+                                                {...field}
+                                                disabled={isPending}
+                                                type="password"
+                                            />
+                                        </FormControl>
+                                        <FormDescription>
+                                            This is your mask key.
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormError message={error} />
+                            <FormSuccess message={success} />
+
+                            <Button type="submit" disabled={isPending}>
+                                {submitButton}
+                            </Button>
+                        </form>
+                        {resendVerificationEmail && (
+                            <div className="flex gap-3">
+                                <Button
+                                    variant={'link'}
+                                    onClick={onResendEmail}
+                                    disabled={count < 60 && count > 0}
+                                >
+                                    Resend Verification Email
+                                </Button>
+                                {count}
+                            </div>
+                        )}
+                        <div className="mt-4 text-sm flex gap-1 justify-center">
+                            {backButtonLabel}
+                            <Link
+                                href={backButtonHref}
+                                className="underline text-blue-500"
+                            >
+                                {backButtonText}
+                            </Link>
+                        </div>
+                    </Form>
+                </div>
             </div>
         </div>
     );
