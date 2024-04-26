@@ -120,7 +120,7 @@ export default function AuthForm({
         <div className="w-full lg:grid lg:min-h-[600px] xl:min-h-[800px]">
             {/* <div className="w-full lg:grid min-h-[100vh] "> */}
             <div className="flex flex-col items-center justify-center py-12">
-                <div className="flex flex-col px-8 py-10 rounded-md border ">
+                <div className="flex flex-col px-8 py-10 rounded-xl border ">
                     <Form {...form}>
                         <form
                             onSubmit={form.handleSubmit(onSubmit)}
