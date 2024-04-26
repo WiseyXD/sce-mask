@@ -1,4 +1,3 @@
-'use server';
 import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
@@ -7,7 +6,9 @@ const transporter = nodemailer.createTransport({
     auth: {
         // TODO: replace `user` and `pass` values from <https://forwardemail.net>
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
+
+        // Always use SMTP Key on Brevo
+        pass: process.env.SMTP_KEY,
     },
 });
 

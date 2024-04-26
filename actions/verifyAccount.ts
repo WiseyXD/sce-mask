@@ -57,8 +57,13 @@ export async function verifyAccount({
 
     console.log(url);
 
-    await main(url, email).catch((err) => console.log(err));
+    try {
+        await main(url, email);
+        return;
+    } catch (error) {
+        const resp = { error };
+        return resp;
+    }
 
-    return;
     // send mail
 }
