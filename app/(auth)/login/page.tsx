@@ -5,7 +5,7 @@ export default function page() {
         <AuthForm
             label="Login"
             labelText="Enter your email below to Login on SCOE-Mask"
-            backButtonHref="/auth/register"
+            backButtonHref="/register"
             backButtonText="Register"
             backButtonLabel="Don't have an account ?"
             submitButton="Login"
