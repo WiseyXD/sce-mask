@@ -64,3 +64,5 @@ model EmailVerification {
   code   String
   createdAt DateTime @default(now())
 }
+
+// Nalla
