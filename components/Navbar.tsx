@@ -1,4 +1,5 @@
 'use client';
+import { projectTitle } from '@/lib/constants';
 import { ModeToggle } from './mode-toggle';
 import { Separator } from './ui/separator';
 
@@ -13,7 +14,7 @@ export default function Navbar({ props }: INavbarProps) {
         <>
             <div className="px-2 py-3">
                 <div className="flex justify-between">
-                    <h1>scoe.mask</h1>
+                    <h1>{projectTitle}</h1>
                     {isAuthorized && (
                         <div className="flex items-center gap-3 ">
                             <h3>User Status</h3>

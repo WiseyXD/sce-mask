@@ -5,7 +5,7 @@
 
 ## Brainstorming of Design
 
-[] - Name of the project
+[x] - Name of the project
 [] - Logo of the project
 [] - Ui/Ux of the project
 [] - teammates for the project
@@ -21,3 +21,28 @@
 26/4
 [x] - Nodemailer with Brevo for mail
 [x] - Email Template done
+
+27/4
+[x] - Email regex for my email
+[x] - Name of the project
+
+email example of my college :
+aryan.nagbanshi{year of addmission}{dse}@{department name}.sce.edu.in
+
+Various dept
+aiml
+ds
+mech
+civil
+it
+comp
+auto
+
+regex requirements for regex to pass are:
+
+year of addmission should be 21 or greater than 21 (only 2 digits are there , eg : 2024 => 24),
+a student may or may not have dse in thier email,
+and all the department names are mentioned above
+
+regex1 = ^[a-zA-Z0-9._%+-]+@(aiml|ds|mech|civil|it|comp|auto)\.sce\.edu\.in$
+regex2 = ^[a-zA-Z0-9._%+-]+(21|[2-9][2-9])(dse)?@(aiml|ds|mech|civil|it|comp|auto)\.sce\.edu\.in$

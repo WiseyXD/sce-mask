@@ -1,3 +1,4 @@
+import { projectTitle } from '@/lib/constants';
 import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
@@ -16,7 +17,7 @@ const transporter = nodemailer.createTransport({
 export async function main(content: any, users: any) {
     // send mail with defined transport object
     const info = await transporter.sendMail({
-        from: '"Creator Of SCOE.mask 👻" <SCOE.mask@JS.com>', // sender address
+        from: `"Creator Of ${projectTitle} 👻" <${projectTitle}@TS.com>`, // sender address
         to: users, // list of receivers
         subject: 'Email Verification', // Subject line
         // text: "Test", // plain text body
@@ -73,11 +74,11 @@ export async function main(content: any, users: any) {
     <p>To verify your email, please click the following link: </p>
     <p><a href=${content} class="btn">Verify Email</a></p>
     <p>If you didn't request this, you can safely ignore this email.</p>
-    <p>Best regards,<br>Creator Of SCOE.mask 👻</p>
+    <p>Best regards,<br>Creator of  ${projectTitle} 👻</p>
 </div>
 <div class="footer">
 <p>This verification token will expire in 5mins.</p>
-    <p>This email was sent by SCOE.mask@JS.com</p>
+    <p>This email was sent by ${projectTitle}@JS.com</p>
     
 </div>
 </body>
