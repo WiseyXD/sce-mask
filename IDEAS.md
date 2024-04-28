@@ -26,6 +26,11 @@
 [x] - Email regex for my email
 [x] - Name of the project
 
+28/4
+[x] - Learn to design
+[] - Work on landing Page
+[] - Zustand setup / do i need it
+
 email example of my college :
 aryan.nagbanshi{year of addmission}{dse}@{department name}.sce.edu.in
 

@@ -6,7 +6,7 @@ export interface IBaseTemplate {
 }
 
 export default async function BaseTemplate({ children }: IBaseTemplate) {
-    const { user } = await validateRequest();
-    if (!user) redirect('/login');
+    const { session } = await validateRequest();
+    if (!session) redirect('/login');
     return <div>{children}</div>;
 }
