@@ -4,7 +4,7 @@ import { ActionResult } from '@/lib/auth';
 import { Argon2id } from 'oslo/password';
 
 import db from '@/lib/db';
-import { signupSchema } from '@/schemas';
+import { signupSchema } from '@/lib/schema';
 import { verifyAccount } from './verifyAccount';
 
 export async function register(values: {

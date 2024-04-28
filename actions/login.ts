@@ -2,7 +2,7 @@
 
 import { ActionResult, lucia } from '@/lib/auth';
 import db from '@/lib/db';
-import { loginSchema } from '@/schemas';
+import { loginSchema } from '@/lib/schema';
 import { cookies } from 'next/headers';
 import { Argon2id } from 'oslo/password';
 
