@@ -25,7 +25,7 @@ import { FormSuccess } from '../form-success';
 import { login } from '@/actions/login';
 import { register } from '@/actions/register';
 import { resendEmailVerificationLink } from '@/actions/resendEmail';
-import { loginSchema, signupSchema } from '@/schemas';
+import { loginSchema, signupSchema } from '@/lib/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 export interface IAuthFormProps {
