@@ -28,8 +28,12 @@
 
 28/4
 [x] - Learn to design
+
+[x] - Zustand setup / do i need it
+
+28/4
 [] - Work on landing Page
-[] - Zustand setup / do i need it
+[] - nextui
 
 email example of my college :
 aryan.nagbanshi{year of addmission}{dse}@{department name}.sce.edu.in

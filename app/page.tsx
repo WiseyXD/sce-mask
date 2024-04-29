@@ -1,4 +1,5 @@
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
+import { Button } from '@nextui-org/button';
 import Link from 'next/link';
 
 export default function Home() {
@@ -6,13 +7,16 @@ export default function Home() {
         <main className="flex min-h-screen flex-col items-center justify-center p-24 gap-y-10">
             Landing will be here.
             <div className="flex flex-col gap-y-[100px] items-center">
-                <HoverBorderGradient
-                    containerClassName="rounded-full"
-                    as="button"
-                    className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
-                >
-                    <Link href={'/register'}>Join Today</Link>
-                </HoverBorderGradient>
+                <Link href={'/register'}>
+                    <HoverBorderGradient
+                        containerClassName="rounded-full"
+                        as="button"
+                        className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
+                    >
+                        Join Today
+                    </HoverBorderGradient>
+                </Link>
+                <Button>New Button</Button>
             </div>
         </main>
     );
