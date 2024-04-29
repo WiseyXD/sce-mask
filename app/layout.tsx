@@ -21,20 +21,18 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={inter.className + ' flex flex-col'}>
-                <NextUIProvider>
-                    <ThemeProvider
-                        attribute="class"
-                        defaultTheme="system"
-                        enableSystem
-                        disableTransitionOnChange
-                    >
-                        <div className="basis-1/5">
-                            <NewNavbar />
-                        </div>
-                        <div className="basis-4/5">{children}</div>
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <NextUIProvider>
+                        <NewNavbar />
+                        {children}
                         <Toaster />
-                    </ThemeProvider>
-                </NextUIProvider>
+                    </NextUIProvider>
+                </ThemeProvider>
             </body>
         </html>
     );

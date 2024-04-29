@@ -38,7 +38,7 @@ export default function NewNavbar() {
                 />
                 <NavbarBrand>
                     <AcmeLogo />
-                    <p className="font-bold text-inherit">ACME</p>
+                    <p className="font-bold text-inherit">SCEMask</p>
                 </NavbarBrand>
             </NavbarContent>
 
