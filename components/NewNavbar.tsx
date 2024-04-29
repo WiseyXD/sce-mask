@@ -30,8 +30,8 @@ export default function NewNavbar() {
     ];
 
     return (
-        <Navbar onMenuOpenChange={setIsMenuOpen} isBordered>
-            <NavbarContent>
+        <Navbar onMenuOpenChange={setIsMenuOpen} isBordered position="static">
+            <NavbarContent className="w-full px-3">
                 <NavbarMenuToggle
                     aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
                     className="sm:hidden"

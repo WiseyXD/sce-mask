@@ -33,7 +33,8 @@
 
 28/4
 [] - Work on landing Page
-[] - nextui
+[x] - nextui
+[] - bug in navbar
 
 email example of my college :
 aryan.nagbanshi{year of addmission}{dse}@{department name}.sce.edu.in
