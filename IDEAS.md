@@ -39,7 +39,8 @@
 [x] - winning prep
 
 4/5
-[] -
+[x] - Ui Fixes / navbar
+[] - Reset Password sort
 
 email example of my college :
 aryan.nagbanshi{year of addmission}{dse}@{department name}.sce.edu.in
