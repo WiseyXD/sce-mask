@@ -28,13 +28,18 @@
 
 28/4
 [x] - Learn to design
-
 [x] - Zustand setup / do i need it
 
 28/4
 [] - Work on landing Page
 [x] - nextui
 [] - bug in navbar
+
+29/4
+[x] - winning prep
+
+4/5
+[] -
 
 email example of my college :
 aryan.nagbanshi{year of addmission}{dse}@{department name}.sce.edu.in

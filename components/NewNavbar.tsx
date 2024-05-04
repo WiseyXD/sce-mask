@@ -1,7 +1,6 @@
 'use client';
+import { useSession } from '@/providers/SessionProvider';
 import {
-    Button,
-    Link,
     Navbar,
     NavbarBrand,
     NavbarContent,
@@ -9,11 +8,15 @@ import {
     NavbarMenu,
     NavbarMenuItem,
     NavbarMenuToggle,
+    Button as NextButton,
 } from '@nextui-org/react';
+import Link from 'next/link';
 import React from 'react';
 import { AcmeLogo } from './AcmeLogo';
 
 export default function NewNavbar() {
+    const sessionData = useSession();
+    console.log(sessionData);
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
     const menuItems = [
@@ -41,54 +44,66 @@ export default function NewNavbar() {
                     <p className="font-bold text-inherit">SCEMask</p>
                 </NavbarBrand>
             </NavbarContent>
+            {sessionData.session ? (
+                <>
+                    <NavbarContent
+                        className="hidden sm:flex gap-4"
+                        justify="center"
+                    >
+                        <NavbarItem>
+                            <Link color="foreground" href="#">
+                                Features
+                            </Link>
+                        </NavbarItem>
+                        <NavbarItem isActive>
+                            <Link href="#" aria-current="page">
+                                Customers
+                            </Link>
+                        </NavbarItem>
+                        <NavbarItem>
+                            <Link color="foreground" href="#">
+                                Integrations
+                            </Link>
+                        </NavbarItem>
+                    </NavbarContent>
 
-            <NavbarContent className="hidden sm:flex gap-4" justify="center">
-                <NavbarItem>
-                    <Link color="foreground" href="#">
-                        Features
-                    </Link>
-                </NavbarItem>
-                <NavbarItem isActive>
-                    <Link href="#" aria-current="page">
-                        Customers
-                    </Link>
-                </NavbarItem>
-                <NavbarItem>
-                    <Link color="foreground" href="#">
-                        Integrations
-                    </Link>
-                </NavbarItem>
-            </NavbarContent>
-            <NavbarContent justify="end">
-                <NavbarItem className="hidden lg:flex">
-                    <Link href="#">Login</Link>
-                </NavbarItem>
-                <NavbarItem>
-                    <Button as={Link} color="primary" href="#" variant="flat">
-                        Sign Up
-                    </Button>
-                </NavbarItem>
-            </NavbarContent>
-            <NavbarMenu>
-                {menuItems.map((item, index) => (
-                    <NavbarMenuItem key={`${item}-${index}`}>
-                        <Link
-                            color={
-                                index === 2
-                                    ? 'primary'
-                                    : index === menuItems.length - 1
-                                      ? 'danger'
-                                      : 'foreground'
-                            }
-                            className="w-full"
-                            href="#"
-                            size="lg"
+                    <NavbarMenu>
+                        {menuItems.map((item, index) => (
+                            <NavbarMenuItem key={`${item}-${index}`}>
+                                <Link
+                                    color={
+                                        index === 2
+                                            ? 'primary'
+                                            : index === menuItems.length - 1
+                                              ? 'danger'
+                                              : 'foreground'
+                                    }
+                                    className="w-full"
+                                    href="#"
+                                >
+                                    {item}
+                                </Link>
+                            </NavbarMenuItem>
+                        ))}
+                    </NavbarMenu>
+                </>
+            ) : (
+                <NavbarContent justify="end">
+                    <NavbarItem className="hidden lg:flex">
+                        <Link href="/login">Login</Link>
+                    </NavbarItem>
+                    <NavbarItem>
+                        <NextButton
+                            as={Link}
+                            color="primary"
+                            href="/register"
+                            variant="flat"
                         >
-                            {item}
-                        </Link>
-                    </NavbarMenuItem>
-                ))}
-            </NavbarMenu>
+                            Sign Up
+                        </NextButton>
+                    </NavbarItem>
+                </NavbarContent>
+            )}
         </Navbar>
     );
 }
