@@ -1,5 +1,5 @@
 import { validateRequest } from '@/actions/validateRequests';
-import NewNavbar from '@/components/NewNavbar';
+import NewNavbar from '@/components/Navabar';
 import { Toaster } from '@/components/ui/toaster';
 import { SessionProvider } from '@/providers/SessionProvider';
 import { ThemeProvider } from '@/providers/theme-provider';

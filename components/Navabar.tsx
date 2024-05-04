@@ -13,10 +13,11 @@ import {
 import Link from 'next/link';
 import React from 'react';
 import { AcmeLogo } from './AcmeLogo';
+import { ModeToggle } from './mode-toggle';
 
 export default function NewNavbar() {
     const sessionData = useSession();
-    console.log(sessionData);
+
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
     const menuItems = [
@@ -63,6 +64,11 @@ export default function NewNavbar() {
                         <NavbarItem>
                             <Link color="foreground" href="#">
                                 Integrations
+                            </Link>
+                        </NavbarItem>
+                        <NavbarItem>
+                            <Link color="foreground" href="#">
+                                <ModeToggle />
                             </Link>
                         </NavbarItem>
                     </NavbarContent>
