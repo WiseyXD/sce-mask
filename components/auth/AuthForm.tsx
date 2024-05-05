@@ -25,6 +25,7 @@ import { FormSuccess } from '../form-success';
 import { login } from '@/actions/login';
 import { register } from '@/actions/register';
 import { resendEmailVerificationLink } from '@/actions/resendEmail';
+import { createLink } from '@/actions/resetPassword';
 import { loginSchema, signupSchema } from '@/lib/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -49,7 +50,7 @@ export default function AuthForm({
 }: IAuthFormProps) {
     const router = useRouter();
     const isRegister = formType === 'register' ? true : false;
-
+    const [oneTimError, setOneTimeError] = useState(false);
     const [verificationCounter, setVerificationCounter] = useState<number>(0);
     const [isPending, startTransisiton] = useTransition();
     const [resendVerificationEmail, setResendVerificationEmail] =
@@ -181,6 +182,23 @@ export default function AuthForm({
                                     </FormItem>
                                 )}
                             />
+                            {!isRegister && error && (
+                                <div className="text-sm flex gap-1 justify-start">
+                                    <button
+                                        className="underline text-blue-500"
+                                        onClick={async () => {
+                                            const resp = await createLink(
+                                                form.getValues().email
+                                            );
+                                            setSuccess(resp.success);
+                                            setError(resp.error);
+                                        }}
+                                        type="button"
+                                    >
+                                        Forgot Password ?
+                                    </button>
+                                </div>
+                            )}
                             <FormError message={error} />
                             <FormSuccess message={success} />
 

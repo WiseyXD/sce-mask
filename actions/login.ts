@@ -35,7 +35,7 @@ export async function login(values: {
             // it is crucial your implementation is protected against brute-force attacks with login throttling etc.
             // If usernames are public, you may outright tell the user that the username is invalid.
             return {
-                error: 'Incorrect username or password',
+                error: 'No user exists with this email in DB',
             };
         }
 
@@ -45,7 +45,7 @@ export async function login(values: {
         );
         if (!validPassword) {
             return {
-                error: 'Incorrect username or password',
+                error: 'Incorrect password',
             };
         }
 
