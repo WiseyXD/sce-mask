@@ -26,7 +26,6 @@ export async function resendEmailVerificationLink(email: string) {
         const resp = await verifyAccount({ userId: existingUser.id, email });
 
         if (resp?.error) {
-            console.log('Rejected Mail request');
             return {
                 error: resp.error,
             };

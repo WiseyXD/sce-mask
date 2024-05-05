@@ -2,7 +2,7 @@
 
 import db from '@/lib/db';
 import jwt from 'jsonwebtoken';
-import { main } from './email';
+import { verificationMail } from './email';
 
 export async function verifyAccount({
     userId,
@@ -58,7 +58,7 @@ export async function verifyAccount({
     console.log(url);
 
     try {
-        await main(url, email);
+        await verificationMail(url, email);
         return;
     } catch (error) {
         const resp = { error };

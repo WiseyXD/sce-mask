@@ -25,7 +25,7 @@ import { FormSuccess } from '../form-success';
 import { login } from '@/actions/login';
 import { register } from '@/actions/register';
 import { resendEmailVerificationLink } from '@/actions/resendEmail';
-import { createLink } from '@/actions/resetPassword';
+import { sendLinkInMail } from '@/actions/resetPassword';
 import { loginSchema, signupSchema } from '@/lib/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -117,7 +117,7 @@ export default function AuthForm({
         setError('');
         setSuccess('');
         const data = await resendEmailVerificationLink(form.getValues('email'));
-        console.log(data);
+
         setVerificationCounter((prev) => prev + 1);
         setSuccess(data.success);
         setError(data.error);
@@ -187,7 +187,7 @@ export default function AuthForm({
                                     <button
                                         className="underline text-blue-500"
                                         onClick={async () => {
-                                            const resp = await createLink(
+                                            const resp = await sendLinkInMail(
                                                 form.getValues().email
                                             );
                                             setSuccess(resp.success);

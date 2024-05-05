@@ -12,7 +12,7 @@ export type TServerSideProps = {
 
 async function Page(props: TServerSideProps): Promise<React.ReactNode> {
     const { token } = props.searchParams;
-    if (token) redirect('/');
+    if (!token) redirect('/');
     const resp = await decodeJWT(token);
 
     if (resp.error) {

@@ -3,8 +3,9 @@
 import db from '@/lib/db';
 import jwt from 'jsonwebtoken';
 import { Argon2id } from 'oslo/password';
+import { sendResetPasswordEmail } from './email';
 
-export async function createLink(email: string) {
+export async function sendLinkInMail(email: string) {
     const baseUrl = process.env.NEXT_BASE_URL!;
     const userExists = await db.user.findUnique({
         where: { email },
@@ -21,9 +22,17 @@ export async function createLink(email: string) {
     });
     const link = `${baseUrl}/forgot-password?token=${token}`;
     console.log(link);
-    return {
-        success: 'Email sent',
-    };
+
+    try {
+        await sendResetPasswordEmail(email, link);
+        return {
+            success: 'Email sent',
+        };
+    } catch (error: any) {
+        return {
+            error: error.message,
+        };
+    }
 }
 
 export async function decodeJWT(token: string | undefined) {

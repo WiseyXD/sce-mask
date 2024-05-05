@@ -24,7 +24,6 @@ export async function logout(): Promise<ActionResult> {
         );
         return redirect('/login');
     } catch (error: any) {
-        console.log(error);
         return {
             error: error.message,
         };
