@@ -6,6 +6,7 @@ export interface IBaseTemplate {
 }
 
 export default async function BaseTemplate({ children }: IBaseTemplate) {
+    console.log('Day null');
     const { session } = await validateRequest();
     if (!session) redirect('/login');
     return <div>{children}</div>;
