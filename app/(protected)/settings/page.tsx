@@ -3,7 +3,7 @@ import { validateRequest } from '@/actions/validateRequests';
 import { Button } from '@/components/ui/button';
 
 export default async function page() {
-    // jsr
+    // Null Day
     const { session } = await validateRequest();
     return (
         <div className="min-h-[93vh]">
