@@ -14,7 +14,10 @@ pnpm i
 bun i
 ```
 
-Secondly, run the development server:
+Secondly , create an .env file in root and copy all the content from .env.sample file
+after that fill all the values in .env file.
+
+Thirdly , run the development server:
 
 ```bash
 npm run dev
@@ -28,10 +31,4 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## This is Next Starter Template with Lucia Auth, Shadcn, NextUI and Aceternity.
-
--   [x] Password Login
--   [x] Forget Password Mail
--   [x] Mail Verification
-
-> **Note:** Change Schema for Input validation in schema.ts file
+# This is Anoynomus Webiste very specific to my college where a student can share his thoughts , chat , create sub groups(sub-redits) and also give conffessions
