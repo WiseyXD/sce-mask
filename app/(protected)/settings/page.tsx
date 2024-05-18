@@ -3,13 +3,12 @@ import { validateRequest } from '@/actions/validateRequests';
 import { Button } from '@/components/ui/button';
 
 export default async function page() {
-    // Null Day
     const { session } = await validateRequest();
     return (
         <div className="min-h-[93vh]">
             {JSON.stringify(session)}
             <form action={logout}>
-                <Button>Logout</Button>
+                /<Button>Logout</Button>
             </form>
         </div>
     );

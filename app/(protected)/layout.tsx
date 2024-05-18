@@ -6,7 +6,6 @@ export interface IBaseTemplate {
 }
 
 export default async function BaseTemplate({ children }: IBaseTemplate) {
-    // Jai shree ram 
     const { session } = await validateRequest();
     if (!session) redirect('/login');
     return <div>{children}</div>;
