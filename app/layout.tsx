@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     description: 'Developed by WiseyXD',
 };
 
-// Null Day 4
+// Null Day 5
 
 export default async function RootLayout({
     children,
