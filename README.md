@@ -31,4 +31,4 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-# This is Anoynomus Webiste very specific to my college where a student can share his thoughts , chat , create sub groups(sub-redits) and also give conffessions
+### This is Anoynomus Webiste very specific to my college where a student can share his thoughts , chat , create sub groups(sub-redits) and also give conffessions
