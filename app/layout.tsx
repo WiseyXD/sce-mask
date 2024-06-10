@@ -1,5 +1,5 @@
 import { validateRequest } from '@/actions/validateRequests';
-import NewNavbar from '@/components/Navabar';
+import NewNavbar from '@/components/Navbar';
 import { Toaster } from '@/components/ui/toaster';
 import { SessionProvider } from '@/providers/SessionProvider';
 import { ThemeProvider } from '@/providers/theme-provider';
@@ -32,7 +32,8 @@ export default async function RootLayout({
                         disableTransitionOnChange
                     >
                         <NextUIProvider>
-                            <NewNavbar />
+                            {!sessionData.session && <NewNavbar />}
+
                             {children}
 
                             <Toaster />

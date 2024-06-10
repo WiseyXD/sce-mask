@@ -40,7 +40,7 @@ export default function NewNavbar() {
                     aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
                     className="sm:hidden"
                 />
-                <Link href={'/'} className='cursor-pointer'>
+                <Link href={'/'} className="cursor-pointer">
                     <NavbarBrand>
                         <AcmeLogo />
                         <p className="font-bold text-inherit">SCEMask</p>

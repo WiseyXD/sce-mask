@@ -7,6 +7,6 @@ export interface IBaseTemplate {
 
 export default async function BaseTemplate({ children }: IBaseTemplate) {
     const { user } = await validateRequest();
-    if (user) redirect('/settings');
+    if (user) redirect('/profile-creation');
     return <div>{children}</div>;
 }
