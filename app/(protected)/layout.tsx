@@ -8,6 +8,7 @@ export interface IBaseTemplate {
 export default async function BaseTemplate({ children }: IBaseTemplate) {
     const { session } = await validateRequest();
     if (!session) redirect('/login');
+
     return (
         <div className="min-h-[100vh] flex justify-center items-center">
             <div className="w-1/2">{children}</div>
