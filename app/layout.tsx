@@ -21,6 +21,7 @@ export default async function RootLayout({
     children: React.ReactNode;
 }>) {
     const sessionData = await validateRequest();
+
     return (
         <html lang="en">
             <body className={inter.className}>

@@ -1,10 +1,4 @@
 'use client';
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/gyfW8NnrgKZ
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
-
 import userImage from '@/public/default-user-img.png';
 import Image from 'next/image';
 
@@ -20,26 +14,21 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { toast } from '@/components/ui/use-toast';
 
+import { logout } from '@/actions/logout';
 import { profileCreationSchema } from '@/lib/schema';
 import { useSession } from '@/providers/SessionProvider';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 export default function ProfileCreationPage() {
     const session = useSession();
-    console.log(session);
-    const [file, setFile] = useState<File | null>(null);
-    // const userId = session?.userId;
 
     const form = useForm<z.infer<typeof profileCreationSchema>>({
         resolver: zodResolver(profileCreationSchema),
         defaultValues: {
             username: '',
-            imageFile: '',
             name: session.user?.email,
             year: 12,
             department: session.user?.email,
@@ -48,27 +37,17 @@ export default function ProfileCreationPage() {
 
     function onSubmit(data: z.infer<typeof profileCreationSchema>) {
         console.log('Submitted');
-        toast({
-            title: 'You submitted the following values:',
-            description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">
-                        {JSON.stringify(data, null, 2)}
-                    </code>
-                </pre>
-            ),
-        });
+        // toast({
+        //     title: 'You submitted the following values:',
+        //     description: (
+        //         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+        //             <code className="text-white">
+        //                 {JSON.stringify(data, null, 2)}
+        //             </code>
+        //         </pre>
+        //     ),
+        // });
     }
-
-    // File upload error , how to validate image in zod not wokring asked GPT fix errors
-
-    const handleFileChange = (e: any) => {
-        const file = e.target.files[0];
-        if (file) {
-            setFile(file);
-            form.setValue('imageFile', [file]);
-        }
-    };
 
     return (
         <div>
@@ -95,33 +74,6 @@ export default function ProfileCreationPage() {
                                                 height={100}
                                             />
                                         </div>
-
-                                        <FormField
-                                            control={form.control}
-                                            name="imageFile"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>
-                                                        Profile Picture
-                                                    </FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            placeholder="shadcn"
-                                                            {...field}
-                                                            type="file"
-                                                            onChange={
-                                                                handleFileChange
-                                                            }
-                                                        />
-                                                    </FormControl>
-                                                    <FormDescription>
-                                                        This is your public
-                                                        display picture.
-                                                    </FormDescription>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
                                     </div>
                                 </div>
                             </div>
@@ -204,17 +156,15 @@ export default function ProfileCreationPage() {
                             />
                         </div>
                     </div>
-                    <Button type="submit" className="w-full ">
+                    <Button type="submit" className="w-full">
                         Save
                     </Button>
                 </form>
             </Form>
+
+            <form action={logout}>
+                <Button>Logout</Button>
+            </form>
         </div>
     );
-}
-
-{
-    /* <form action={logout}>
-        /<Button>Logout</Button>
-    </form> */
 }

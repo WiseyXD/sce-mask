@@ -1,8 +1,12 @@
+import { validateRequest } from '@/actions/validateRequests';
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
 import { Button } from '@nextui-org/button';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
-export default function Home() {
+export default async function Home() {
+    const sessionData = await validateRequest();
+    if (sessionData.user) redirect('/settings');
     return (
         <main className="min-h-[93vh] flex flex-col items-center justify-center p-24 gap-y-10 ">
             Landing will be here.
