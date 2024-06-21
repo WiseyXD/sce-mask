@@ -44,6 +44,8 @@ model User {
   password           String
   isEmailVerified    Boolean             @default(false)
   image              String?
+  department         String?
+  yearOfAddmission   String?
   role               UserRole            @default(USER)
   accounts           Account[]
   sessions           Session[]

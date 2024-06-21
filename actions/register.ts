@@ -39,10 +39,27 @@ export async function register(values: {
         }
     }
 
+    const domain_part = email.split('@')[1];
+    const usernamePart = email.split('@')[0];
+
+    let numberMatch = usernamePart.match(/\d+/);
+    let branch = domain_part.split('.')[0];
+
+    const yearOfAddmission = numberMatch ? numberMatch[0] : null;
+
+    let department;
+    if (branch == 'it' && yearOfAddmission == '22') {
+        department = 'aiml';
+    } else {
+        department = branch;
+    }
+
     const newUser = await db.user.create({
         data: {
             email,
             password: hashedPassword,
+            department,
+            yearOfAddmission,
         },
     });
 
