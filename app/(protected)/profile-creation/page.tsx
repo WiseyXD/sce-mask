@@ -1,5 +1,5 @@
 'use client';
-
+// how to get dept and year of addmission here through server actions
 import { AcmeLogo } from '@/components/AcmeLogo';
 import { Button } from '@/components/ui/button';
 import {
