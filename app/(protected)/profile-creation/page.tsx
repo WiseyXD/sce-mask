@@ -14,17 +14,36 @@ import {
 import { Input } from '@/components/ui/input';
 import UserImage from '@/public/default-user-img.png';
 
+import getUserDetails from '@/actions/getUserDetails';
 import { logout } from '@/actions/logout';
 import { profileCreationSchema } from '@/lib/schema';
 import { useSession } from '@/providers/SessionProvider';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 export default function ProfileCreationPage() {
     const session = useSession();
     const email = session.user?.email;
+    const [department, setDepartment] = useState('');
+    const [yearOfAddmission, setYearOfAddmission] = useState('');
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                const details = await getUserDetails(email!);
+                if (details?.department && details?.yearOfAddmission) {
+                    setDepartment(details?.department);
+                    setYearOfAddmission(details?.yearOfAddmission);
+                }
+            } catch (error) {
+                console.error('Error fetching user details:', error);
+            }
+        };
+
+        fetchUserDetails();
+    }, []);
 
     const form = useForm<z.infer<typeof profileCreationSchema>>({
         resolver: zodResolver(profileCreationSchema),
@@ -105,7 +124,7 @@ export default function ProfileCreationPage() {
                                 <FormLabel>Department</FormLabel>
                                 <FormControl>
                                     <Input
-                                        value={email}
+                                        value={department.toUpperCase()}
                                         placeholder="shadcn"
                                         disabled
                                     />
@@ -119,7 +138,7 @@ export default function ProfileCreationPage() {
                                 <FormLabel>Year of Addmission</FormLabel>
                                 <FormControl>
                                     <Input
-                                        value={email}
+                                        value={yearOfAddmission}
                                         placeholder="shadcn"
                                         disabled
                                     />
