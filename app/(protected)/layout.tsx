@@ -11,7 +11,7 @@ export default async function BaseTemplate({ children }: IBaseTemplate) {
 
     return (
         <div className="min-h-[100vh] flex justify-center items-center">
-            <div className="w-1/2">{children}</div>
+            <div className="w-4/6">{children}</div>
         </div>
     );
 }
