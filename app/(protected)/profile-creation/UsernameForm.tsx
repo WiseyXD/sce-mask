@@ -12,12 +12,18 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useToast } from '@/components/ui/use-toast';
 import UserImage from '@/public/default-user-img.png';
 
 import { logout } from '@/actions/logout';
+import setUsername from '@/actions/usernameCreation';
+import { FormError } from '@/components/form-error';
+import { FormSuccess } from '@/components/form-success';
+import { ToastAction } from '@/components/ui/toast';
 import { profileCreationSchema } from '@/lib/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
+import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -25,13 +31,20 @@ type TUsernameFormProps = {
     email: string | undefined;
     yearOfAddmission: string | undefined | null;
     department: string | undefined | null;
+    id: string;
 };
 
 export default function UsernameForm({
     email,
     yearOfAddmission,
     department,
+    id,
 }: TUsernameFormProps) {
+    const [isPending, startTransisiton] = useTransition();
+    const [error, setError] = useState<string>('');
+    const [success, setSuccess] = useState<string>('');
+    const { toast } = useToast();
+
     const form = useForm<z.infer<typeof profileCreationSchema>>({
         resolver: zodResolver(profileCreationSchema),
         defaultValues: {
@@ -39,8 +52,34 @@ export default function UsernameForm({
         },
     });
 
-    function onSubmit(values: z.infer<typeof profileCreationSchema>) {
-        console.log('Form Submitted', values);
+    async function onSubmit(values: z.infer<typeof profileCreationSchema>) {
+        try {
+            setError('');
+            setSuccess('');
+            startTransisiton(async () => {
+                const resp = await setUsername(values.username, id);
+                if (!resp.success) {
+                    setError(resp.msg);
+                    return;
+                }
+                setSuccess(resp.msg);
+                toast({
+                    title: 'Username set successfully.',
+                    description: resp.msg,
+                });
+            });
+        } catch (error) {
+            toast({
+                variant: 'destructive',
+                title: 'Uh oh! Something went wrong.',
+                description: 'There was a problem with your request.',
+                action: (
+                    <ToastAction altText="Try again">Try again</ToastAction>
+                ),
+            });
+            console.log(error);
+            return;
+        }
     }
 
     return (
@@ -83,10 +122,11 @@ export default function UsernameForm({
                                             <Input
                                                 placeholder="shadcn"
                                                 {...field}
+                                                disabled={isPending}
                                             />
                                         </FormControl>
                                         <FormDescription>
-                                            This is your public display name.
+                                            {error}
                                         </FormDescription>
                                         <FormMessage />
                                     </FormItem>
@@ -135,14 +175,22 @@ export default function UsernameForm({
                             </FormItem>
                         </div>
                     </div>
-                    <Button type="submit" className="w-full">
+                    <div className="py-3">
+                        <FormError message={error} />
+                        <FormSuccess message={success} />
+                    </div>
+                    <Button
+                        type="submit"
+                        className="w-full"
+                        disabled={isPending}
+                    >
                         Save
                     </Button>
                 </form>
             </Form>
 
             <form action={logout}>
-                <Button>Logout</Button>
+                <Button disabled={isPending}>Logout</Button>
             </form>
         </div>
     );

@@ -11,6 +11,7 @@ export default async function ProfileCreationPage() {
 
     return (
         <UsernameForm
+            id={user?.id!}
             email={details?.email}
             department={details?.department}
             yearOfAddmission={details?.yearOfAddmission}
