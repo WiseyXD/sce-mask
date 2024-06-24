@@ -2,13 +2,15 @@
 
 import getUserDetails from '@/actions/getUserDetails';
 import { validateRequest } from '@/actions/validateRequests';
+import { redirect } from 'next/navigation';
 import UsernameForm from './UsernameForm';
 
 export default async function ProfileCreationPage() {
     const { user } = await validateRequest();
-
     const details = await getUserDetails(user?.id);
-
+    if (details?.username) {
+        redirect('/settings');
+    }
     return (
         <UsernameForm
             id={user?.id!}

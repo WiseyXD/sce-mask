@@ -23,6 +23,7 @@ import { ToastAction } from '@/components/ui/toast';
 import { profileCreationSchema } from '@/lib/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
+import { redirect } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -67,6 +68,7 @@ export default function UsernameForm({
                     title: 'Username set successfully.',
                     description: resp.msg,
                 });
+                return redirect('/settings');
             });
         } catch (error) {
             toast({
