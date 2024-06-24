@@ -9,7 +9,7 @@ export default async function ProfileCreationPage() {
     const { user } = await validateRequest();
     const details = await getUserDetails(user?.id);
     if (details?.username) {
-        redirect('/settings');
+        return redirect('/home');
     }
     return (
         <UsernameForm

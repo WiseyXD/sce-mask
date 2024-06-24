@@ -68,7 +68,7 @@ export default function UsernameForm({
                     title: 'Username set successfully.',
                     description: resp.msg,
                 });
-                return redirect('/settings');
+                return redirect('/home');
             });
         } catch (error) {
             toast({

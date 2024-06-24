@@ -6,8 +6,8 @@ export interface IBaseTemplate {
 }
 
 export default async function BaseTemplate({ children }: IBaseTemplate) {
-    const { session } = await validateRequest();
-    if (!session) redirect('/login');
+    const { session, user } = await validateRequest();
+    if (!session) return redirect('/login');
 
     return (
         <div className="min-h-[100vh] flex justify-center items-center">
