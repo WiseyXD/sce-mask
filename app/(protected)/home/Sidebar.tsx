@@ -70,7 +70,7 @@ export default function Sidebar() {
             <Button className="bg-blue-600 text-white w-full rounded-full">
                 Post
             </Button>
-            <Popover showArrow placement="bottom">
+            <Popover showArrow placement="bottom" className="w-full">
                 <PopoverTrigger>
                     <NextUser
                         as="button"
