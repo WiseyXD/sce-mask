@@ -57,7 +57,7 @@ type SidebarProps = {
 export default function Sidebar({ userDetails }: TUserDetails) {
     return (
         <div className="flex flex-col justify-center items-start gap-y-10 ">
-            <div className="flex justify-center">
+            <div className="flex justify-center ">
                 <AcmeLogo />
             </div>
             {sidebarMenu.map((item) => {

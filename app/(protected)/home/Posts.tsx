@@ -1,6 +1,5 @@
 import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
 import PostCard from './PostCard';
-
 const postsIcons = [
     {
         text: 'Comment',
@@ -18,7 +17,7 @@ const postsIcons = [
 
 export default function Posts() {
     return (
-        <div className="flex flex-col ">
+        <div className="">
             <PostCard />
             <PostCard />
             <PostCard />

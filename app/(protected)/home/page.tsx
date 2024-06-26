@@ -10,8 +10,8 @@ export default async function page() {
     const { user } = await validateRequest();
     const userDetails = await getUserDetails(user?.id);
     return (
-        <div className="min-h-[100vh]">
-            <div className="grid grid-cols-4 justify-stretch justify-items-stretch gap-x-2 min-h-screen">
+        <div className="min-h-[93vh]">
+            <div className="grid grid-cols-4 justify-stretch justify-items-stretch gap-x-2">
                 <div className="">
                     <Sidebar userDetails={userDetails} />
                 </div>

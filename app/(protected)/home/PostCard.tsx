@@ -48,7 +48,7 @@ export default function PostCard() {
                     </div>
                     <div className="flex justify-start gap-x-3 pt-2 ">
                         {postsIcons.map((item) => {
-                            return <>{item.icon}</>;
+                            return <div key={item.text}>{item.icon}</div>;
                         })}
                     </div>
                 </div>
