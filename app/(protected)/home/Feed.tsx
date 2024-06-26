@@ -24,7 +24,7 @@ const feedPageOptins = [
 export default function Feed({ userDetails }: TUserDetails) {
     return (
         <div className="w-full">
-            <div className="flex justify-evenly py-3 bg-opacity-50">
+            <div className="flex justify-evenly py-4 bg-opacity-50">
                 {feedPageOptins.map((i) => (
                     <p key={i.text} className="font-semibold">
                         {i.text}

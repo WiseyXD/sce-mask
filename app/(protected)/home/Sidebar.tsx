@@ -1,14 +1,7 @@
 import { AcmeLogo } from '@/components/AcmeLogo';
-import { UserTwitterCard } from '@/components/UserTwitterCard';
-import { imageLink } from '@/lib/utils';
+import PopoverUserCard from '@/components/PopoverUserCard';
 import { TUserDetails } from '@/types';
-import {
-    Button as NextButton,
-    User as NextUser,
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from '@nextui-org/react';
+import { Button as NextButton } from '@nextui-org/react';
 import {
     Book,
     BookMarked,
@@ -74,24 +67,7 @@ export default function Sidebar({ userDetails }: TUserDetails) {
             <NextButton className="bg-blue-600 text-white w-full rounded-full">
                 Post
             </NextButton>
-            <Popover showArrow placement="bottom" className="w-full">
-                <PopoverTrigger>
-                    <NextUser
-                        as="button"
-                        name={userDetails?.username}
-                        description="Product Designer"
-                        className="transition-transform"
-                        avatarProps={{
-                            src: imageLink,
-
-                            // src: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
-                        }}
-                    />
-                </PopoverTrigger>
-                <PopoverContent className="p-1">
-                    <UserTwitterCard />
-                </PopoverContent>
-            </Popover>
+            <PopoverUserCard username={userDetails?.username!} />
         </div>
     );
 }

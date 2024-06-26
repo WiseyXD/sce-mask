@@ -1,4 +1,5 @@
 'use client';
+import { imageLink } from '@/lib/utils';
 import {
     Avatar,
     Button,
@@ -9,7 +10,12 @@ import {
 } from '@nextui-org/react';
 import React from 'react';
 
-export const UserTwitterCard = () => {
+type TUserTwitterCardProps = {
+    username: string;
+};
+
+// is followed the change state
+export const UserTwitterCard = ({ username }: TUserTwitterCardProps) => {
     const [isFollowed, setIsFollowed] = React.useState(false);
 
     return (
@@ -23,14 +29,14 @@ export const UserTwitterCard = () => {
                         isBordered
                         radius="full"
                         size="md"
-                        src="https://i.pravatar.cc/150?u=a04258114e29026702d"
+                        src={imageLink}
                     />
                     <div className="flex flex-col items-start justify-center">
                         <h4 className="text-small font-semibold leading-none text-default-600">
-                            Zoey Lang
+                            {username}
                         </h4>
                         <h5 className="text-small tracking-tight text-default-500">
-                            @zoeylang
+                            @
                         </h5>
                     </div>
                 </div>
