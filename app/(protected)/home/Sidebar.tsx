@@ -1,7 +1,9 @@
 import { AcmeLogo } from '@/components/AcmeLogo';
 import { UserTwitterCard } from '@/components/UserTwitterCard';
-import { Button } from '@/components/ui/button';
+import { imageLink } from '@/lib/utils';
+import { TUserDetails } from '@/types';
 import {
+    Button as NextButton,
     User as NextUser,
     Popover,
     PopoverContent,
@@ -48,11 +50,13 @@ const sidebarMenu = [
     },
 ];
 
-type SidebarProps = {};
+type SidebarProps = {
+    userDetails: TUserDetails;
+};
 
-export default function Sidebar() {
+export default function Sidebar({ userDetails }: TUserDetails) {
     return (
-        <div className="flex flex-col justify-center items-start gap-y-10">
+        <div className="flex flex-col justify-center items-start gap-y-10 ">
             <div className="flex justify-center">
                 <AcmeLogo />
             </div>
@@ -67,18 +71,20 @@ export default function Sidebar() {
                     </div>
                 );
             })}
-            <Button className="bg-blue-600 text-white w-full rounded-full">
+            <NextButton className="bg-blue-600 text-white w-full rounded-full">
                 Post
-            </Button>
+            </NextButton>
             <Popover showArrow placement="bottom" className="w-full">
                 <PopoverTrigger>
                     <NextUser
                         as="button"
-                        name="Zoe Lang"
+                        name={userDetails?.username}
                         description="Product Designer"
                         className="transition-transform"
                         avatarProps={{
-                            src: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
+                            src: imageLink,
+
+                            // src: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
                         }}
                     />
                 </PopoverTrigger>
