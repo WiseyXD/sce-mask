@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 
 export default async function Home() {
     const sessionData = await validateRequest();
-    if (sessionData.user) redirect('/settings');
+    if (sessionData.user) redirect('/home');
     return (
         <main className="min-h-[93vh] flex flex-col items-center justify-center p-24 gap-y-10 ">
             Landing will be here.

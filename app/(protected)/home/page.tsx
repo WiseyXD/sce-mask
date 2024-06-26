@@ -11,16 +11,16 @@ export default async function page() {
     const userDetails = await getUserDetails(user?.id);
     return (
         <div className="min-h-[93vh]">
-            <div className="grid grid-cols-4 justify-stretch justify-items-stretch gap-x-2">
-                <div className="">
+            <div className="grid grid-cols-4 justify-stretch justify-items-stretch gap-x-3">
+                <div className="lg:col-span-1 lg:block hidden">
                     <Sidebar userDetails={userDetails} />
                 </div>
-                <div className="col-span-2 flex ">
+                <div className="lg:col-span-2 col-span-3 flex ">
                     <Separator orientation="vertical" />
                     <Feed userDetails={userDetails} />
                     <Separator orientation="vertical" />
                 </div>
-                <div className="">
+                <div className="lg:col-span-1 lg:block hidden ">
                     <Extras userDetails={userDetails} />
                 </div>
             </div>

@@ -53,17 +53,19 @@ export default function Sidebar({ userDetails }: TUserDetails) {
             <div className="flex justify-center ">
                 <AcmeLogo />
             </div>
-            {sidebarMenu.map((item) => {
-                return (
-                    <div
-                        className="flex gap-x-4 text-2xl justify-center items-center  hover:bg-gray-700 hover:rounded-full hover:px-2 hover : py-3 ease-in-out duration-300"
-                        key={item.text}
-                    >
-                        {item.icon}
-                        <h2>{item.text}</h2>
-                    </div>
-                );
-            })}
+            <div className="flex flex-col gap-y-3 items-start">
+                {sidebarMenu.map((item) => {
+                    return (
+                        <div
+                            className="flex gap-x-4 text-2xl justify-center items-center  hover:bg-gray-700 hover:rounded-full hover:px-2 hover : py-3 ease-in-out duration-300"
+                            key={item.text}
+                        >
+                            {item.icon}
+                            <h2>{item.text}</h2>
+                        </div>
+                    );
+                })}
+            </div>
             <NextButton className="bg-blue-600 text-white w-full rounded-full">
                 Post
             </NextButton>
