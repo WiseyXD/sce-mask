@@ -17,9 +17,9 @@ export default function PopoverUserCard({ username }: TPopoverUserCard) {
             <PopoverTrigger>
                 <NextUser
                     as="button"
-                    name={'USername'}
-                    description="Product Designer"
-                    className="transition-transform"
+                    name={'Username'}
+                    description="Full-Stack Developer"
+                    className="transition-transform "
                     avatarProps={{
                         src: imageLink,
 
