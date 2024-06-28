@@ -5,6 +5,7 @@ import { Button as NextButton } from '@nextui-org/react';
 import {
     Book,
     BookMarked,
+    FeatherIcon,
     Home,
     Mail,
     Search,
@@ -57,19 +58,26 @@ export default function Sidebar({ userDetails }: TUserDetails) {
                 {sidebarMenu.map((item) => {
                     return (
                         <div
-                            className="flex gap-x-4 text-2xl justify-center items-center  hover:bg-gray-700 hover:rounded-full hover:px-2 hover : py-3 ease-in-out duration-300"
+                            className="flex gap-x-4 text-2xl justify-center items-center  hover:bg-gray-700 hover:rounded-full px-2 py-3 ease-in-out duration-300"
                             key={item.text}
                         >
                             {item.icon}
-                            <h2>{item.text}</h2>
+                            <div className="lg:block hidden">
+                                <h2>{item.text}</h2>
+                            </div>
                         </div>
                     );
                 })}
+                <div className="lg:hidden block px-2 py-3  hover:bg-gray-700 hover:rounded-full ease-in-out duration-300">
+                    <FeatherIcon className="text-blue-600" />
+                </div>
             </div>
-            <NextButton className="bg-blue-600 text-white w-full rounded-full">
+            <NextButton className="hidden lg:block bg-blue-600 text-white w-full rounded-full ">
                 Post
             </NextButton>
-            <PopoverUserCard username={userDetails?.username!} />
+            <div className="lg:block hidden">
+                <PopoverUserCard username={userDetails?.username!} />
+            </div>
         </div>
     );
 }

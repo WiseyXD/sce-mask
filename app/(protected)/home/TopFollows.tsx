@@ -8,7 +8,7 @@ export default function TopFollows() {
                 <CardTitle>Who to follow</CardTitle>
             </CardHeader>
             <CardContent>
-                <div className="flex flex-col items-start justify-start">
+                <div className="flex flex-col items-center justify-center">
                     {/* <Image
                         alt="Product image"
                         className="aspect-square w-full rounded-md object-cover"

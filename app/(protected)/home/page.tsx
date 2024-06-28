@@ -11,16 +11,16 @@ export default async function page() {
     const userDetails = await getUserDetails(user?.id);
     return (
         <div className="min-h-[93vh]">
-            <div className="grid grid-cols-4 justify-stretch justify-items-stretch gap-x-3">
-                <div className="lg:col-span-1 lg:block hidden">
+            <div className="flex lg:grid lg:grid-cols-[0.85fr_3fr_1.15fr] gap-x-3">
+                <div className="">
                     <Sidebar userDetails={userDetails} />
                 </div>
-                <div className="lg:col-span-2 col-span-3 flex ">
+                <div className="flex">
                     <Separator orientation="vertical" />
                     <Feed userDetails={userDetails} />
                     <Separator orientation="vertical" />
                 </div>
-                <div className="lg:col-span-1 lg:block hidden ">
+                <div className="hidden lg:block">
                     <Extras userDetails={userDetails} />
                 </div>
             </div>
