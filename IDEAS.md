@@ -6,13 +6,12 @@
 ## Brainstorming of Design
 
 [x] - Name of the project
-[] - Logo of the project
-[] - Ui/Ux of the project
-[] - teammates for the project
+[ ] - Logo of the project
+[x] - Ui/Ux of the project
 
 # Working on Auth
 
-[] - username input after registring
+[x] - username input after registring
 [x] - mails by nodemailer and brevo
 [x] - timer for resend email
 
@@ -31,16 +30,16 @@
 [x] - Zustand setup / do i need it
 
 28/4
-[] - Work on landing Page
+[ ] - Work on landing Page
 [x] - nextui
-[] - bug in navbar
+[ ] - bug in navbar
 
 29/4
 [x] - winning prep
 
 4/5
 [x] - Ui Fixes / navbar
-[] - Reset Password sort
+[x] - Reset Password sort
 
 email example of my college :
 aryan.nagbanshi{year of addmission}{dse}@{department name}.sce.edu.in
