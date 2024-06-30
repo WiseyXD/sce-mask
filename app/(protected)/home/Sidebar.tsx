@@ -58,7 +58,7 @@ export default function Sidebar({ userDetails }: TUserDetails) {
                 {sidebarMenu.map((item) => {
                     return (
                         <div
-                            className="flex gap-x-4 text-2xl justify-center items-center  hover:bg-gray-700 hover:rounded-full px-2 py-3 ease-in-out duration-300"
+                            className="flex gap-x-4 text-2xl justify-center items-center  hover:bg-gray-700 hover:rounded-full hover:cursor-pointer  px-2 py-3 ease-in-out duration-300"
                             key={item.text}
                         >
                             {item.icon}
