@@ -50,6 +50,7 @@ model User {
   accounts           Account[]
   sessions           Session[]
   emailVerifications EmailVerification[]
+  posts              Post[]
 }
 
 model Session {
@@ -60,11 +61,34 @@ model Session {
 }
 
 model EmailVerification {
-  id     String @id @default(cuid())
-  userId String
-  user   User   @relation(references: [id], fields: [userId], onDelete: Cascade)
-  code   String
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+  code      String
   createdAt DateTime @default(now())
+}
+
+model Post {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(references: [id], fields: [userId], onDelete: Cascade)
+  text      String
+  mediaLink String?
+  time      DateTime  @default(now())
+  likeCount Int       @default(0)
+  bookmarks Int       @default(0)
+  comments  Comment[]
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  postId    String
+  post      Post     @relation(references: [id], fields: [postId], onDelete: Cascade)
+  text      String?
+  mediaLink String?
+  time      DateTime @default(now())
+  likeCount Int      @default(0)
+  bookmarks Int      @default(0)
 }
 
 // Nalla
