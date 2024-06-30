@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import { withUt } from 'uploadthing/tw';
 const { nextui } = require('@nextui-org/react');
 
 const {
@@ -11,7 +12,7 @@ const config = {
         './pages/**/*.{ts,tsx}',
         './components/**/*.{ts,tsx}',
         './app/**/*.{ts,tsx}',
-        './src/**/*.{ts,tsx}',
+        './src/**/*.{ts,tsx,mdx}',
         './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
     ],
     prefix: '',
@@ -95,4 +96,4 @@ function addVariablesForColors({ addBase, theme }: any) {
     });
 }
 
-export default config;
+export default withUt(config);
