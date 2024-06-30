@@ -16,7 +16,7 @@ import { TUserDetails } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button as NextButton, User as NextUser } from '@nextui-org/react';
 import { Image, Smile } from 'lucide-react';
-import { useState, useTransition } from 'react';
+import { useRef, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -44,7 +44,8 @@ export default function PostBar({ userDetails }: NonNullable<TUserDetails>) {
     const [isPending, startTransisiton] = useTransition();
     const { toast } = useToast();
     const [file, setFile] = useState<File | null>(null);
-    const [fileUrl, setFileUrl] = useState<string | null>(null);
+    const [fileUrl, setFileUrl] = useState<string | undefined>(undefined);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const form = useForm<z.infer<typeof postCreationSchema>>({
         resolver: zodResolver(postCreationSchema),
@@ -65,7 +66,7 @@ export default function PostBar({ userDetails }: NonNullable<TUserDetails>) {
             const url = URL.createObjectURL(selectedFile);
             setFileUrl(url);
         } else {
-            setFileUrl(null);
+            setFileUrl(undefined);
         }
     };
 
@@ -81,9 +82,15 @@ export default function PostBar({ userDetails }: NonNullable<TUserDetails>) {
                 const resp = await createPost({
                     text: values.text,
                     userId: userDetails.id,
+                    mediaLink: fileUrl ? fileUrl : '',
                 });
                 if (resp.success) {
                     form.reset();
+                    setFile(null);
+                    setFileUrl(undefined);
+                    if (fileInputRef.current) {
+                        fileInputRef.current.value = ''; // Clear the file input
+                    }
                     toast({
                         title: 'Post created succesfully.',
                     });
@@ -154,6 +161,7 @@ export default function PostBar({ userDetails }: NonNullable<TUserDetails>) {
                                         <div className="" key={item.text}>
                                             {item.type == 'file' ? (
                                                 <Input
+                                                    ref={fileInputRef}
                                                     type="file"
                                                     accept="image/jpg,image/png,image/webp,image/jpg,image/gif,video/mp4,video/webm"
                                                     name="media"
