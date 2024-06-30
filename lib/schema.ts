@@ -47,3 +47,7 @@ export const profileCreationSchema = z.object({
         message: 'Username must be at least 2 characters.',
     }),
 });
+
+export const postCreationSchema = z.object({
+    text: z.string().min(1, { message: 'Text is required' }),
+});
