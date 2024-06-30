@@ -16,16 +16,20 @@ const postsIcons = [
 ];
 
 export default function Posts() {
+    // get all posts
+
     return (
         <div className="">
-            <PostCard />
-            <PostCard />
-            <PostCard />
-            <PostCard />
-            <PostCard />
-            <PostCard />
-            <PostCard />
-            <PostCard />
+            {/* posts map */}
+            <PostCard username={'null'} />
+            <PostCard username={'null'} />
+            <PostCard username={'null'} />
+            <PostCard username={'null'} />
+            <PostCard username={'null'} />
+            <PostCard username={'null'} />
+            <PostCard username={'null'} />
+            <PostCard username={'null'} />
+            <PostCard username={'null'} />
         </div>
     );
 }

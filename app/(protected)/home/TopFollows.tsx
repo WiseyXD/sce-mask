@@ -2,6 +2,8 @@ import { UserTwitterCard } from '@/components/UserTwitterCard';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function TopFollows() {
+    // get all top follows
+
     return (
         <Card className="overflow-hidden">
             <CardHeader className="">
@@ -16,6 +18,8 @@ export default function TopFollows() {
                         src={imageLink}
                         width="300"
                     /> */}
+
+                    {/* Map all top follows */}
                     <UserTwitterCard username={'username'} />
                     <UserTwitterCard username={'username'} />
 

@@ -18,7 +18,11 @@ const postsIcons = [
     },
 ];
 
-export default function PostCard() {
+type TPostCard = {
+    username: string;
+};
+
+export default function PostCard({ username }: TPostCard) {
     return (
         <div className="flex flex-col">
             <div className="flex py-3 px-2">
@@ -35,7 +39,7 @@ export default function PostCard() {
                 </div>
                 <div className="flex flex-col w-full">
                     <div className="flex items-center gap-x-2">
-                        <p className="font-semibold text-lg">@username</p>
+                        <p className="font-semibold text-lg">{username}</p>
                         <p className="text-muted">Time</p>
                     </div>
                     <div className="flex flex-col">
