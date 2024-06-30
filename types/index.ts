@@ -12,3 +12,24 @@ export type TUserDetails = {
         role: UserRole;
     } | null;
 };
+
+export type TPost = {
+    id?: string;
+    userId: string;
+    text: string;
+    mediaLink?: string; // Optional field
+    time?: Date;
+    likeCount?: number;
+    bookmarks?: number;
+    comments?: Comment[]; // Array
+};
+
+export type TComment = {
+    id: string;
+    postId: string;
+    text?: string; // Optional field
+    mediaLink?: string; // Optional field
+    time: Date;
+    likeCount: number;
+    bookmarks: number;
+};
