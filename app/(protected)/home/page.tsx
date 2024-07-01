@@ -1,10 +1,10 @@
 import getUserDetails from '@/actions/getUserDetails';
 import { validateRequest } from '@/actions/validateRequests';
+import Extras from '@/app/(protected)/home/components/Extras';
+import Feed from '@/app/(protected)/home/components/Feed';
+import Sidebar from '@/app/(protected)/home/components/Sidebar';
 import { Separator } from '@/components/ui/separator';
 import db from '@/lib/db';
-import Extras from './Extras';
-import Feed from './Feed';
-import Sidebar from './Sidebar';
 
 // Add Skeleton and pass the userDetaisl to all other props
 export default async function page() {
