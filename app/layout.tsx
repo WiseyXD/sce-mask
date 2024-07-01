@@ -20,8 +20,6 @@ export const metadata: Metadata = {
     description: 'Developed by WiseyXD',
 };
 
-// deployement fuck
-
 export default async function RootLayout({
     children,
 }: Readonly<{
