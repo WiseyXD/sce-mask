@@ -11,7 +11,7 @@ import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import { postCreationSchema } from '@/lib/schema';
-import { UploadDropzone } from '@/lib/uploadthing';
+import { UploadButton } from '@/lib/uploadthing';
 import { imageLink } from '@/lib/utils';
 import { TUserDetails } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -170,8 +170,8 @@ export default function PostBar({ userDetails }: NonNullable<TUserDetails>) {
                             </div>
                         )} */}
 
-                        <div className="flex justify-between pt-3">
-                            <div className="flex items-center gap-x-2 text-blue-600">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 justify-between pt-3 gap-y-3">
+                            <div className="flex items-center justify-evenly lg:justify-start lg:gap-x-2 text-blue-600 ">
                                 {icons.map((item) => {
                                     return (
                                         <div
@@ -181,7 +181,7 @@ export default function PostBar({ userDetails }: NonNullable<TUserDetails>) {
                                             {showDropzone &&
                                             item.type == 'file' ? (
                                                 <div className="flex ">
-                                                    <UploadDropzone
+                                                    <UploadButton
                                                         className="cursor-pointer"
                                                         endpoint="imageUploader"
                                                         disabled={

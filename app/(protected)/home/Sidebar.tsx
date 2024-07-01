@@ -1,5 +1,13 @@
 import { AcmeLogo } from '@/components/AcmeLogo';
 import PopoverUserCard from '@/components/PopoverUserCard';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog';
 import { TUserDetails } from '@/types';
 import { Button as NextButton } from '@nextui-org/react';
 import {
@@ -12,6 +20,7 @@ import {
     User,
     UserRound,
 } from 'lucide-react';
+import PostBar from './PostBar';
 
 const sidebarMenu = [
     {
@@ -70,13 +79,39 @@ export default function Sidebar({ userDetails }: TUserDetails) {
                         </div>
                     );
                 })}
-                <div className="lg:hidden block px-2 py-3  hover:bg-gray-700 hover:rounded-full ease-in-out duration-300">
-                    <FeatherIcon className="text-blue-600" />
-                </div>
+
+                <Dialog>
+                    <DialogTrigger asChild>
+                        <div className="lg:hidden block px-2 py-3  hover:bg-gray-700 hover:rounded-full ease-in-out duration-300 cursor-pointer">
+                            <FeatherIcon className="text-blue-600" />
+                        </div>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-lg lg:max-w-3xl">
+                        <DialogHeader>
+                            <DialogTitle>Create new post.</DialogTitle>
+                            <DialogDescription>
+                                Be anoynomous.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <PostBar userDetails={userDetails} />
+                    </DialogContent>
+                </Dialog>
             </div>
-            <NextButton className="hidden lg:block bg-blue-600 text-white w-full rounded-full ">
-                Post
-            </NextButton>
+            <Dialog>
+                <DialogTrigger asChild>
+                    <NextButton className="hidden lg:block bg-blue-600 text-white w-full rounded-full ">
+                        Post
+                    </NextButton>
+                </DialogTrigger>
+                <DialogContent className="max-w-3xl">
+                    <DialogHeader>
+                        <DialogTitle>Create new post.</DialogTitle>
+                        <DialogDescription>Be anoynomous.</DialogDescription>
+                    </DialogHeader>
+                    <PostBar userDetails={userDetails} />
+                </DialogContent>
+            </Dialog>
+
             <div className="lg:block hidden">
                 <PopoverUserCard username={userDetails?.username!} />
             </div>
