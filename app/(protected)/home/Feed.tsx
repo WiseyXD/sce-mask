@@ -29,7 +29,6 @@ type TFeedProps = {
 };
 
 export default function Feed({ userDetails, posts }: TFeedProps) {
-    console.log(posts);
     return (
         <div className="w-full">
             <div className="flex justify-evenly py-4 bg-opacity-50">
