@@ -1,6 +1,7 @@
 import getUserDetails from '@/actions/getUserDetails';
 import { validateRequest } from '@/actions/validateRequests';
 import { Separator } from '@/components/ui/separator';
+import db from '@/lib/db';
 import Extras from './Extras';
 import Feed from './Feed';
 import Sidebar from './Sidebar';
@@ -9,6 +10,13 @@ import Sidebar from './Sidebar';
 export default async function page() {
     const { user } = await validateRequest();
     const userDetails = await getUserDetails(user?.id);
+
+    const posts = await db.post.findMany({
+        where: {
+            userId: userDetails?.id,
+        },
+    });
+
     return (
         <div className="min-h-[93vh]">
             <div className="flex lg:grid lg:grid-cols-[0.85fr_3fr_1.15fr] gap-x-3">
@@ -17,7 +25,9 @@ export default async function page() {
                 </div>
                 <div className="flex">
                     <Separator orientation="vertical" />
-                    <Feed userDetails={userDetails} />
+                    {userDetails && (
+                        <Feed userDetails={userDetails} posts={posts} />
+                    )}
                     <Separator orientation="vertical" />
                 </div>
                 <div className="hidden lg:block">

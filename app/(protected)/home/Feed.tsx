@@ -1,6 +1,8 @@
+'use client';
+
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { TUserDetails } from '@/types';
+import { TPost, TUserDetails } from '@/types';
 import PostBar from './PostBar';
 import Posts from './Posts';
 
@@ -21,7 +23,13 @@ const feedPageOptins = [
     },
 ];
 
-export default function Feed({ userDetails }: TUserDetails) {
+type TFeedProps = {
+    userDetails: TUserDetails;
+    posts: TPost[];
+};
+
+export default function Feed({ userDetails, posts }: TFeedProps) {
+    console.log(posts);
     return (
         <div className="w-full">
             <div className="flex justify-evenly py-4 bg-opacity-50">

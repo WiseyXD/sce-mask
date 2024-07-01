@@ -42,7 +42,11 @@ const icons = [
     // },
 ];
 
-export default function PostBar({ userDetails }: NonNullable<TUserDetails>) {
+type TPostBarProps = {
+    userDetails: TUserDetails;
+};
+
+export default function PostBar({ userDetails }: TPostBarProps) {
     const [isPendingPost, setIsPendingPost] = useState<boolean>(false);
     const [isPendingUpload, setIsPendingUpload] = useState<boolean>(false);
 

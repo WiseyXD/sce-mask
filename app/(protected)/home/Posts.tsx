@@ -16,8 +16,6 @@ const postsIcons = [
 ];
 
 export default function Posts() {
-    // get all posts
-
     return (
         <div className="">
             {/* posts map */}
