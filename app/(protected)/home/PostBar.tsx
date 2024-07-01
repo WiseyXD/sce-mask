@@ -7,8 +7,8 @@ import {
     FormItem,
     FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
+import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import { postCreationSchema } from '@/lib/schema';
 import { UploadDropzone } from '@/lib/uploadthing';
@@ -16,7 +16,8 @@ import { imageLink } from '@/lib/utils';
 import { TUserDetails } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button as NextButton, User as NextUser } from '@nextui-org/react';
-import { Image, Smile } from 'lucide-react';
+
+import { BarChartHorizontal, Image, Smile, XIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -29,7 +30,7 @@ const icons = [
     },
     {
         text: 'Poll',
-        icon: <Image />,
+        icon: <BarChartHorizontal />,
     },
     {
         text: 'Emoji',
@@ -42,7 +43,9 @@ const icons = [
 ];
 
 export default function PostBar({ userDetails }: NonNullable<TUserDetails>) {
-    const [isPending, setIsPending] = useState<boolean>(false);
+    const [isPendingPost, setIsPendingPost] = useState<boolean>(false);
+    const [isPendingUpload, setIsPendingUpload] = useState<boolean>(false);
+
     const { toast } = useToast();
     const [showDropzone, setShowDropzone] = useState<boolean>(false);
     // const [file, setFile] = useState<File | null>(null);
@@ -80,7 +83,8 @@ export default function PostBar({ userDetails }: NonNullable<TUserDetails>) {
             return;
         }
         try {
-            setIsPending(true);
+            setIsPendingPost(true);
+            setIsPendingPost(true);
             const resp = await createPost({
                 text: values.text,
                 userId: userDetails.id,
@@ -96,10 +100,14 @@ export default function PostBar({ userDetails }: NonNullable<TUserDetails>) {
                 toast({
                     title: 'Post created succesfully.',
                 });
-                setIsPending(false);
+                setIsPendingPost(false);
+                setIsPendingUpload(false);
+                setShowDropzone(false);
+
                 console.log(resp.msg);
             } else {
-                setIsPending(false);
+                setIsPendingPost(false);
+                setIsPendingUpload(false);
                 console.log(resp.msg);
             }
         } catch (error) {
@@ -107,7 +115,8 @@ export default function PostBar({ userDetails }: NonNullable<TUserDetails>) {
                 title: 'Error occured while post creation.',
                 variant: 'destructive',
             });
-            setIsPending(false);
+            setIsPendingPost(false);
+            setIsPendingUpload(false);
         }
     }
 
@@ -136,11 +145,11 @@ export default function PostBar({ userDetails }: NonNullable<TUserDetails>) {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
-                                        <Input
+                                        <Textarea
                                             placeholder="What's Happening?"
-                                            className="border-0 w-full mb-4"
+                                            className="border-0 w-full mb-4 resize-none"
                                             {...field}
-                                            disabled={isPending}
+                                            disabled={isPendingPost}
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -171,45 +180,94 @@ export default function PostBar({ userDetails }: NonNullable<TUserDetails>) {
                                         >
                                             {showDropzone &&
                                             item.type == 'file' ? (
-                                                <UploadDropzone
-                                                    className="cursor-pointer"
-                                                    endpoint="imageUploader"
-                                                    disabled={isPending}
-                                                    //         onBeforeUploadBegin={((files: File[]) => File[] | Promise<File[]> =>
-                                                    //             preview file throught url
-                                                    // )}
-                                                    onClientUploadComplete={(
-                                                        res
-                                                    ) => {
-                                                        // Do something with the response
-                                                        console.log(
-                                                            'Files: ',
-                                                            res[0]
-                                                        );
-                                                        setFileUrl(res[0].url);
-                                                        setIsPending(false);
-                                                        toast({
-                                                            title: 'File uploaded successfully.',
-                                                        });
-                                                    }}
-                                                    onUploadError={(
-                                                        error: Error
-                                                    ) => {
-                                                        // Do something with the error.
-                                                        setIsPending(false);
-                                                        toast({
-                                                            title: `ERROR! ${error.message}`,
-                                                            variant:
-                                                                'destructive',
-                                                        });
-                                                    }}
-                                                />
+                                                <div className="flex ">
+                                                    <UploadDropzone
+                                                        className="cursor-pointer"
+                                                        endpoint="imageUploader"
+                                                        disabled={
+                                                            isPendingUpload
+                                                        }
+                                                        onBeforeUploadBegin={(
+                                                            files
+                                                        ) => {
+                                                            setIsPendingPost(
+                                                                true
+                                                            );
+
+                                                            // Preprocess files before uploading (e.g. rename them)
+                                                            return files.map(
+                                                                (f) =>
+                                                                    new File(
+                                                                        [f],
+                                                                        'renamed-' +
+                                                                            f.name,
+                                                                        {
+                                                                            type: f.type,
+                                                                        }
+                                                                    )
+                                                            );
+                                                        }}
+                                                        onUploadBegin={() => {
+                                                            setIsPendingPost(
+                                                                true
+                                                            );
+                                                        }}
+                                                        onClientUploadComplete={(
+                                                            res
+                                                        ) => {
+                                                            // Do something with the response
+                                                            console.log(
+                                                                'Files: ',
+                                                                res[0]
+                                                            );
+
+                                                            setFileUrl(
+                                                                res[0].url
+                                                            );
+                                                            setIsPendingPost(
+                                                                false
+                                                            );
+                                                            toast({
+                                                                title: 'File uploaded successfully.',
+                                                            });
+                                                        }}
+                                                        onUploadError={(
+                                                            error: Error
+                                                        ) => {
+                                                            // Do something with the error.
+                                                            setIsPendingPost(
+                                                                false
+                                                            );
+                                                            toast({
+                                                                title: `ERROR! ${error.message}`,
+                                                                variant:
+                                                                    'destructive',
+                                                            });
+                                                        }}
+                                                    />
+                                                    {showDropzone ? (
+                                                        <div
+                                                            onClick={() => {
+                                                                setShowDropzone(
+                                                                    false
+                                                                );
+                                                                setIsPendingPost(
+                                                                    false
+                                                                );
+                                                            }}
+                                                            className="cursor-pointer"
+                                                        >
+                                                            <XIcon />
+                                                        </div>
+                                                    ) : null}
+                                                </div>
                                             ) : item.type == 'file' ? (
                                                 <div
                                                     className=""
-                                                    onClick={() =>
-                                                        setShowDropzone(true)
-                                                    }
+                                                    onClick={() => {
+                                                        setShowDropzone(true);
+                                                        setIsPendingPost(true);
+                                                    }}
                                                 >
                                                     {item.icon}
                                                 </div>
@@ -219,16 +277,11 @@ export default function PostBar({ userDetails }: NonNullable<TUserDetails>) {
                                         </div>
                                     );
                                 })}
-                                {showDropzone ? (
-                                    <div onClick={() => setShowDropzone(false)}>
-                                        Cut
-                                    </div>
-                                ) : null}
                             </div>
                             <NextButton
                                 className="bg-blue-600 text-white  rounded-full"
                                 type="submit"
-                                disabled={isPending}
+                                disabled={isPendingPost}
                             >
                                 Post
                             </NextButton>
