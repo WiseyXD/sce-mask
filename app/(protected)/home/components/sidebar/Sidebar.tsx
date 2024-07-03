@@ -20,7 +20,7 @@ import {
     User,
     UserRound,
 } from 'lucide-react';
-import PostBar from './PostBar';
+import PostBar from './feed/PostBar';
 
 const sidebarMenu = [
     {

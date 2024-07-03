@@ -1,5 +1,5 @@
+import PostCard from '@/app/(protected)/home/components/feed/PostCard';
 import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
-import PostCard from './PostCard';
 const postsIcons = [
     {
         text: 'Comment',

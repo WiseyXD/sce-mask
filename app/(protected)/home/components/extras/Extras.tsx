@@ -1,5 +1,5 @@
-import HotTopicsCard from '@/app/(protected)/home/components/HotTopicsCard';
-import TopFollows from '@/app/(protected)/home/components/TopFollows';
+import HotTopicsCard from '@/app/(protected)/home/components/extras/HotTopicsCard';
+import TopFollows from '@/app/(protected)/home/components/extras/TopFollows';
 
 import { TUserDetails } from '@/types';
 import Search from './Search';

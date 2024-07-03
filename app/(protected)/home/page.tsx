@@ -1,7 +1,7 @@
 import getUserDetails from '@/actions/getUserDetails';
 import { validateRequest } from '@/actions/validateRequests';
-import Extras from '@/app/(protected)/home/components/Extras';
-import Feed from '@/app/(protected)/home/components/Feed';
+import Extras from '@/app/(protected)/home/components/extras/Extras';
+import Feed from '@/app/(protected)/home/components/feed/Feed';
 import Sidebar from '@/app/(protected)/home/components/Sidebar';
 import { Separator } from '@/components/ui/separator';
 import db from '@/lib/db';
