@@ -1,3 +1,4 @@
+import PostBar from '@/app/(protected)/home/components/feed/PostBar';
 import { AcmeLogo } from '@/components/AcmeLogo';
 import PopoverUserCard from '@/components/PopoverUserCard';
 import {
@@ -20,7 +21,6 @@ import {
     User,
     UserRound,
 } from 'lucide-react';
-import PostBar from './feed/PostBar';
 
 const sidebarMenu = [
     {
