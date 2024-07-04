@@ -1,5 +1,6 @@
 import { Separator } from '@/components/ui/separator';
 import { imageLink } from '@/lib/utils';
+import { TPost } from '@/types';
 import { User as NextUser } from '@nextui-org/react';
 import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
 
@@ -18,11 +19,12 @@ const postsIcons = [
     },
 ];
 
-type TPostCard = {
-    username: string;
+type TPostCardProps = {
+    username: string | null | undefined;
+    post: TPost;
 };
 
-export default function PostCard({ username }: TPostCard) {
+export default function PostCard({ username, post }: Partial<TPostCardProps>) {
     return (
         <div className="flex flex-col">
             <div className="flex py-3 px-2">
@@ -40,14 +42,12 @@ export default function PostCard({ username }: TPostCard) {
                 <div className="flex flex-col w-full">
                     <div className="flex items-center gap-x-2">
                         <p className="font-semibold text-lg">{username}</p>
-                        <p className="text-muted">Time</p>
+                        <p className="text-muted">
+                            {JSON.stringify(post?.time)}
+                        </p>
                     </div>
                     <div className="flex flex-col">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing
-                        elit. A, odit iste. Sequi placeat facilis tempore nisi
-                        exercitationem, repellendus voluptates laboriosam
-                        aliquam, eius est officiis a odio sed harum omnis
-                        commodi.
+                        {post?.text}
                         {/* If Image the render it here */}
                     </div>
                     <div className="flex justify-start gap-x-3 pt-2 ">
