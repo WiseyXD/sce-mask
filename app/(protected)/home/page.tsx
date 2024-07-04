@@ -6,7 +6,9 @@ import Sidebar from '@/app/(protected)/home/components/sidebar/Sidebar';
 import { Separator } from '@/components/ui/separator';
 import db from '@/lib/db';
 
-// Add Skeleton and pass the userDetaisl to all other props
+// Add Skeleton
+// while creating post also attach the username in the post schema
+
 export default async function page() {
     const { user } = await validateRequest();
     const userDetails = await getUserDetails(user?.id);
