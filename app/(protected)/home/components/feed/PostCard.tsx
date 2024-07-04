@@ -4,6 +4,8 @@ import { TPost } from '@/types';
 import { User as NextUser } from '@nextui-org/react';
 import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
 
+import moment from 'moment';
+
 const postsIcons = [
     {
         text: 'Comment',
@@ -43,7 +45,9 @@ export default function PostCard({ username, post }: Partial<TPostCardProps>) {
                     <div className="flex items-center gap-x-2">
                         <p className="font-semibold text-lg">{username}</p>
                         <p className="text-muted">
-                            {JSON.stringify(post?.time)}
+                            {/* {JSON.stringify(post?.time)} */}
+                            {/* {moment(post?.time).format('MM/DD/YYYY')} */}
+                            {moment(post?.time).fromNow()}
                         </p>
                     </div>
                     <div className="flex flex-col">
