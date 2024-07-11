@@ -7,7 +7,7 @@ import { Separator } from '@/components/ui/separator';
 import db from '@/lib/db';
 
 // Add Skeleton
-// while creating post also attach the username in the
+// while creating post also attach the username in the schema
 
 export default async function page() {
     const { user } = await validateRequest();
