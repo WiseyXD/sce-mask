@@ -1,7 +1,7 @@
 # Important things to learn first
 
 [x] - Scalable Architecture for Next.js Project
-[] - Server Actions
+[x] - Server Actions
 
 ## Brainstorming of Design
 
