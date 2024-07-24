@@ -19,7 +19,7 @@ export type TPost = {
     time?: Date;
     likeCount?: number;
     bookmarks?: number;
-    user: {
+    user?: {
         image?: string | null;
         username: string | null;
     };
