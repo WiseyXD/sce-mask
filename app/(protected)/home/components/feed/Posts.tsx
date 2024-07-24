@@ -30,10 +30,7 @@ export default function Posts({ posts, userDetails }: TPostProps) {
             {posts.map((post) => {
                 return (
                     <div key={post.id}>
-                        <PostCard
-                            username={userDetails?.username}
-                            post={post}
-                        />
+                        <PostCard username={post?.user?.username} post={post} />
                     </div>
                 );
             })}

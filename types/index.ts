@@ -19,6 +19,10 @@ export type TPost = {
     time?: Date;
     likeCount?: number;
     bookmarks?: number;
+    user: {
+        image?: string | null;
+        username: string | null;
+    };
     comments?: Comment[]; // Array
 };
 
