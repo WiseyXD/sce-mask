@@ -5,6 +5,7 @@ import { User as NextUser } from '@nextui-org/react';
 import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
 
 import moment from 'moment';
+import Image from 'next/image';
 
 const postsIcons = [
     {
@@ -52,7 +53,14 @@ export default function PostCard({ username, post }: Partial<TPostCardProps>) {
                     </div>
                     <div className="flex flex-col">
                         {post?.text}
-                        {/* If Image the render it here */}
+                        {post?.mediaLink && (
+                            <Image
+                                src={post?.mediaLink}
+                                alt="Media"
+                                height={300}
+                                width={300}
+                            />
+                        )}
                     </div>
                     <div className="flex justify-start gap-x-3 pt-2 ">
                         {postsIcons.map((item) => {

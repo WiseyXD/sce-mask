@@ -13,9 +13,6 @@ export default async function page() {
     const userDetails = await getUserDetails(user?.id);
 
     const posts = await db.post.findMany({
-        where: {
-            userId: userDetails?.id,
-        },
         include: {
             user: {
                 select: {

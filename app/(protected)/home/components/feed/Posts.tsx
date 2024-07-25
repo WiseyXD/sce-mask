@@ -24,6 +24,7 @@ type TPostProps = {
 export default function Posts({ posts, userDetails }: TPostProps) {
     console.log(userDetails);
     console.log(posts);
+    if (posts[0] === null) return 'No Posts in DB';
     return (
         <div className="">
             {/* posts map */}

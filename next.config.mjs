@@ -12,6 +12,12 @@ const nextConfig = {
                 port: '',
                 pathname: '/profile_images/**',
             },
+            {
+                protocol: 'https',
+                hostname: 'utfs.io',
+                port: '',
+                pathname: '/**',
+            },
         ],
     },
 };
