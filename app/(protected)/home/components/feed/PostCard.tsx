@@ -10,15 +10,21 @@ import Image from 'next/image';
 const postsIcons = [
     {
         text: 'Comment',
-        icon: <MessagesSquare />,
+        icon: (
+            <MessagesSquare className="hover:border border-blue-400 rounded-md duration-150 ease-in-out" />
+        ),
     },
     {
         text: 'Like',
-        icon: <Heart />,
+        icon: (
+            <Heart className="hover:border border-red-600 rounded-md duration-150 ease-in-out" />
+        ),
     },
     {
         text: 'Bookmark',
-        icon: <BookmarkPlus />,
+        icon: (
+            <BookmarkPlus className="hover:border border-blue-400 rounded-md duration-150 ease-in-out" />
+        ),
     },
 ];
 
@@ -51,18 +57,19 @@ export default function PostCard({ username, post }: Partial<TPostCardProps>) {
                             {moment(post?.time).fromNow()}
                         </p>
                     </div>
-                    <div className="flex flex-col">
+                    <div className="flex flex-col gap-y-3">
                         {post?.text}
                         {post?.mediaLink && (
                             <Image
                                 src={post?.mediaLink}
                                 alt="Media"
+                                className="rounded-lg"
                                 height={300}
                                 width={300}
                             />
                         )}
                     </div>
-                    <div className="flex justify-start gap-x-3 pt-2 ">
+                    <div className="flex justify-evenly gap-x-3 pt-2 ">
                         {postsIcons.map((item) => {
                             return <div key={item.text}>{item.icon}</div>;
                         })}
