@@ -36,7 +36,7 @@ type TPostCardProps = {
 
 interface CommentModalProps {
     text: string;
-    icon: JSX.Element;
+    icon: React.JSX.Element;
     postCreatorUsername: string | null | undefined;
 }
 
