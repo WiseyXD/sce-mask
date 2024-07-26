@@ -10,10 +10,8 @@ import {
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
-    FormLabel,
     FormMessage,
 } from '@/components/ui/form';
 import { Separator } from '@/components/ui/separator';
@@ -167,73 +165,81 @@ function CommentModal({ text, icon, postCreatorUsername }: CommentModalProps) {
                         {icon}
                     </div>
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent className="">
                     <DialogHeader>
                         <DialogTitle>Comment</DialogTitle>
-                        <DialogDescription>
-                            <div className="flex items-center ">
-                                <div>
-                                    <NextUser
-                                        as="button"
-                                        name={null}
-                                        description=""
-                                        className="transition-transform"
-                                        avatarProps={{
-                                            src: imageLink,
-                                        }}
-                                    />
+                        <DialogDescription className="">
+                            <div className="w-full">
+                                <div className="flex items-center ">
+                                    <div>
+                                        <NextUser
+                                            as="button"
+                                            name={null}
+                                            description=""
+                                            className="transition-transform"
+                                            avatarProps={{
+                                                src: imageLink,
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="flex flex-col gap-y-3 text-white">
+                                        {text}
+                                    </div>
                                 </div>
-                                <div className="flex flex-col gap-y-3 text-white">
-                                    {text}
-                                </div>
-                            </div>
-                            <div className="flex items-center ">
-                                <div>
-                                    <NextUser
-                                        as="button"
-                                        name={null}
-                                        description=""
-                                        className="transition-transform"
-                                        avatarProps={{
-                                            src: imageLink,
-                                        }}
-                                    />
-                                </div>
-                                <div className="flex flex-col gap-y-3 text-white">
-                                    <Form {...form}>
-                                        <form
-                                            onSubmit={form.handleSubmit(
-                                                onSubmit
-                                            )}
-                                            className="flex items-center space-y-8"
-                                        >
-                                            <FormField
-                                                control={form.control}
-                                                name="comment"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <FormLabel>
-                                                            Username
-                                                        </FormLabel>
-                                                        <FormControl>
-                                                            <Textarea
-                                                                placeholder="shadcn"
-                                                                {...field}
-                                                            />
-                                                        </FormControl>
-                                                        <FormDescription>
-                                                            This is your public
-                                                            display name.
-                                                        </FormDescription>
-                                                        <FormMessage />
-                                                    </FormItem>
+                                <div className="border-l-5 h-10 w-7 ml-4 mt-2"></div>
+                                <div className="flex items-center">
+                                    <div>
+                                        <NextUser
+                                            as="button"
+                                            name={null}
+                                            description=""
+                                            className="transition-transform"
+                                            avatarProps={{
+                                                src: imageLink,
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="flex flex-col gap-y-3 text-white w-full">
+                                        <Form {...form}>
+                                            <form
+                                                onSubmit={form.handleSubmit(
+                                                    onSubmit
                                                 )}
-                                            />
-                                            <Button type="submit">
-                                                Submit
-                                            </Button>
-                                        </form>
-                                    </Form>
+                                            >
+                                                <div className="flex justify-center items-center gap-x-2">
+                                                    <div className="w-full basis-2/3">
+                                                        <FormField
+                                                            control={
+                                                                form.control
+                                                            }
+                                                            name="comment"
+                                                            render={({
+                                                                field,
+                                                            }) => (
+                                                                <FormItem>
+                                                                    <FormControl>
+                                                                        <Textarea
+                                                                            placeholder="Post your reply..."
+                                                                            {...field}
+                                                                        />
+                                                                    </FormControl>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                    </div>
+                                                    <div className="basis-1/3">
+                                                        <Button
+                                                            type="submit"
+                                                            className="h-full w-full"
+                                                        >
+                                                            Submit
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </Form>
+                                    </div>
                                 </div>
                             </div>
                         </DialogDescription>
