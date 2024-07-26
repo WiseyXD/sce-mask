@@ -19,7 +19,7 @@ export const createPost = async (postData: TPost) => {
     } catch (error) {
         console.log(error);
         return {
-            msg: 'error accoured',
+            msg: 'error occured',
             success: false,
         };
     }

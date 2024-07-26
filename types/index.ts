@@ -27,7 +27,7 @@ export type TPost = {
 };
 
 export type TComment = {
-    id: string;
+    id?: string;
     postId: string;
     text?: string; // Optional field
     mediaLink?: string; // Optional field
