@@ -22,8 +22,6 @@ type TPostProps = {
 };
 
 export default function Posts({ posts, userDetails }: TPostProps) {
-    console.log(userDetails);
-    console.log(posts);
     if (posts[0] === null) return 'No Posts in DB';
     return (
         <div className="">
@@ -31,18 +29,14 @@ export default function Posts({ posts, userDetails }: TPostProps) {
             {posts.map((post) => {
                 return (
                     <div key={post.id}>
-                        <PostCard username={post?.user?.username} post={post} />
+                        <PostCard
+                            username={post?.user?.username}
+                            post={post}
+                            userDetails={userDetails}
+                        />
                     </div>
                 );
             })}
-            {/* <PostCard username={'null'} />
-            <PostCard username={'null'} />
-            <PostCard username={'null'} />
-            <PostCard username={'null'} />
-            <PostCard username={'null'} />
-            <PostCard username={'null'} />
-            <PostCard username={'null'} />
-            <PostCard username={'null'} /> */}
         </div>
     );
 }

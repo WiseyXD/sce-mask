@@ -29,9 +29,10 @@ export type TPost = {
 export type TComment = {
     id?: string;
     postId: string;
+    userId: string;
     text?: string; // Optional field
     mediaLink?: string; // Optional field
-    time: Date;
-    likeCount: number;
-    bookmarks: number;
+    time?: Date;
+    likeCount?: number;
+    bookmarks?: number;
 };
