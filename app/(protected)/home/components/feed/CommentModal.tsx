@@ -19,6 +19,7 @@ import { imageLink } from '@/lib/utils';
 import { User as NextUser } from '@nextui-org/react';
 
 import { createComment } from '@/actions/comment';
+import { useToast } from '@/components/ui/use-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { revalidatePath } from 'next/cache';
 import { useState } from 'react';
@@ -41,11 +42,11 @@ export default function CommentModal({
     signedInUserId,
 }: CommentModalProps) {
     const [isPending, setIsPending] = useState(false);
+    const { toast } = useToast();
 
     const formSchema = z.object({
         comment: z.string().min(2).max(50),
     });
-
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -69,10 +70,17 @@ export default function CommentModal({
             if (resp.success) {
                 form.reset();
                 setIsPending(false);
+                toast({
+                    title: 'Comment added.',
+                });
             }
             revalidatePath('/home');
         } catch (error) {
             setIsPending(false);
+            toast({
+                title: 'Error while adding comment.',
+                variant: 'destructive',
+            });
             console.log(error);
         }
     }
