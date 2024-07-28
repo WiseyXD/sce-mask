@@ -6,6 +6,7 @@ import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
 
 import moment from 'moment';
 import Image from 'next/image';
+import Link from 'next/link';
 import CommentModal from './CommentModal';
 
 type TPostCardProps = {
@@ -65,26 +66,28 @@ export default function PostCard({
                     />
                 </div>
                 <div className="flex flex-col w-full">
-                    <div className="flex items-center gap-x-2">
-                        <p className="font-semibold text-lg">{username}</p>
-                        <p className="text-muted">
-                            {/* {JSON.stringify(post?.time)} */}
-                            {/* {moment(post?.time).format('MM/DD/YYYY')} */}
-                            {moment(post?.time).fromNow()}
-                        </p>
-                    </div>
-                    <div className="flex flex-col gap-y-3">
-                        {post?.text}
-                        {post?.mediaLink && (
-                            <Image
-                                src={post?.mediaLink}
-                                alt="Media"
-                                className="rounded-lg"
-                                height={300}
-                                width={300}
-                            />
-                        )}
-                    </div>
+                    <Link href={`/home/${post?.id}`}>
+                        <div className="flex items-center gap-x-2">
+                            <p className="font-semibold text-lg">{username}</p>
+                            <p className="text-muted">
+                                {/* {JSON.stringify(post?.time)} */}
+                                {/* {moment(post?.time).format('MM/DD/YYYY')} */}
+                                {moment(post?.time).fromNow()}
+                            </p>
+                        </div>
+                        <div className="flex flex-col gap-y-3">
+                            {post?.text}
+                            {post?.mediaLink && (
+                                <Image
+                                    src={post?.mediaLink}
+                                    alt="Media"
+                                    className="rounded-lg"
+                                    height={300}
+                                    width={300}
+                                />
+                            )}
+                        </div>
+                    </Link>
                     <div className="flex justify-evenly gap-x-3 pt-2 ">
                         {postsIcons.map((item) => {
                             return (
