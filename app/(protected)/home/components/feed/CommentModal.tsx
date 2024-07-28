@@ -21,7 +21,6 @@ import { User as NextUser } from '@nextui-org/react';
 import { createComment } from '@/actions/comment';
 import { useToast } from '@/components/ui/use-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { revalidatePath } from 'next/cache';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -71,7 +70,7 @@ export default function CommentModal({
                     title: 'Comment added.',
                 });
             }
-            revalidatePath('/home');
+            // revalidatePath('/home');
         } catch (error) {
             setIsPending(false);
             toast({
