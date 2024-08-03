@@ -6,7 +6,7 @@ import Sidebar from '@/app/(protected)/home/components/sidebar/Sidebar';
 import { Separator } from '@/components/ui/separator';
 import db from '@/lib/db';
 
-// Add Skeleton
+// Add Skeleton adm will work
 
 export default async function page() {
     const { user } = await validateRequest();
