@@ -7,7 +7,7 @@ import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
 import moment from 'moment';
 import Image from 'next/image';
 import Link from 'next/link';
-import CommentModal from '../CommentModal';
+import IconSection from '../IconSection';
 
 type TPostCardProps = {
     username: string | null | undefined;
@@ -51,6 +51,7 @@ export default function PostCard({
     post,
     userDetails,
 }: Partial<TPostCardProps>) {
+    console.log(post);
     return (
         <div className="flex flex-col">
             <div className="flex py-3 px-2">
@@ -88,49 +89,24 @@ export default function PostCard({
                             )}
                         </div>
                     </Link>
-                    <div className="flex justify-evenly gap-x-3 pt-2 ">
-                        {postsIcons.map((item) => {
-                            return (
-                                <div key={item.text}>
-                                    {item.isModal ? (
-                                        <CommentModal
-                                            key={item.text}
-                                            commentCount={
-                                                post?.comments?.length
-                                                    ? post?.comments.length
-                                                    : 0
-                                            }
-                                            text={
-                                                post?.text
-                                                    ? post?.text
-                                                    : 'No text'
-                                            }
-                                            icon={item.icon}
-                                            postCreatorUsername={username}
-                                            postId={
-                                                post?.id
-                                                    ? post?.id
-                                                    : 'no post id'
-                                            }
-                                            signedInUserId={
-                                                userDetails
-                                                    ? userDetails.id
-                                                    : 'signedin user id not avaialbe'
-                                            }
-                                        />
-                                    ) : (
-                                        <div
-                                            key={item.text}
-                                            className="cursor-pointer"
-                                            onClick={item.onClickFunction}
-                                        >
-                                            {item.icon}
-                                        </div>
-                                    )}
-                                </div>
-                            );
-                        })}
-                    </div>
+                    <IconSection
+                        bookmarks={post?.bookmarks ? post.bookmarks : 0}
+                        commentCount={
+                            post?.comments?.length ? post.comments.length : 0
+                        }
+                        isPostComment={true}
+                        likeCount={post?.likeCount ? post.likeCount : 0}
+                        originalText={post?.text ? post.text : 'No text'}
+                        postCreatorUsername={
+                            username ? username : 'No username found'
+                        }
+                        postId={post?.id ? post.id : 'No id'}
+                        signedInUserId={
+                            userDetails
+                                ? userDetails.id
+                                : 'signedin user id not avaialbe'
+                        }
+                    />
                 </div>
             </div>
             <Separator />

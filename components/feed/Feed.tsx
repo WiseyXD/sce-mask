@@ -25,10 +25,13 @@ const feedPageOptins = [
 
 type TFeedProps = {
     userDetails: TUserDetails;
-    posts: TPost[];
+    posts: TPost[] | null;
 };
 
 export default function Feed({ userDetails, posts }: TFeedProps) {
+    if (posts == null) {
+        return <>Error while fetching all post from DB.</>;
+    }
     return (
         <div className="w-full">
             <div className="flex justify-evenly py-4 bg-opacity-50">

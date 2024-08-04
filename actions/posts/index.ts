@@ -62,3 +62,38 @@ export const getPostbyId = async (id: string) => {
         };
     }
 };
+
+export const getAllPosts = async () => {
+    try {
+        const post = await db.post.findMany({
+            include: {
+                user: {
+                    select: {
+                        username: true,
+                        image: true,
+                    },
+                },
+                comments: {
+                    include: {
+                        user: {
+                            select: {
+                                username: true,
+                                image: true,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+        return {
+            success: true,
+            msg: post,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            msg: 'error occured while getting post by id',
+            success: false,
+        };
+    }
+};
