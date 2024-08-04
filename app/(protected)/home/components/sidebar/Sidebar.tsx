@@ -21,35 +21,43 @@ import {
     User,
     UserRound,
 } from 'lucide-react';
+import Link from 'next/link';
 
 const sidebarMenu = [
     {
         icon: <Home />,
         text: 'Home',
+        path: '/home',
     },
     {
         icon: <Search />,
         text: 'Explore',
+        path: '#',
     },
     {
         icon: <Mail />,
         text: 'Messages',
+        path: '#',
     },
     {
         icon: <UserRound />,
         text: 'Communities',
+        path: '#',
     },
     {
         icon: <User />,
         text: 'Profile',
+        path: '#',
     },
     {
         icon: <BookMarked />,
         text: 'Bookmarks',
+        path: '#',
     },
     {
         icon: <Book />,
         text: 'More',
+        path: '#',
     },
 ];
 
@@ -70,15 +78,14 @@ export default function Sidebar({ userDetails }: TSidebarProps) {
             <div className="flex flex-col gap-y-3 items-start">
                 {sidebarMenu.map((item) => {
                     return (
-                        <div
-                            className="flex gap-x-4 text-2xl justify-center items-center  hover:bg-gray-700 hover:rounded-full hover:cursor-pointer  px-2 py-3 ease-in-out duration-300"
-                            key={item.text}
-                        >
-                            {item.icon}
-                            <div className="lg:block hidden">
-                                <h2>{item.text}</h2>
+                        <Link href={item.path} key={item.text}>
+                            <div className="flex gap-x-4 text-2xl justify-center items-center  hover:bg-gray-700 hover:rounded-full hover:cursor-pointer  px-2 py-3 ease-in-out duration-300">
+                                {item.icon}
+                                <div className="lg:block hidden">
+                                    <h2>{item.text}</h2>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     );
                 })}
 

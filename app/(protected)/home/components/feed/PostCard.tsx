@@ -66,7 +66,7 @@ export default function PostCard({
                     />
                 </div>
                 <div className="flex flex-col w-full">
-                    <Link href={`/home/${post?.id}`}>
+                    <Link href={`/${post?.id}`}>
                         <div className="flex items-center gap-x-2">
                             <p className="font-semibold text-lg">{username}</p>
                             <p className="text-muted">
