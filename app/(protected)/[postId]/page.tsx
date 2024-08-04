@@ -1,5 +1,6 @@
 import { getPostbyId } from '@/actions/posts';
 import { validateRequest } from '@/actions/validateRequests';
+import IconSection from '@/components/IconSection';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { imageLink } from '@/lib/utils';
@@ -8,7 +9,6 @@ import { Avatar, Button, Card, CardHeader } from '@nextui-org/react';
 import { ArrowLeft, BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
 import moment from 'moment';
 import Image from 'next/image';
-import CommentModal from '../../../components/feed/CommentModal';
 
 export default async function Page({ params }: { params: { postId: string } }) {
     const { session, user } = await validateRequest();
@@ -140,52 +140,25 @@ export default async function Page({ params }: { params: { postId: string } }) {
                         <p className="text-muted text-small">{formattedDate}</p>
                     </div>
                     <Separator />
-                    <div className="flex justify-evenly gap-x-3 pt-2 ">
-                        {postsIcons.map((item) => {
-                            return (
-                                <div key={item.text}>
-                                    {item.isModal ? (
-                                        <CommentModal
-                                            key={item.text}
-                                            text={
-                                                msg?.text
-                                                    ? msg?.text
-                                                    : 'No text'
-                                            }
-                                            icon={item.icon}
-                                            commentCount={
-                                                msg?.comments?.length != 0
-                                                    ? msg?.comments?.length
-                                                    : 0
-                                            }
-                                            postCreatorUsername={
-                                                postCreatorData?.username
-                                            }
-                                            postId={
-                                                msg?.id ? msg?.id : 'no post id'
-                                            }
-                                            signedInUserId={
-                                                user
-                                                    ? user.id
-                                                    : 'signedin user id not avaialbe'
-                                            }
-                                        />
-                                    ) : (
-                                        <div
-                                            key={item.text}
-                                            className="cursor-pointer"
-                                            // onClick={item.onClickFunction}
-                                        >
-                                            <div className="flex gap-x-2 justify-center">
-                                                {item.icon}
-                                                {item.count}
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            );
-                        })}
-                    </div>
+
+                    <IconSection
+                        bookmarks={msg.bookmarks ? msg.bookmarks : 0}
+                        commentCount={
+                            msg.comments?.length ? msg.comments.length : 0
+                        }
+                        isPostComment={true}
+                        likeCount={msg.likeCount ? msg.likeCount : 0}
+                        originalText={msg.text}
+                        postCreatorUsername={
+                            postCreatorData?.username
+                                ? postCreatorData.username
+                                : 'No username found'
+                        }
+                        postId={msg.id ? msg.id : 'No id'}
+                        signedInUserId={
+                            user ? user.id : 'signedin user id not avaialbe'
+                        }
+                    />
                 </div>
                 <Separator />
 

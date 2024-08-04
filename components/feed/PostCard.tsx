@@ -7,7 +7,7 @@ import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
 import moment from 'moment';
 import Image from 'next/image';
 import Link from 'next/link';
-import CommentModal from './CommentModal';
+import CommentModal from '../CommentModal';
 
 type TPostCardProps = {
     username: string | null | undefined;

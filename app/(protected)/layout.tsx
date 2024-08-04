@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 
 import getUserDetails from '@/actions/getUserDetails';
 import Extras from '@/components/extras/Extras';
-import Sidebar from '@/components/sidebar/Sidebar';
+import Sidebar from '@/components/Sidebar';
 import { Separator } from '@/components/ui/separator';
 
 export interface IBaseTemplate {
