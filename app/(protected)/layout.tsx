@@ -2,8 +2,8 @@ import { validateRequest } from '@/actions/validateRequests';
 import { redirect } from 'next/navigation';
 
 import getUserDetails from '@/actions/getUserDetails';
-import Extras from '@/app/(protected)/home/components/extras/Extras';
-import Sidebar from '@/app/(protected)/home/components/sidebar/Sidebar';
+import Extras from '@/components/extras/Extras';
+import Sidebar from '@/components/sidebar/Sidebar';
 import { Separator } from '@/components/ui/separator';
 
 export interface IBaseTemplate {

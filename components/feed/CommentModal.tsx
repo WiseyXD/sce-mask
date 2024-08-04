@@ -1,4 +1,6 @@
+'use client';
 import { Button } from '@/components/ui/button';
+
 import {
     Dialog,
     DialogContent,
@@ -28,6 +30,7 @@ import { z } from 'zod';
 interface CommentModalProps {
     text: string;
     icon: React.JSX.Element;
+    commentCount: number | undefined;
     postCreatorUsername: string | null | undefined;
     postId: string;
     signedInUserId: string | undefined;
@@ -36,6 +39,7 @@ interface CommentModalProps {
 export default function CommentModal({
     text,
     icon,
+    commentCount,
     postCreatorUsername,
     postId,
     signedInUserId,
@@ -84,7 +88,12 @@ export default function CommentModal({
             <Dialog>
                 <DialogTrigger>
                     {' '}
-                    <div className="cursor-pointer">{icon}</div>
+                    <div className="cursor-pointer">
+                        <div className="flex gap-x-2 justify-center">
+                            {icon}
+                            {commentCount}
+                        </div>
+                    </div>
                 </DialogTrigger>
                 <DialogContent className="">
                     <DialogHeader>

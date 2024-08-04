@@ -1,6 +1,6 @@
 import getUserDetails from '@/actions/getUserDetails';
 import { validateRequest } from '@/actions/validateRequests';
-import Feed from '@/app/(protected)/home/components/feed/Feed';
+import Feed from '@/components/feed/Feed';
 import db from '@/lib/db';
 
 // Add Skeleton

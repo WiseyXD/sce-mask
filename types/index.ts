@@ -23,7 +23,7 @@ export type TPost = {
         image?: string | null;
         username: string | null;
     };
-    comments?: Comment[]; // Array
+    comments?: TComment[]; // Array
 };
 
 export type TComment = {
@@ -35,4 +35,8 @@ export type TComment = {
     time?: Date;
     likeCount?: number;
     bookmarks?: number;
+    user?: {
+        image?: string | null;
+        username: string | null;
+    };
 };

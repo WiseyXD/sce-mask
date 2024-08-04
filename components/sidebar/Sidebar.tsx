@@ -1,5 +1,5 @@
-import PostBar from '@/app/(protected)/home/components/feed/PostBar';
 import { AcmeLogo } from '@/components/AcmeLogo';
+import PostBar from '@/components/feed/PostBar';
 import PopoverUserCard from '@/components/PopoverUserCard';
 import {
     Dialog,

@@ -1,6 +1,6 @@
 'use client';
 
-import Posts from '@/app/(protected)/home/components/feed/Posts';
+import Posts from '@/components/feed/Posts';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { TPost, TUserDetails } from '@/types';

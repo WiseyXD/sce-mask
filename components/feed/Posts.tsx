@@ -1,4 +1,4 @@
-import PostCard from '@/app/(protected)/home/components/feed/PostCard';
+import PostCard from '@/components/feed/PostCard';
 import { TPost, TUserDetails } from '@/types';
 import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
 const postsIcons = [

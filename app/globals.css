@@ -10,6 +10,19 @@ body:root {
 h1 {
     @apply text-3xl;
 }
+
+.imageDiv {
+    position: relative;
+    width: 100%; /* or any dynamic value like 50%, etc. */
+    height: 0;
+    /* padding-bottom: 56.25%; */
+    padding-bottom: 0%;
+}
+
+.iageDiv2 {
+    width: 30%;
+}
+
 @layer base {
     :root {
         --background: 0 0% 100%;

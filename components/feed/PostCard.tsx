@@ -95,6 +95,11 @@ export default function PostCard({
                                     {item.isModal ? (
                                         <CommentModal
                                             key={item.text}
+                                            commentCount={
+                                                post?.comments?.length
+                                                    ? post?.comments.length
+                                                    : 0
+                                            }
                                             text={
                                                 post?.text
                                                     ? post?.text
