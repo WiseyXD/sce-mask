@@ -70,7 +70,6 @@ export default function CommentModal({
                     title: 'Comment added.',
                 });
             }
-            // revalidatePath('/home');
         } catch (error) {
             setIsPending(false);
             toast({
