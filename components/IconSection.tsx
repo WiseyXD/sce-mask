@@ -13,7 +13,7 @@ type TIconSectionProps = {
     signedInUserId: string;
 };
 
-export default function IconSection(params: Partial<TIconSectionProps>) {
+export default function IconSection(params: TIconSectionProps) {
     const postsIcons = [
         {
             text: 'Comment',
@@ -53,39 +53,36 @@ export default function IconSection(params: Partial<TIconSectionProps>) {
             {postsIcons.map((item) => {
                 return (
                     <div key={item.text}>
-                        {params.isPostComment &&
-                            (item.isModal ? (
-                                <CommentModal
-                                    key={item.text}
-                                    text={
-                                        params.originalText
-                                            ? params?.originalText
-                                            : 'No text'
-                                    }
-                                    icon={item.icon}
-                                    commentCount={params.commentCount}
-                                    postCreatorUsername={
-                                        params.postCreatorUsername
-                                    }
-                                    postId={
-                                        params.postId
-                                            ? params.postId
-                                            : 'no post id recieved'
-                                    }
-                                    signedInUserId={params.signedInUserId}
-                                />
-                            ) : (
-                                <div
-                                    key={item.text}
-                                    className="cursor-pointer"
-                                    onClick={item.onClickFunction}
-                                >
-                                    <div className="flex gap-x-2 justify-center">
-                                        {item.icon}
-                                        {item.count}
-                                    </div>
+                        {item.isModal && params.isPostComment ? (
+                            <CommentModal
+                                key={item.text}
+                                text={
+                                    params.originalText
+                                        ? params?.originalText
+                                        : 'No text'
+                                }
+                                icon={item.icon}
+                                commentCount={params.commentCount}
+                                postCreatorUsername={params.postCreatorUsername}
+                                postId={
+                                    params.postId
+                                        ? params.postId
+                                        : 'no post id recieved'
+                                }
+                                signedInUserId={params.signedInUserId}
+                            />
+                        ) : (
+                            <div
+                                key={item.text}
+                                className="cursor-pointer"
+                                onClick={item.onClickFunction}
+                            >
+                                <div className="flex gap-x-2 justify-center">
+                                    {item.icon}
+                                    {item.count}
                                 </div>
-                            ))}
+                            </div>
+                        )}
                     </div>
                 );
             })}
