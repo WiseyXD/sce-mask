@@ -19,7 +19,45 @@ export const createPost = async (postData: TPost) => {
     } catch (error) {
         console.log(error);
         return {
-            msg: 'error occured',
+            msg: 'error occured while getting post',
+            success: false,
+        };
+    }
+};
+
+export const getPostbyId = async (id: string) => {
+    try {
+        const post = await db.post.findUnique({
+            where: {
+                id,
+            },
+            include: {
+                user: {
+                    select: {
+                        username: true,
+                        image: true,
+                    },
+                },
+                comments: {
+                    include: {
+                        user: {
+                            select: {
+                                username: true,
+                                image: true,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+        return {
+            success: true,
+            msg: post,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            msg: 'error occured while getting post by id',
             success: false,
         };
     }

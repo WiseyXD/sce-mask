@@ -1,10 +1,9 @@
-import getUserDetails from '@/actions/getUserDetails';
-import { validateRequest } from '@/actions/validateRequests';
+import { getPostbyId } from '@/actions/posts';
 
 export default async function Page({ params }: { params: { postId: string } }) {
     const { postId } = params;
-    const { user } = await validateRequest();
-    const userDetails = await getUserDetails(user?.id);
+    const data = await getPostbyId(postId);
+    console.log(data.msg);
     return (
         <div className="min-h-screen w-full">
             <p>{postId}</p>
