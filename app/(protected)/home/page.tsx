@@ -30,7 +30,8 @@ export default async function page() {
             {userDetails && (
                 <Feed
                     userDetails={userDetails}
-                    posts={typeof msg != 'string' && msg}
+                    // @ts-ignore
+                    posts={typeof msg != 'string' ? msg : null}
                 />
             )}
         </div>
