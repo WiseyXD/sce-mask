@@ -41,7 +41,7 @@ export default function IconSection(params: TIconSectionProps) {
             return;
         };
         checkIsLiked();
-    }, [params.likeCount]);
+    }, [params.likeCount, params.signedInUserId]);
 
     const handleLikeClick = async () => {
         if (likeId) {
