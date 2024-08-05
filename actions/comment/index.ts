@@ -1,8 +1,12 @@
 'use server';
 import db from '@/lib/db';
 import { TComment } from '@/types';
+import { revalidatePath } from 'next/cache';
 
-export const createComment = async (commentData: TComment) => {
+export const createComment = async (
+    commentData: TComment,
+    reloadPath: string
+) => {
     try {
         const comment = await db.comment.create({
             data: {
@@ -14,6 +18,7 @@ export const createComment = async (commentData: TComment) => {
                 }),
             },
         });
+        revalidatePath(reloadPath);
         return {
             success: true,
             msg: comment,
