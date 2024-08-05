@@ -6,6 +6,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { TPost } from '@/types';
 import moment from 'moment';
+import { redirect } from 'next/navigation';
 
 export default async function Page({ params }: { params: { postId: string } }) {
     const { session, user } = await validateRequest();
@@ -13,8 +14,9 @@ export default async function Page({ params }: { params: { postId: string } }) {
     // @ts-ignore
     const { success, msg }: { success: boolean | string; msg: TPost } =
         await getPostbyId(postId);
+    console.log(success);
     if (!success) {
-        return <>Error Occured while retrieving post details</>;
+        return redirect('/home');
     }
 
     const postCreatorData = msg.user;

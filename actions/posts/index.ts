@@ -52,9 +52,15 @@ export const getPostbyId = async (id: string) => {
                 },
             },
         });
+        if (post) {
+            return {
+                success: true,
+                msg: post,
+            };
+        }
         return {
-            success: true,
-            msg: post,
+            msg: 'No post with provided id.',
+            success: false,
         };
     } catch (error) {
         console.log(error);
