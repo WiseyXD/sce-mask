@@ -103,7 +103,7 @@ export const getAllPosts = async () => {
     }
 };
 
-const likePost = async (postId: string, reloadPath: string) => {
+export const likePost = async (postId: string, reloadPath: string) => {
     try {
         const likedPost = await db.post.update({
             where: {

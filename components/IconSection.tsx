@@ -1,6 +1,9 @@
 'use client';
+import { likePost } from '@/actions/posts';
 import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 import CommentModal from './CommentModal';
+import { useToast } from './ui/use-toast';
 
 type TIconSectionProps = {
     isPostComment: boolean;
@@ -14,6 +17,8 @@ type TIconSectionProps = {
 };
 
 export default function IconSection(params: TIconSectionProps) {
+    const reloadPath = usePathname();
+    const { toast } = useToast();
     const postsIcons = [
         {
             text: 'Comment',
@@ -30,8 +35,16 @@ export default function IconSection(params: TIconSectionProps) {
                 <Heart className="hover:border border-red-600 rounded-md duration-150 ease-in-out" />
             ),
             isModal: false,
-            onClickFunction: () => {
-                console.log('Like');
+            onClickFunction: async () => {
+                const resp = await likePost(params.postId, reloadPath);
+                if (!resp.success) {
+                    toast({
+                        title: 'Error occured while liking the post.',
+                        variant: 'destructive',
+                    });
+                    return;
+                }
+                return;
             },
             count: params.likeCount,
         },
