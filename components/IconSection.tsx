@@ -1,4 +1,5 @@
 'use client';
+import { dislikeComment } from '@/actions/comment';
 import { dislikePost, isPostLikedByUser, likePost } from '@/actions/posts';
 import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
 import { usePathname } from 'next/navigation';
@@ -40,12 +41,46 @@ export default function IconSection(params: TIconSectionProps) {
             }
             return;
         };
+
         checkIsLiked();
     }, [params.likeCount, params.signedInUserId]);
 
-    const handleLikeClick = async () => {
+    const handlePostLikeClick = async () => {
         if (likeId) {
             const resp = await dislikePost(params.postId, likeId, reloadPath);
+            if (!resp.success) {
+                toast({
+                    title: 'Error occured while disliking the post.',
+                    variant: 'destructive',
+                });
+                return;
+            }
+            setLikeId(null);
+            return;
+        } else {
+            const resp = await likePost(
+                params.postId,
+                params.signedInUserId,
+                reloadPath
+            );
+            if (!resp.success) {
+                toast({
+                    title: 'Error occured while liking the post.',
+                    variant: 'destructive',
+                });
+                return;
+            }
+            return;
+        }
+    };
+
+    const handleCommentLikeClick = async () => {
+        if (likeId) {
+            const resp = await dislikeComment(
+                params.postId,
+                likeId,
+                reloadPath
+            );
             if (!resp.success) {
                 toast({
                     title: 'Error occured while disliking the post.',
@@ -88,7 +123,9 @@ export default function IconSection(params: TIconSectionProps) {
                 <Heart className="hover:border border-red-600 rounded-md duration-150 ease-in-out" />
             ),
             isModal: false,
-            onClickFunction: handleLikeClick,
+            onClickFunction: params.isPostComment
+                ? handlePostLikeClick
+                : handleCommentLikeClick,
             count: params.likeCount,
             additionalClassName: isLiked ? 'bg-red-500' : '',
         },

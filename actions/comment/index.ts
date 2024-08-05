@@ -31,3 +31,71 @@ export const createComment = async (
         };
     }
 };
+
+export const likeComment = async (
+    commentId: string,
+    userId: string,
+    reloadPath: string
+) => {
+    try {
+        const commentToBeLiked = await db.comment.update({
+            where: {
+                id: commentId,
+            },
+            data: {
+                likeCount: {
+                    increment: 1,
+                },
+            },
+        });
+
+        const newlikeComment = await db.commentLike.create({
+            data: {
+                userId,
+                commentId,
+            },
+        });
+        revalidatePath(reloadPath);
+        return {
+            success: true,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+        };
+    }
+};
+
+export const dislikeComment = async (
+    commentId: string,
+    commentLikeId: string,
+    reloadPath: string
+) => {
+    try {
+        const commentToBeDisliked = await db.comment.update({
+            where: {
+                id: commentId,
+            },
+            data: {
+                likeCount: {
+                    decrement: 1,
+                },
+            },
+        });
+        const likeComment = await db.commentLike.delete({
+            where: {
+                id: commentLikeId,
+            },
+        });
+        revalidatePath(reloadPath);
+        return {
+            success: true,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+        };
+    }
+};

@@ -14,7 +14,7 @@ export default async function Page({ params }: { params: { postId: string } }) {
     // @ts-ignore
     const { success, msg }: { success: boolean | string; msg: TPost } =
         await getPostbyId(postId);
-    console.log(success);
+
     if (!success) {
         return redirect('/home');
     }
