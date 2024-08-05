@@ -1,6 +1,7 @@
 'use server';
 import db from '@/lib/db';
 import { TPost } from '@/types';
+import { revalidatePath } from 'next/cache';
 
 export const createPost = async (postData: TPost) => {
     try {
@@ -12,6 +13,7 @@ export const createPost = async (postData: TPost) => {
             },
         });
         console.log(post);
+        revalidatePath('/home');
         return {
             success: true,
             msg: post,
@@ -83,6 +85,9 @@ export const getAllPosts = async () => {
                         },
                     },
                 },
+            },
+            orderBy: {
+                time: 'desc', // Sort by date in descending order
             },
         });
         return {
