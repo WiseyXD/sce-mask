@@ -25,13 +25,14 @@ export default async function page() {
     if (!success) {
         return <>Error occured while fetching posts from db.</>;
     }
+    const posts = msg;
     return (
         <div className="flex w-full">
             {userDetails && (
                 <Feed
                     userDetails={userDetails}
                     // @ts-ignore
-                    posts={typeof msg != 'string' ? msg : null}
+                    posts={typeof posts != 'string' ? posts : null}
                 />
             )}
         </div>
