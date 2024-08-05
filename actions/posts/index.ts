@@ -102,3 +102,27 @@ export const getAllPosts = async () => {
         };
     }
 };
+
+const likePost = async (postId: string, reloadPath: string) => {
+    try {
+        const likedPost = await db.post.update({
+            where: {
+                id: postId,
+            },
+            data: {
+                likeCount: {
+                    increment: 1,
+                },
+            },
+        });
+        revalidatePath(reloadPath);
+        return {
+            success: true,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+        };
+    }
+};
