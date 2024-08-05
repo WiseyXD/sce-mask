@@ -23,6 +23,7 @@ import { User as NextUser } from '@nextui-org/react';
 import { createComment } from '@/actions/comment';
 import { useToast } from '@/components/ui/use-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -45,6 +46,7 @@ export default function CommentModal({
     signedInUserId,
 }: CommentModalProps) {
     const [isPending, setIsPending] = useState(false);
+    const reloadPath = usePathname();
     const { toast } = useToast();
 
     const formSchema = z.object({
@@ -60,13 +62,16 @@ export default function CommentModal({
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
             setIsPending(true);
-            const resp = await createComment({
-                postId: postId,
-                text: values.comment,
-                userId: signedInUserId
-                    ? signedInUserId
-                    : 'signedin user id not given',
-            });
+            const resp = await createComment(
+                {
+                    postId: postId,
+                    text: values.comment,
+                    userId: signedInUserId
+                        ? signedInUserId
+                        : 'signedin user id not given',
+                },
+                reloadPath
+            );
             if (resp.success) {
                 form.reset();
                 setIsPending(false);
