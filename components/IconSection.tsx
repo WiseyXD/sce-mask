@@ -1,7 +1,8 @@
 'use client';
-import { likePost } from '@/actions/posts';
+import { dislikePost, isPostLikedByUser, likePost } from '@/actions/posts';
 import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import CommentModal from './CommentModal';
 import { useToast } from './ui/use-toast';
 
@@ -18,7 +19,59 @@ type TIconSectionProps = {
 
 export default function IconSection(params: TIconSectionProps) {
     const reloadPath = usePathname();
+    const [isLiked, setIsLiked] = useState(false);
+    const [likeId, setLikeId] = useState<string | null>(null);
     const { toast } = useToast();
+
+    useEffect(() => {
+        const checkIsLiked = async () => {
+            const resp = await isPostLikedByUser(
+                params.signedInUserId,
+                params.postId
+            );
+            if (resp.success) {
+                if (typeof resp.msg == 'boolean') {
+                    setIsLiked(resp.msg);
+                    if (resp.likeId) {
+                        setLikeId(resp.likeId);
+                    }
+                }
+                return;
+            }
+            return;
+        };
+        checkIsLiked();
+    }, [params.likeCount]);
+
+    const handleLikeClick = async () => {
+        if (likeId) {
+            const resp = await dislikePost(params.postId, likeId, reloadPath);
+            if (!resp.success) {
+                toast({
+                    title: 'Error occured while disliking the post.',
+                    variant: 'destructive',
+                });
+                return;
+            }
+            setLikeId(null);
+            return;
+        } else {
+            const resp = await likePost(
+                params.postId,
+                params.signedInUserId,
+                reloadPath
+            );
+            if (!resp.success) {
+                toast({
+                    title: 'Error occured while liking the post.',
+                    variant: 'destructive',
+                });
+                return;
+            }
+            return;
+        }
+    };
+
     const postsIcons = [
         {
             text: 'Comment',
@@ -35,18 +88,9 @@ export default function IconSection(params: TIconSectionProps) {
                 <Heart className="hover:border border-red-600 rounded-md duration-150 ease-in-out" />
             ),
             isModal: false,
-            onClickFunction: async () => {
-                const resp = await likePost(params.postId, reloadPath);
-                if (!resp.success) {
-                    toast({
-                        title: 'Error occured while liking the post.',
-                        variant: 'destructive',
-                    });
-                    return;
-                }
-                return;
-            },
+            onClickFunction: handleLikeClick,
             count: params.likeCount,
+            additionalClassName: isLiked ? 'bg-red-500' : '',
         },
         {
             text: 'Bookmark',
@@ -91,7 +135,9 @@ export default function IconSection(params: TIconSectionProps) {
                                 onClick={item.onClickFunction}
                             >
                                 <div className="flex gap-x-2 justify-center">
-                                    {item.icon}
+                                    <div className={item.additionalClassName}>
+                                        {item.icon}
+                                    </div>
                                     {item.count}
                                 </div>
                             </div>

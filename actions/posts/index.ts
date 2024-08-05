@@ -103,7 +103,11 @@ export const getAllPosts = async () => {
     }
 };
 
-export const likePost = async (postId: string, reloadPath: string) => {
+export const likePost = async (
+    postId: string,
+    userId: string,
+    reloadPath: string
+) => {
     try {
         const likedPost = await db.post.update({
             where: {
@@ -115,10 +119,77 @@ export const likePost = async (postId: string, reloadPath: string) => {
                 },
             },
         });
+        const newLike = await db.like.create({
+            data: {
+                postId: postId,
+                userId: userId,
+            },
+        });
         revalidatePath(reloadPath);
         return {
             success: true,
         };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+        };
+    }
+};
+
+export const dislikePost = async (
+    postId: string,
+    likeId: string,
+    reloadPath: string
+) => {
+    try {
+        const likedPost = await db.post.update({
+            where: {
+                id: postId,
+            },
+            data: {
+                likeCount: {
+                    decrement: 1,
+                },
+            },
+        });
+        const deleteLike = await db.like.delete({
+            where: {
+                id: likeId,
+            },
+        });
+        revalidatePath(reloadPath);
+        return {
+            success: true,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+        };
+    }
+};
+
+export const isPostLikedByUser = async (userId: string, postId: string) => {
+    try {
+        const like = await db.like.findFirst({
+            where: {
+                userId: userId,
+                postId: postId,
+            },
+        });
+        if (like) {
+            return {
+                msg: true,
+                likeId: like.id,
+                success: true,
+            };
+        } else {
+            return {
+                msg: false,
+                success: true,
+            };
+        }
     } catch (error) {
         console.log(error);
         return {
