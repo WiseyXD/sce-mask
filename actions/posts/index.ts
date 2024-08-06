@@ -275,7 +275,7 @@ export const unbookmarkPost = async (
     }
 };
 
-const isPostBookmarked = async (postId: string, userId: string) => {
+export const isPostBookmarked = async (postId: string, userId: string) => {
     try {
         const bookmarkedPost = await db.bookmark.findFirst({
             where: {
