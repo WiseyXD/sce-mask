@@ -99,3 +99,31 @@ export const dislikeComment = async (
         };
     }
 };
+
+const isCommentLikedByTheUser = async (userId: string, commentId: string) => {
+    try {
+        const isLiked = await db.commentLike.findFirst({
+            where: {
+                userId: userId,
+                commentId: commentId,
+            },
+        });
+        if (isLiked) {
+            return {
+                msg: true,
+                likeId: isLiked.id,
+                success: true,
+            };
+        } else {
+            return {
+                msg: false,
+                success: true,
+            };
+        }
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+        };
+    }
+};
