@@ -100,7 +100,10 @@ export const dislikeComment = async (
     }
 };
 
-const isCommentLikedByTheUser = async (userId: string, commentId: string) => {
+export const isCommentLikedByTheUser = async (
+    userId: string,
+    commentId: string
+) => {
     try {
         const isLiked = await db.commentLike.findFirst({
             where: {
