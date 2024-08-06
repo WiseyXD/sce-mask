@@ -23,8 +23,8 @@ export default function CommentList({
         <div className="flex flex-col gap-y-4">
             {comments?.map((comment: TComment) => {
                 return (
-                    <>
-                        <div className="flex-col px-2" key={comment.id}>
+                    <div key={comment.id}>
+                        <div className="flex-col px-2">
                             <Card
                                 shadow="none"
                                 className="w-full border-none bg-transparent"
@@ -119,7 +119,7 @@ export default function CommentList({
                             postCreatorUsername="no need"
                         />
                         <Separator />
-                    </>
+                    </div>
                 );
             })}
         </div>
