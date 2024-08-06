@@ -1,10 +1,20 @@
 'use client';
 import {
+    bookmarkComment,
     dislikeComment,
+    isCommentBookmarked,
     isCommentLikedByTheUser,
     likeComment,
+    unbookmarkComment,
 } from '@/actions/comment';
-import { dislikePost, isPostLikedByUser, likePost } from '@/actions/posts';
+import {
+    bookmarkPost,
+    dislikePost,
+    isPostBookmarked,
+    isPostLikedByUser,
+    likePost,
+    unbookmarkPost,
+} from '@/actions/posts';
 import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -26,11 +36,51 @@ export default function IconSection(params: TIconSectionProps) {
     const reloadPath = usePathname();
     const [isLiked, setIsLiked] = useState(false);
     const [likeId, setLikeId] = useState<string | null>(null);
+    const [isBookmarked, setIsBookmarked] = useState(false);
+    const [bookmarkId, setBookmarkId] = useState<string | null>(null);
     const { toast } = useToast();
 
     useEffect(() => {
         params.isPostComment ? checkIsLiked() : checkIsCommentLiked();
     }, [params.likeCount, params.signedInUserId]);
+
+    useEffect(() => {
+        params.isPostComment ? checkIsBookmarked() : checkIsCommentBookmarked();
+    }, [params.signedInUserId, params.bookmarks]);
+
+    const checkIsCommentBookmarked = async () => {
+        const resp = await isCommentBookmarked(
+            params.postId,
+            params.signedInUserId
+        );
+        if (resp.success) {
+            if (typeof resp.msg == 'boolean') {
+                setIsBookmarked(resp.msg);
+                if (resp.bookmarkId) {
+                    setBookmarkId(resp.bookmarkId);
+                }
+            }
+            return;
+        }
+        return;
+    };
+
+    const checkIsBookmarked = async () => {
+        const resp = await isPostBookmarked(
+            params.postId,
+            params.signedInUserId
+        );
+        if (resp.success) {
+            if (typeof resp.msg == 'boolean') {
+                setIsBookmarked(resp.msg);
+                if (resp.bookmarkId) {
+                    setBookmarkId(resp.bookmarkId);
+                }
+            }
+            return;
+        }
+        return;
+    };
 
     const checkIsLiked = async () => {
         const resp = await isPostLikedByUser(
@@ -48,6 +98,7 @@ export default function IconSection(params: TIconSectionProps) {
         }
         return;
     };
+
     const checkIsCommentLiked = async () => {
         const resp = await isCommentLikedByTheUser(
             params.signedInUserId,
@@ -127,6 +178,72 @@ export default function IconSection(params: TIconSectionProps) {
         }
     };
 
+    const handlePostBookmarkCLick = async () => {
+        if (bookmarkId) {
+            const resp = await unbookmarkPost(
+                bookmarkId,
+                params.postId,
+                reloadPath
+            );
+            if (!resp.success) {
+                toast({
+                    title: 'Error occured while unbookmarking the post.',
+                    variant: 'destructive',
+                });
+                return;
+            }
+            setBookmarkId(null);
+            return;
+        } else {
+            const resp = await bookmarkPost(
+                params.postId,
+                params.signedInUserId,
+                reloadPath
+            );
+            if (!resp.success) {
+                toast({
+                    title: 'Error occured while liking the post.',
+                    variant: 'destructive',
+                });
+                return;
+            }
+            return;
+        }
+    };
+
+    const handleCommentBookmarkCLick = async () => {
+        if (bookmarkId) {
+            const resp = await unbookmarkComment(
+                bookmarkId,
+                params.postId,
+                reloadPath
+            );
+            if (!resp.success) {
+                toast({
+                    title: 'Error occured while unbookmarking the comment.',
+                    variant: 'destructive',
+                });
+                return;
+            }
+            setBookmarkId(null);
+            return;
+        } else {
+            const resp = await bookmarkComment(
+                params.postId,
+                params.signedInUserId,
+                reloadPath
+            );
+            if (!resp.success) {
+                toast({
+                    title: 'Error occured while liking the post.',
+                    variant: 'destructive',
+                });
+                return;
+            }
+            return;
+        }
+    };
+
     const postsIcons = [
         {
             text: 'Comment',
@@ -155,10 +272,11 @@ export default function IconSection(params: TIconSectionProps) {
                 <BookmarkPlus className="hover:border border-blue-400 rounded-md duration-150 ease-in-out" />
             ),
             isModal: false,
-            onClickFunction: () => {
-                console.log('Bookmark');
-            },
+            onClickFunction: params.isPostComment
+                ? handlePostBookmarkCLick
+                : handleCommentBookmarkCLick,
             count: params.bookmarks,
+            additionalClassName: isBookmarked ? 'bg-blue-400' : '',
         },
     ];
 
