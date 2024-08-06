@@ -55,6 +55,7 @@ model User {
   bookmarkedPosts    Bookmark[]
   comments           Comment[]
   commentLikes       CommentLike[]
+  commentBookmarks   CommentBookmark[]
 }
 
 model Session {
@@ -87,32 +88,33 @@ model Post {
 }
 
 model Comment {
-  id           String        @id @default(cuid())
-  userId       String
-  user         User          @relation(references: [id], fields: [userId], onDelete: Cascade)
-  postId       String
-  post         Post          @relation(references: [id], fields: [postId], onDelete: Cascade)
-  text         String?
-  mediaLink    String?
-  time         DateTime      @default(now())
-  likeCount    Int           @default(0)
-  bookmarks    Int           @default(0)
-  commentLikes CommentLike[]
+  id               String            @id @default(cuid())
+  userId           String
+  user             User              @relation(references: [id], fields: [userId], onDelete: Cascade)
+  postId           String
+  post             Post              @relation(references: [id], fields: [postId], onDelete: Cascade)
+  text             String?
+  mediaLink        String?
+  time             DateTime          @default(now())
+  likeCount        Int               @default(0)
+  bookmarks        Int               @default(0)
+  commentLikes     CommentLike[]
+  commentBookmarks CommentBookmark[]
 }
 
 model Like {
   id        String   @id @default(cuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id] , onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   postId    String
-  post      Post     @relation(fields: [postId], references: [id] ,onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 }
 
 model Bookmark {
   id        String   @id @default(cuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id] ,onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   postId    String
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
@@ -121,8 +123,17 @@ model Bookmark {
 model CommentLike {
   id        String   @id @default(cuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id],onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   commentId String
-  comment   Comment  @relation(fields: [commentId], references: [id],onDelete: Cascade)
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model CommentBookmark {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  commentId String
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 }
