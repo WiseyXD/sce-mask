@@ -29,41 +29,41 @@ export default function IconSection(params: TIconSectionProps) {
     const { toast } = useToast();
 
     useEffect(() => {
-        const checkIsLiked = async () => {
-            const resp = await isPostLikedByUser(
-                params.signedInUserId,
-                params.postId
-            );
-            if (resp.success) {
-                if (typeof resp.msg == 'boolean') {
-                    setIsLiked(resp.msg);
-                    if (resp.likeId) {
-                        setLikeId(resp.likeId);
-                    }
-                }
-                return;
-            }
-            return;
-        };
-        const checkIsCommentLiked = async () => {
-            const resp = await isCommentLikedByTheUser(
-                params.signedInUserId,
-                params.postId
-            );
-            if (resp.success) {
-                if (typeof resp.msg == 'boolean') {
-                    setIsLiked(resp.msg);
-                    if (resp.likeId) {
-                        setLikeId(resp.likeId);
-                    }
-                }
-                return;
-            }
-            return;
-        };
-
         params.isPostComment ? checkIsLiked() : checkIsCommentLiked();
     }, [params.likeCount, params.signedInUserId]);
+
+    const checkIsLiked = async () => {
+        const resp = await isPostLikedByUser(
+            params.signedInUserId,
+            params.postId
+        );
+        if (resp.success) {
+            if (typeof resp.msg == 'boolean') {
+                setIsLiked(resp.msg);
+                if (resp.likeId) {
+                    setLikeId(resp.likeId);
+                }
+            }
+            return;
+        }
+        return;
+    };
+    const checkIsCommentLiked = async () => {
+        const resp = await isCommentLikedByTheUser(
+            params.signedInUserId,
+            params.postId
+        );
+        if (resp.success) {
+            if (typeof resp.msg == 'boolean') {
+                setIsLiked(resp.msg);
+                if (resp.likeId) {
+                    setLikeId(resp.likeId);
+                }
+            }
+            return;
+        }
+        return;
+    };
 
     const handlePostLikeClick = async () => {
         if (likeId) {
