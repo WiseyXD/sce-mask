@@ -203,3 +203,101 @@ export const isPostLikedByUser = async (userId: string, postId: string) => {
         };
     }
 };
+
+export const bookmarkPost = async (
+    postId: string,
+    userId: string,
+    reloadPath: string
+) => {
+    try {
+        await db.post.update({
+            where: {
+                id: postId,
+            },
+            data: {
+                bookmarks: {
+                    increment: 1,
+                },
+            },
+        });
+
+        const bookmark = await db.bookmark.create({
+            data: {
+                postId,
+                userId,
+            },
+        });
+        revalidatePath(reloadPath);
+        return {
+            success: true,
+            msg: bookmark.id,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+        };
+    }
+};
+
+export const unbookmarkPost = async (
+    bookmarkId: string,
+    postId: string,
+    reloadPath: string
+) => {
+    try {
+        await db.post.update({
+            where: {
+                id: postId,
+            },
+            data: {
+                bookmarks: {
+                    decrement: 1,
+                },
+            },
+        });
+
+        const bookmark = await db.bookmark.delete({
+            where: {
+                id: bookmarkId,
+            },
+        });
+        revalidatePath(reloadPath);
+        return {
+            success: true,
+            msg: bookmark.id,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+        };
+    }
+};
+
+const isPostBookmarked = async (postId: string, userId: string) => {
+    try {
+        const bookmarkedPost = await db.bookmark.findFirst({
+            where: {
+                postId,
+                userId,
+            },
+        });
+        if (bookmarkedPost) {
+            return {
+                msg: true,
+                bookmarkId: bookmarkedPost.id,
+                success: true,
+            };
+        }
+        return {
+            success: true,
+            msg: false,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+        };
+    }
+};
