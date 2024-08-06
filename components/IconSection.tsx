@@ -1,5 +1,9 @@
 'use client';
-import { dislikeComment } from '@/actions/comment';
+import {
+    dislikeComment,
+    isCommentLikedByTheUser,
+    likeComment,
+} from '@/actions/comment';
 import { dislikePost, isPostLikedByUser, likePost } from '@/actions/posts';
 import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
 import { usePathname } from 'next/navigation';
@@ -41,8 +45,24 @@ export default function IconSection(params: TIconSectionProps) {
             }
             return;
         };
+        const checkIsCommentLiked = async () => {
+            const resp = await isCommentLikedByTheUser(
+                params.signedInUserId,
+                params.postId
+            );
+            if (resp.success) {
+                if (typeof resp.msg == 'boolean') {
+                    setIsLiked(resp.msg);
+                    if (resp.likeId) {
+                        setLikeId(resp.likeId);
+                    }
+                }
+                return;
+            }
+            return;
+        };
 
-        checkIsLiked();
+        params.isPostComment ? checkIsLiked() : checkIsCommentLiked();
     }, [params.likeCount, params.signedInUserId]);
 
     const handlePostLikeClick = async () => {
@@ -91,7 +111,7 @@ export default function IconSection(params: TIconSectionProps) {
             setLikeId(null);
             return;
         } else {
-            const resp = await likePost(
+            const resp = await likeComment(
                 params.postId,
                 params.signedInUserId,
                 reloadPath
