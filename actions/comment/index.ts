@@ -130,3 +130,104 @@ export const isCommentLikedByTheUser = async (
         };
     }
 };
+
+export const bookmarkComment = async (
+    commentId: string,
+    userId: string,
+    reloadPath: string
+) => {
+    try {
+        await db.comment.update({
+            where: {
+                id: commentId,
+            },
+            data: {
+                bookmarks: {
+                    increment: 1,
+                },
+            },
+        });
+
+        const bookmark = await db.commentBookmark.create({
+            data: {
+                commentId,
+                userId,
+            },
+        });
+        revalidatePath(reloadPath);
+        return {
+            success: true,
+            msg: bookmark.id,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+        };
+    }
+};
+
+export const unbookmarkComment = async (
+    bookmarkId: string,
+    commentId: string,
+    reloadPath: string
+) => {
+    try {
+        await db.comment.update({
+            where: {
+                id: commentId,
+            },
+            data: {
+                bookmarks: {
+                    decrement: 1,
+                },
+            },
+        });
+
+        const bookmark = await db.commentBookmark.delete({
+            where: {
+                id: bookmarkId,
+            },
+        });
+        revalidatePath(reloadPath);
+        return {
+            success: true,
+            msg: bookmark.id,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+        };
+    }
+};
+
+export const isCommentBookmarked = async (
+    commentId: string,
+    userId: string
+) => {
+    try {
+        const bookmarkedComment = await db.commentBookmark.findFirst({
+            where: {
+                commentId,
+                userId,
+            },
+        });
+        if (bookmarkedComment) {
+            return {
+                msg: true,
+                bookmarkId: bookmarkedComment.id,
+                success: true,
+            };
+        }
+        return {
+            success: true,
+            msg: false,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+        };
+    }
+};
