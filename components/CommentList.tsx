@@ -23,8 +23,8 @@ export default function CommentList({
         <div className="flex flex-col gap-y-4">
             {comments?.map((comment: TComment) => {
                 return (
-                    <div key={comment.id}>
-                        <div className="flex-col px-2">
+                    <div key={comment.id} className="">
+                        <div className="flex-col px-2 py-2">
                             <Card
                                 shadow="none"
                                 className="w-full border-none bg-transparent"
@@ -99,7 +99,7 @@ export default function CommentList({
                                 )}
                             </div>
                         </div>
-                        <Separator />
+                        <Separator className="" />
                         <IconSection
                             isPostComment={false}
                             bookmarks={
@@ -118,7 +118,8 @@ export default function CommentList({
                             originalText="no need"
                             postCreatorUsername="no need"
                         />
-                        <Separator />
+
+                        <Separator className="mt-2" />
                     </div>
                 );
             })}
