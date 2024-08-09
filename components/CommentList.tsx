@@ -120,6 +120,19 @@ export default function CommentList({
                         />
 
                         <Separator className="mt-2" />
+                        {comment.replies?.length != 0
+                            ? comment.replies?.map((reply) => {
+                                  console.log(reply);
+                                  return (
+                                      <div key={reply.id}>
+                                          <CommentList
+                                              comments={reply.replies!}
+                                              signedInUserId={signedInUserId}
+                                          />
+                                      </div>
+                                  );
+                              })
+                            : null}
                     </div>
                 );
             })}

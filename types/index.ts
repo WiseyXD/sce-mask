@@ -28,15 +28,19 @@ export type TPost = {
 
 export type TComment = {
     id?: string;
-    postId: string;
+    postId?: string | null; // postId can be null if the comment is a reply to another comment
     userId: string;
     text?: string; // Optional field
     mediaLink?: string; // Optional field
     time?: Date;
     likeCount?: number;
     bookmarks?: number;
+    parentCommentId?: string | null; // Nullable field for replies
     user?: {
         image?: string | null;
         username: string | null;
     };
+    replies?: TComment[]; // Optional array for replies to this comment
+    commentLikes?: number; // Optional field for the number of likes
+    commentBookmarks?: number; // Optional field for the number of bookmarks
 };
