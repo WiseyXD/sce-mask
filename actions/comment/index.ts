@@ -32,6 +32,32 @@ export const createComment = async (
     }
 };
 
+export const createReply = async (
+    parentCommentId: string,
+    userId: string,
+    text: string,
+    reloadPath: string
+) => {
+    try {
+        const reply = await db.comment.create({
+            data: {
+                parentCommentId,
+                text,
+                userId,
+            },
+        });
+        revalidatePath(reloadPath);
+        return {
+            success: true,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+        };
+    }
+};
+
 export const likeComment = async (
     commentId: string,
     userId: string,
@@ -223,32 +249,6 @@ export const isCommentBookmarked = async (
         return {
             success: true,
             msg: false,
-        };
-    } catch (error) {
-        console.log(error);
-        return {
-            success: false,
-        };
-    }
-};
-
-export const createReply = async (
-    parentCommentId: string,
-    userId: string,
-    text: string,
-    reloadPath: string
-) => {
-    try {
-        const reply = await db.comment.create({
-            data: {
-                parentCommentId,
-                text,
-                userId,
-            },
-        });
-        revalidatePath(reloadPath);
-        return {
-            success: true,
         };
     } catch (error) {
         console.log(error);

@@ -115,8 +115,8 @@ export default function CommentList({
                             }
                             signedInUserId={signedInUserId}
                             commentCount={0}
-                            originalText="no need"
-                            postCreatorUsername="no need"
+                            originalText={comment?.text!}
+                            postCreatorUsername={comment.user?.username!}
                         />
 
                         <Separator className="mt-2" />

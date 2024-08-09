@@ -20,7 +20,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { imageLink } from '@/lib/utils';
 import { User as NextUser } from '@nextui-org/react';
 
-import { createComment } from '@/actions/comment';
+import { createComment, createReply } from '@/actions/comment';
 import { useToast } from '@/components/ui/use-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePathname } from 'next/navigation';
@@ -35,6 +35,7 @@ interface CommentModalProps {
     postCreatorUsername: string | null | undefined;
     postId: string;
     signedInUserId: string | undefined;
+    isPostComment: boolean;
 }
 
 export default function CommentModal({
@@ -44,6 +45,7 @@ export default function CommentModal({
     postCreatorUsername,
     postId,
     signedInUserId,
+    isPostComment,
 }: CommentModalProps) {
     const [isPending, setIsPending] = useState(false);
     const reloadPath = usePathname();
@@ -62,22 +64,40 @@ export default function CommentModal({
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
             setIsPending(true);
-            const resp = await createComment(
-                {
-                    postId: postId,
-                    text: values.comment,
-                    userId: signedInUserId
+            if (isPostComment) {
+                const resp = await createComment(
+                    {
+                        postId: postId,
+                        text: values.comment,
+                        userId: signedInUserId
+                            ? signedInUserId
+                            : 'signedin user id not given',
+                    },
+                    reloadPath
+                );
+                if (resp.success) {
+                    form.reset();
+                    setIsPending(false);
+                    toast({
+                        title: 'Comment added.',
+                    });
+                }
+            } else {
+                const resp = await createReply(
+                    postId, // Replace with the actual parent comment ID variable
+                    signedInUserId
                         ? signedInUserId
-                        : 'signedin user id not given',
-                },
-                reloadPath
-            );
-            if (resp.success) {
-                form.reset();
-                setIsPending(false);
-                toast({
-                    title: 'Comment added.',
-                });
+                        : 'no id provided in comment modal error.', // Replace with the signed-in user's ID variable
+                    values.comment, // The comment text from the form
+                    reloadPath
+                );
+                if (resp.success) {
+                    form.reset();
+                    setIsPending(false);
+                    toast({
+                        title: 'Comment added.',
+                    });
+                }
             }
         } catch (error) {
             setIsPending(false);

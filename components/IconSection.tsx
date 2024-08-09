@@ -285,7 +285,7 @@ export default function IconSection(params: TIconSectionProps) {
             {postsIcons.map((item) => {
                 return (
                     <div key={item.text}>
-                        {item.isModal && params.isPostComment ? (
+                        {item.isModal ? (
                             <CommentModal
                                 key={item.text}
                                 text={
@@ -302,6 +302,7 @@ export default function IconSection(params: TIconSectionProps) {
                                         : 'no post id recieved'
                                 }
                                 signedInUserId={params.signedInUserId}
+                                isPostComment={params.isPostComment}
                             />
                         ) : (
                             <div

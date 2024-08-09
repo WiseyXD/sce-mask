@@ -90,20 +90,21 @@ model Post {
 model Comment {
   id               String            @id @default(cuid())
   userId           String
-  user             User              @relation(references: [id], fields: [userId], onDelete: Cascade)
+  user             User              @relation(fields: [userId], references: [id])
   postId           String?
-  post             Post?             @relation(references: [id], fields: [postId], onDelete: Cascade)
+  post             Post?             @relation(fields: [postId], references: [id], onDelete: Cascade)
   text             String?
   mediaLink        String?
   time             DateTime          @default(now())
   likeCount        Int               @default(0)
   bookmarks        Int               @default(0)
-  parentCommentId  String?           // Field for parent comment
+  parentCommentId  String?
   parentComment    Comment?          @relation("CommentReplies", fields: [parentCommentId], references: [id], onDelete: Cascade)
   replies          Comment[]         @relation("CommentReplies")
   commentLikes     CommentLike[]
   commentBookmarks CommentBookmark[]
 }
+
 
 
 model Like {
