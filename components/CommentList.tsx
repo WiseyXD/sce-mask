@@ -15,9 +15,11 @@ export default function CommentList({
     comments,
     signedInUserId,
 }: TCommentListProps) {
-    if (comments == null) {
+    if (comments == null || comments.length == 0) {
         return <>No Comments yet!</>;
     }
+
+    console.log(comments[0].replies);
 
     return (
         <div className="flex flex-col gap-y-4">
@@ -120,19 +122,17 @@ export default function CommentList({
                         />
 
                         <Separator className="mt-2" />
-                        {comment.replies?.length != 0
-                            ? comment.replies?.map((reply) => {
-                                  console.log(reply);
-                                  return (
-                                      <div key={reply.id}>
-                                          <CommentList
-                                              comments={reply.replies!}
-                                              signedInUserId={signedInUserId}
-                                          />
-                                      </div>
-                                  );
-                              })
-                            : null}
+                        {comment.replies?.length != 0 &&
+                            comment.replies?.map((reply) => {
+                                return (
+                                    <div key={reply.id}>
+                                        <CommentList
+                                            comments={reply.replies!}
+                                            signedInUserId={signedInUserId}
+                                        />
+                                    </div>
+                                );
+                            })}
                     </div>
                 );
             })}
