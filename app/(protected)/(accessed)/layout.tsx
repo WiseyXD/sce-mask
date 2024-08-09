@@ -17,19 +17,21 @@ export default async function BaseTemplate({ children }: IBaseTemplate) {
     if (!userDetails?.username) return redirect('/profile-creation');
 
     return (
-        <div className="min-h-[100vh] flex justify-center items-center">
-            <div className="w-5/6 lg:w-4/6 ">
-                <div className="flex lg:grid lg:grid-cols-[0.85fr_3fr_1.15fr] gap-x-3">
-                    <div className="">
-                        <Sidebar userDetails={userDetails} />
-                    </div>
-                    <div className="flex w-full">
-                        <Separator orientation="vertical" />
-                        {children}
-                        <Separator orientation="vertical" />
-                    </div>
-                    <div className="hidden lg:block">
-                        <Extras userDetails={userDetails} />
+        <div className="min-h-screen w-full">
+            <div className="min-h-[100vh] flex justify-center items-center">
+                <div className="w-5/6 lg:w-4/6 ">
+                    <div className="flex lg:grid lg:grid-cols-[0.85fr_3fr_1.15fr] gap-x-3">
+                        <div className="">
+                            <Sidebar userDetails={userDetails} />
+                        </div>
+                        <div className="flex w-full">
+                            <Separator orientation="vertical" />
+                            {children}
+                            <Separator orientation="vertical" />
+                        </div>
+                        <div className="hidden lg:block">
+                            <Extras userDetails={userDetails} />
+                        </div>
                     </div>
                 </div>
             </div>

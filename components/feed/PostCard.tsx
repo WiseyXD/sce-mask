@@ -56,15 +56,29 @@ export default function PostCard({
         <div className="flex flex-col">
             <div className="flex py-3 px-2">
                 <div>
-                    <NextUser
-                        as="button"
-                        name={null}
-                        description=""
-                        className="transition-transform"
-                        avatarProps={{
-                            src: imageLink,
-                        }}
-                    />
+                    {userDetails?.id ? (
+                        <Link href={`/user-profile/${userDetails.id}`}>
+                            <NextUser
+                                as="button"
+                                name={null}
+                                description=""
+                                className="transition-transform"
+                                avatarProps={{
+                                    src: imageLink,
+                                }}
+                            />
+                        </Link>
+                    ) : (
+                        <NextUser
+                            as="button"
+                            name={null}
+                            description=""
+                            className="transition-transform"
+                            avatarProps={{
+                                src: imageLink,
+                            }}
+                        />
+                    )}
                 </div>
                 <div className="flex flex-col w-full">
                     <Link href={`/${post?.id}`}>

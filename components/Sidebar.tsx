@@ -122,7 +122,10 @@ export default function Sidebar({ userDetails }: TSidebarProps) {
             </Dialog>
 
             <div className="lg:block hidden">
-                <PopoverUserCard username={userDetails?.username!} />
+                <PopoverUserCard
+                    username={userDetails?.username!}
+                    userId={userDetails?.id!}
+                />
             </div>
         </div>
     );

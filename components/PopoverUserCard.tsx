@@ -9,9 +9,13 @@ import { UserTwitterCard } from './UserTwitterCard';
 
 type TPopoverUserCard = {
     username: string;
+    userId: string;
 };
 
-export default function PopoverUserCard({ username }: TPopoverUserCard) {
+export default function PopoverUserCard({
+    username,
+    userId,
+}: TPopoverUserCard) {
     return (
         <Popover showArrow placement="bottom" className="w-full">
             <PopoverTrigger>
@@ -28,7 +32,7 @@ export default function PopoverUserCard({ username }: TPopoverUserCard) {
                 />
             </PopoverTrigger>
             <PopoverContent className="p-1">
-                <UserTwitterCard username={username} />
+                <UserTwitterCard username={username} userId={userId} />
             </PopoverContent>
         </Popover>
     );

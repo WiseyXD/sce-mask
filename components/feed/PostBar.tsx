@@ -18,6 +18,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button as NextButton, User as NextUser } from '@nextui-org/react';
 
 import { BarChartHorizontal, Image, Smile, XIcon } from 'lucide-react';
+import Link from 'next/link';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -127,15 +128,29 @@ export default function PostBar({ userDetails }: TPostBarProps) {
     return (
         <div className="flex py-3 px-2 ">
             <div>
-                <NextUser
-                    as="button"
-                    name={null}
-                    description=""
-                    className="transition-transform"
-                    avatarProps={{
-                        src: imageLink,
-                    }}
-                />
+                {userDetails?.id ? (
+                    <Link href={`/user-profile/${userDetails.id}`}>
+                        <NextUser
+                            as="button"
+                            name={null}
+                            description=""
+                            className="transition-transform"
+                            avatarProps={{
+                                src: imageLink,
+                            }}
+                        />
+                    </Link>
+                ) : (
+                    <NextUser
+                        as="button"
+                        name={null}
+                        description=""
+                        className="transition-transform"
+                        avatarProps={{
+                            src: imageLink,
+                        }}
+                    />
+                )}
             </div>
             <div className=" w-full">
                 <Form {...form}>
