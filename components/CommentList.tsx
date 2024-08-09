@@ -9,21 +9,24 @@ import IconSection from './IconSection';
 type TCommentListProps = {
     comments: TComment[] | null;
     signedInUserId: string;
+    depth: number;
 };
 
 export default function CommentList({
     comments,
     signedInUserId,
+    depth = 0,
 }: TCommentListProps) {
-    if (comments == null || comments.length == 0) {
+    console.log(comments);
+    if (comments == null || comments.length === 0) {
         return <>No Comments yet!</>;
     }
 
-    console.log(comments[0].replies);
+    console.log(`Rendering depth ${depth}:`, comments);
 
     return (
-        <div className="flex flex-col gap-y-4">
-            {comments?.map((comment: TComment) => {
+        <div className={`flex flex-col gap-y-4 ${depth > 0 ? 'pl-8' : ''}`}>
+            {comments.map((comment: TComment) => {
                 return (
                     <div key={comment.id} className="">
                         <div className="flex-col px-2 py-2">
@@ -55,19 +58,6 @@ export default function CommentList({
                                             </p>
                                         </div>
                                     </div>
-                                    {/* <Button
-                                    className={
-                                        isFollowed
-                                        ? 'bg-transparent text-foreground border-default-200'
-                                            : 'bg-blue-600'
-                                    }
-                                    radius="full"
-                                    size="sm"
-                                    variant={isFollowed ? 'bordered' : 'solid'}
-                                    onPress={() => setIsFollowed(!isFollowed)}
-                                >
-                                    {isFollowed ? 'Unfollow' : 'Follow'}
-                                </Button> */}
                                 </CardHeader>
                             </Card>
                             <div className="flex-col pl-16">
@@ -78,13 +68,6 @@ export default function CommentList({
                                 </div>
                                 {comment.mediaLink && (
                                     <div className=" flex justify-center mt-3 mb-2">
-                                        {/* <Image
-                                src={msg?.mediaLink}
-                                alt="Media"
-                                className="rounded-lg"
-                                width={600}
-                                height={500}
-                            /> */}
                                         <Image
                                             src={comment.mediaLink}
                                             alt="Media"
@@ -104,35 +87,24 @@ export default function CommentList({
                         <Separator className="" />
                         <IconSection
                             isPostComment={false}
-                            bookmarks={
-                                comment.bookmarks ? comment.bookmarks : 0
-                            }
-                            likeCount={
-                                comment.likeCount ? comment.likeCount : 0
-                            }
-                            postId={
-                                comment.id
-                                    ? comment?.id
-                                    : 'comment id not given'
-                            }
+                            bookmarks={comment.bookmarks || 0}
+                            likeCount={comment.likeCount || 0}
+                            postId={comment.id || 'comment id not given'}
                             signedInUserId={signedInUserId}
-                            commentCount={0}
+                            commentCount={comment.replies?.length || 0}
                             originalText={comment?.text!}
                             postCreatorUsername={comment.user?.username!}
                         />
 
                         <Separator className="mt-2" />
-                        {comment.replies?.length != 0 &&
-                            comment.replies?.map((reply) => {
-                                return (
-                                    <div key={reply.id}>
-                                        <CommentList
-                                            comments={reply.replies!}
-                                            signedInUserId={signedInUserId}
-                                        />
-                                    </div>
-                                );
-                            })}
+
+                        {comment.replies && comment.replies.length > 0 && (
+                            <CommentList
+                                comments={comment.replies}
+                                signedInUserId={signedInUserId}
+                                depth={depth + 1} // Increase depth for nested replies
+                            />
+                        )}
                     </div>
                 );
             })}

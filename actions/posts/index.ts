@@ -48,7 +48,48 @@ export const getPostbyId = async (id: string) => {
                                 image: true,
                             },
                         },
-                        replies: true,
+                        replies: {
+                            include: {
+                                user: {
+                                    select: {
+                                        username: true,
+                                        image: true,
+                                    },
+                                },
+                                replies: {
+                                    include: {
+                                        user: {
+                                            select: {
+                                                username: true,
+                                                image: true,
+                                            },
+                                        },
+                                        replies: {
+                                            include: {
+                                                user: {
+                                                    select: {
+                                                        username: true,
+                                                        image: true,
+                                                    },
+                                                },
+                                                replies: {
+                                                    // Recursively include deeper replies
+                                                    include: {
+                                                        user: {
+                                                            select: {
+                                                                username: true,
+                                                                image: true,
+                                                            },
+                                                        },
+                                                        replies: true,
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
                     },
                 },
             },
