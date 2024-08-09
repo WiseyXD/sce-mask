@@ -16,7 +16,7 @@ export default function CommentList({
     comments,
     signedInUserId,
     depth = 0,
-}: TCommentListProps) {
+}: Partial<TCommentListProps>) {
     console.log(comments);
     if (comments == null || comments.length === 0) {
         return <>No Comments yet!</>;
@@ -90,7 +90,7 @@ export default function CommentList({
                             bookmarks={comment.bookmarks || 0}
                             likeCount={comment.likeCount || 0}
                             postId={comment.id || 'comment id not given'}
-                            signedInUserId={signedInUserId}
+                            signedInUserId={signedInUserId!}
                             commentCount={comment.replies?.length || 0}
                             originalText={comment?.text!}
                             postCreatorUsername={comment.user?.username!}
