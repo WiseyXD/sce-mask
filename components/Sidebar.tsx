@@ -23,44 +23,6 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
-const sidebarMenu = [
-    {
-        icon: <Home />,
-        text: 'Home',
-        path: '/home',
-    },
-    {
-        icon: <Search />,
-        text: 'Explore',
-        path: '#',
-    },
-    {
-        icon: <Mail />,
-        text: 'Messages',
-        path: '#',
-    },
-    {
-        icon: <UserRound />,
-        text: 'Communities',
-        path: '#',
-    },
-    {
-        icon: <User />,
-        text: 'Profile',
-        path: '#',
-    },
-    {
-        icon: <BookMarked />,
-        text: 'Bookmarks',
-        path: '#',
-    },
-    {
-        icon: <Book />,
-        text: 'More',
-        path: '#',
-    },
-];
-
 type SidebarProps = {
     userDetails: TUserDetails;
 };
@@ -70,6 +32,43 @@ type TSidebarProps = {
 };
 
 export default function Sidebar({ userDetails }: TSidebarProps) {
+    const sidebarMenu = [
+        {
+            icon: <Home />,
+            text: 'Home',
+            path: '/home',
+        },
+        {
+            icon: <Search />,
+            text: 'Explore',
+            path: '#',
+        },
+        {
+            icon: <Mail />,
+            text: 'Messages',
+            path: '#',
+        },
+        {
+            icon: <UserRound />,
+            text: 'Communities',
+            path: '#',
+        },
+        {
+            icon: <User />,
+            text: 'Profile',
+            path: `/user-profile/${userDetails?.id}`,
+        },
+        {
+            icon: <BookMarked />,
+            text: 'Bookmarks',
+            path: '#',
+        },
+        {
+            icon: <Book />,
+            text: 'More',
+            path: '#',
+        },
+    ];
     return (
         <div className="flex flex-col justify-center items-start gap-y-10 ">
             <div className="flex justify-center ">
