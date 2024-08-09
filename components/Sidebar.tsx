@@ -125,6 +125,7 @@ export default function Sidebar({ userDetails }: TSidebarProps) {
                 <PopoverUserCard
                     username={userDetails?.username!}
                     userId={userDetails?.id!}
+                    hasLogoutButton={true}
                 />
             </div>
         </div>
