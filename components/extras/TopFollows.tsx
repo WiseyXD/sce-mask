@@ -20,10 +20,10 @@ export default function TopFollows() {
                     /> */}
 
                     {/* Map all top follows */}
-                    <UserTwitterCard username={'username'} />
-                    <UserTwitterCard username={'username'} />
+                    <UserTwitterCard username={'username'} userId={'null'} />
+                    <UserTwitterCard username={'username'} userId={'null'} />
 
-                    <UserTwitterCard username={'username'} />
+                    <UserTwitterCard username={'username'} userId={'null'} />
                 </div>
             </CardContent>
         </Card>

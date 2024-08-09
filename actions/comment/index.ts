@@ -231,3 +231,29 @@ export const isCommentBookmarked = async (
         };
     }
 };
+
+export const createReply = async (
+    parentCommentId: string,
+    userId: string,
+    text: string,
+    reloadPath: string
+) => {
+    try {
+        const reply = await db.comment.create({
+            data: {
+                parentCommentId,
+                text,
+                userId,
+            },
+        });
+        revalidatePath(reloadPath);
+        return {
+            success: true,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+        };
+    }
+};
