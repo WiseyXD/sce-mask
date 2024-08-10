@@ -1,6 +1,6 @@
 import { AcmeLogo } from '@/components/AcmeLogo';
-import PostBar from '@/components/feed/PostBar';
 import PopoverUserCard from '@/components/PopoverUserCard';
+import PostBar from '@/components/PostBar';
 import {
     Dialog,
     DialogContent,

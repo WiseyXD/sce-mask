@@ -1,7 +1,7 @@
 import getUserDetails from '@/actions/getUserDetails';
 import { getAllPosts } from '@/actions/posts';
 import { validateRequest } from '@/actions/validateRequests';
-import Feed from '@/components/feed/Feed';
+import Feed from '@/components/Feed';
 
 // Add Skeleton
 

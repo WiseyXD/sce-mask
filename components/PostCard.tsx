@@ -4,10 +4,10 @@ import { TPost, TUserDetails } from '@/types';
 import { User as NextUser } from '@nextui-org/react';
 import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
 
+import IconSection from '@/components/IconSection';
 import moment from 'moment';
 import Image from 'next/image';
 import Link from 'next/link';
-import IconSection from '../IconSection';
 
 type TPostCardProps = {
     username: string | null | undefined;

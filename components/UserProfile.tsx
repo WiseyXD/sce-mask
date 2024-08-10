@@ -19,6 +19,7 @@ import { BookmarkIcon } from 'lucide-react';
 import Link from 'next/link';
 
 import { Tab, Tabs } from '@nextui-org/react';
+import { ScrollArea } from './ui/scroll-area';
 export default function UserProfile() {
     let tabs = [
         {
@@ -35,241 +36,268 @@ export default function UserProfile() {
         },
     ];
     return (
-        <div className="flex flex-col items-center w-full max-w-3xl mx-auto">
-            <div className="relative w-full h-40 bg-blue-600 rounded-b-3xl">
-                <div className="absolute -bottom-16 left-1/2 -translate-x-1/2">
-                    <Avatar className="w-32 h-32 border-4 border-white">
-                        <AvatarImage
-                            src="/placeholder-user.jpg"
-                            alt="@shadcn"
-                        />
-                        <AvatarFallback>AC</AvatarFallback>
-                    </Avatar>
+        <ScrollArea className="h-screen">
+            <div className="flex flex-col w-full max-w-3xl mx-auto">
+                <UserHeader />
+                <div className="px-4">
+                    <div className="w-full flex flex-wrap ">
+                        <Tabs
+                            aria-label="Dynamic tabs"
+                            items={tabs}
+                            variant={'underlined'}
+                            className="w-full flex justify-evenly items-center "
+                        >
+                            {(item) => (
+                                <Tab key={item.id} title={item.label}>
+                                    {item.content}
+                                </Tab>
+                            )}
+                        </Tabs>
+                    </div>
+                </div>
+                <div className="w-full mt-8 grid gap-4">
+                    <Card className="border-0 rounded-none shadow-none">
+                        <CardHeader className="flex flex-row items-center p-4">
+                            <Link
+                                href="#"
+                                className="flex items-center gap-2 text-sm font-semibold"
+                                prefetch={false}
+                            >
+                                <Avatar className="w-8 h-8 border">
+                                    <AvatarImage
+                                        src="/placeholder-user.jpg"
+                                        alt="@shadcn"
+                                    />
+                                    <AvatarFallback>AC</AvatarFallback>
+                                </Avatar>
+                                Acme Incs
+                            </Link>
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="w-8 h-8 ml-auto rounded-full"
+                                    >
+                                        <MoveHorizontalIcon className="w-4 h-4" />
+                                    </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end">
+                                    <DropdownMenuItem>
+                                        <BookmarkIcon className="w-4 h-4 mr-2" />
+                                        Save
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem>
+                                        <StarIcon className="w-4 h-4 mr-2" />
+                                        Add to favorites
+                                    </DropdownMenuItem>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem>
+                                        <FileWarningIcon className="w-4 h-4 mr-2" />
+                                        Report
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        </CardHeader>
+                        <CardContent className="p-0">
+                            <img
+                                src="/placeholder.svg"
+                                width={400}
+                                height={400}
+                                alt="Image"
+                                className="object-cover aspect-square"
+                            />
+                        </CardContent>
+                        <CardFooter className="grid gap-2 p-2 pb-4">
+                            <div className="flex items-center w-full">
+                                <Button variant="ghost" size="icon">
+                                    <HeartIcon className="w-4 h-4" />
+                                    <span className="sr-only">Like</span>
+                                </Button>
+                                <Button variant="ghost" size="icon">
+                                    <MessageCircleIcon className="w-4 h-4" />
+                                    <span className="sr-only">Comment</span>
+                                </Button>
+                                <Button variant="ghost" size="icon">
+                                    <SendIcon className="w-4 h-4" />
+                                    <span className="sr-only">Share</span>
+                                </Button>
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="ml-auto"
+                                >
+                                    <BookmarkIcon className="w-4 h-4" />
+                                    <span className="sr-only">Comment</span>
+                                </Button>
+                            </div>
+                            <div className="px-2 text-sm w-full grid gap-1.5">
+                                <div>
+                                    <Link
+                                        href="#"
+                                        className="font-medium"
+                                        prefetch={false}
+                                    >
+                                        john
+                                    </Link>
+                                    Wow, this photo is absolutely stunning! 😍✨
+                                </div>
+                                <div>
+                                    <Link
+                                        href="#"
+                                        className="font-medium"
+                                        prefetch={false}
+                                    >
+                                        amelia
+                                    </Link>
+                                    This post just made my day! 😃👍
+                                </div>
+                            </div>
+                        </CardFooter>
+                    </Card>
+                    <Card className="border-0 rounded-none shadow-none">
+                        <CardHeader className="flex flex-row items-center p-4">
+                            <Link
+                                href="#"
+                                className="flex items-center gap-2 text-sm font-semibold"
+                                prefetch={false}
+                            >
+                                <Avatar className="w-8 h-8 border">
+                                    <AvatarImage
+                                        src="/placeholder-user.jpg"
+                                        alt="@shadcn"
+                                    />
+                                    <AvatarFallback>AC</AvatarFallback>
+                                </Avatar>
+                                Acme Inc
+                            </Link>
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="w-8 h-8 ml-auto rounded-full"
+                                    >
+                                        <MoveHorizontalIcon className="w-4 h-4" />
+                                    </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end">
+                                    <DropdownMenuItem>
+                                        <BookmarkIcon className="w-4 h-4 mr-2" />
+                                        Save
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem>
+                                        <StarIcon className="w-4 h-4 mr-2" />
+                                        Add to favorites
+                                    </DropdownMenuItem>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem>
+                                        <FileWarningIcon className="w-4 h-4 mr-2" />
+                                        Report
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        </CardHeader>
+                        <CardContent className="p-0">
+                            <img
+                                src="/placeholder.svg"
+                                width={400}
+                                height={225}
+                                alt="Image"
+                                className="object-cover aspect-video"
+                            />
+                        </CardContent>
+                        <CardFooter className="grid gap-2 p-2 pb-4">
+                            <div className="flex items-center w-full">
+                                <Button variant="ghost" size="icon">
+                                    <HeartIcon className="w-4 h-4" />
+                                    <span className="sr-only">Like</span>
+                                </Button>
+                                <Button variant="ghost" size="icon">
+                                    <MessageCircleIcon className="w-4 h-4" />
+                                    <span className="sr-only">Comment</span>
+                                </Button>
+                                <Button variant="ghost" size="icon">
+                                    <SendIcon className="w-4 h-4" />
+                                    <span className="sr-only">Share</span>
+                                </Button>
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="ml-auto"
+                                >
+                                    <BookmarkIcon className="w-4 h-4" />
+                                    <span className="sr-only">Comment</span>
+                                </Button>
+                            </div>
+                            <div className="px-2 text-sm w-full grid gap-1.5">
+                                <div>
+                                    <Link
+                                        href="#"
+                                        className="font-medium"
+                                        prefetch={false}
+                                    >
+                                        john
+                                    </Link>
+                                    Wow, this photo is absolutely stunning! 😍✨
+                                </div>
+                                <div>
+                                    <Link
+                                        href="#"
+                                        className="font-medium"
+                                        prefetch={false}
+                                    >
+                                        amelia
+                                    </Link>
+                                    This post just made my day! 😃👍
+                                </div>
+                            </div>
+                        </CardFooter>
+                    </Card>
                 </div>
             </div>
-            <div className="mt-20 text-center space-y-2">
+        </ScrollArea>
+    );
+}
+
+const UserHeader = () => {
+    return (
+        <>
+            <div className="relative w-full h-40 bg-[#00b894]">
+                <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-full items-center ">
+                    <div className="w-full flex items-center justify-between px-3 ">
+                        <Avatar className="w-32 h-32 border-4 border-white relative z-10">
+                            <AvatarImage
+                                src="/placeholder-user.jpg"
+                                alt="@shadcn"
+                            />
+                            <AvatarFallback>AC</AvatarFallback>
+                        </Avatar>
+                        <div className="w-full flex justify-end items-center gap-2 pt-12">
+                            <Button variant="ghost" size="icon">
+                                <MessageCircleIcon className="" />
+                                <span className="sr-only">Message</span>
+                            </Button>
+                            <Button
+                                variant="default"
+                                size="icon"
+                                className="px-10 bg-blue-600 text-white rounded-full"
+                            >
+                                Follow
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="mt-20 flex-col space-y-2 px-4">
                 <h2 className="text-2xl font-bold">Acme Inc</h2>
                 <p className="text-muted-foreground">
                     Software company based in San Francisco
                 </p>
             </div>
-            <div className="w-full flex flex-wrap ">
-                <Tabs
-                    aria-label="Dynamic tabs"
-                    items={tabs}
-                    variant={'underlined'}
-                    className="w-full flex justify-evenly items-center "
-                >
-                    {(item) => (
-                        <Tab key={item.id} title={item.label}>
-                            {item.content}
-                        </Tab>
-                    )}
-                </Tabs>
-            </div>
-            <div className="w-full mt-8 grid gap-4">
-                <Card className="border-0 rounded-none shadow-none">
-                    <CardHeader className="flex flex-row items-center p-4">
-                        <Link
-                            href="#"
-                            className="flex items-center gap-2 text-sm font-semibold"
-                            prefetch={false}
-                        >
-                            <Avatar className="w-8 h-8 border">
-                                <AvatarImage
-                                    src="/placeholder-user.jpg"
-                                    alt="@shadcn"
-                                />
-                                <AvatarFallback>AC</AvatarFallback>
-                            </Avatar>
-                            Acme Incs
-                        </Link>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="w-8 h-8 ml-auto rounded-full"
-                                >
-                                    <MoveHorizontalIcon className="w-4 h-4" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuItem>
-                                    <BookmarkIcon className="w-4 h-4 mr-2" />
-                                    Save
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <StarIcon className="w-4 h-4 mr-2" />
-                                    Add to favorites
-                                </DropdownMenuItem>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>
-                                    <FileWarningIcon className="w-4 h-4 mr-2" />
-                                    Report
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </CardHeader>
-                    <CardContent className="p-0">
-                        <img
-                            src="/placeholder.svg"
-                            width={400}
-                            height={400}
-                            alt="Image"
-                            className="object-cover aspect-square"
-                        />
-                    </CardContent>
-                    <CardFooter className="grid gap-2 p-2 pb-4">
-                        <div className="flex items-center w-full">
-                            <Button variant="ghost" size="icon">
-                                <HeartIcon className="w-4 h-4" />
-                                <span className="sr-only">Like</span>
-                            </Button>
-                            <Button variant="ghost" size="icon">
-                                <MessageCircleIcon className="w-4 h-4" />
-                                <span className="sr-only">Comment</span>
-                            </Button>
-                            <Button variant="ghost" size="icon">
-                                <SendIcon className="w-4 h-4" />
-                                <span className="sr-only">Share</span>
-                            </Button>
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                className="ml-auto"
-                            >
-                                <BookmarkIcon className="w-4 h-4" />
-                                <span className="sr-only">Comment</span>
-                            </Button>
-                        </div>
-                        <div className="px-2 text-sm w-full grid gap-1.5">
-                            <div>
-                                <Link
-                                    href="#"
-                                    className="font-medium"
-                                    prefetch={false}
-                                >
-                                    john
-                                </Link>
-                                Wow, this photo is absolutely stunning! 😍✨
-                            </div>
-                            <div>
-                                <Link
-                                    href="#"
-                                    className="font-medium"
-                                    prefetch={false}
-                                >
-                                    amelia
-                                </Link>
-                                This post just made my day! 😃👍
-                            </div>
-                        </div>
-                    </CardFooter>
-                </Card>
-                <Card className="border-0 rounded-none shadow-none">
-                    <CardHeader className="flex flex-row items-center p-4">
-                        <Link
-                            href="#"
-                            className="flex items-center gap-2 text-sm font-semibold"
-                            prefetch={false}
-                        >
-                            <Avatar className="w-8 h-8 border">
-                                <AvatarImage
-                                    src="/placeholder-user.jpg"
-                                    alt="@shadcn"
-                                />
-                                <AvatarFallback>AC</AvatarFallback>
-                            </Avatar>
-                            Acme Inc
-                        </Link>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="w-8 h-8 ml-auto rounded-full"
-                                >
-                                    <MoveHorizontalIcon className="w-4 h-4" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuItem>
-                                    <BookmarkIcon className="w-4 h-4 mr-2" />
-                                    Save
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <StarIcon className="w-4 h-4 mr-2" />
-                                    Add to favorites
-                                </DropdownMenuItem>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>
-                                    <FileWarningIcon className="w-4 h-4 mr-2" />
-                                    Report
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </CardHeader>
-                    <CardContent className="p-0">
-                        <img
-                            src="/placeholder.svg"
-                            width={400}
-                            height={225}
-                            alt="Image"
-                            className="object-cover aspect-video"
-                        />
-                    </CardContent>
-                    <CardFooter className="grid gap-2 p-2 pb-4">
-                        <div className="flex items-center w-full">
-                            <Button variant="ghost" size="icon">
-                                <HeartIcon className="w-4 h-4" />
-                                <span className="sr-only">Like</span>
-                            </Button>
-                            <Button variant="ghost" size="icon">
-                                <MessageCircleIcon className="w-4 h-4" />
-                                <span className="sr-only">Comment</span>
-                            </Button>
-                            <Button variant="ghost" size="icon">
-                                <SendIcon className="w-4 h-4" />
-                                <span className="sr-only">Share</span>
-                            </Button>
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                className="ml-auto"
-                            >
-                                <BookmarkIcon className="w-4 h-4" />
-                                <span className="sr-only">Comment</span>
-                            </Button>
-                        </div>
-                        <div className="px-2 text-sm w-full grid gap-1.5">
-                            <div>
-                                <Link
-                                    href="#"
-                                    className="font-medium"
-                                    prefetch={false}
-                                >
-                                    john
-                                </Link>
-                                Wow, this photo is absolutely stunning! 😍✨
-                            </div>
-                            <div>
-                                <Link
-                                    href="#"
-                                    className="font-medium"
-                                    prefetch={false}
-                                >
-                                    amelia
-                                </Link>
-                                This post just made my day! 😃👍
-                            </div>
-                        </div>
-                    </CardFooter>
-                </Card>
-            </div>
-        </div>
+        </>
     );
-}
+};
 
 function FileWarningIcon(props: any) {
     return (
