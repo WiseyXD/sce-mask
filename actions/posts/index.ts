@@ -136,7 +136,7 @@ export const getAllPosts = async () => {
                 },
             },
             orderBy: {
-                time: 'desc', // Sort by date in descending order
+                time: 'desc',
             },
         });
         return {
@@ -147,6 +147,53 @@ export const getAllPosts = async () => {
         console.log(error);
         return {
             msg: 'error occured while getting post by id',
+            success: false,
+        };
+    }
+};
+
+export const getAllPostsByUserId = async (userId: string) => {
+    try {
+        const posts = await db.post.findMany({
+            where: {
+                userId: userId,
+            },
+            include: {
+                user: {
+                    select: {
+                        username: true,
+                        image: true,
+                    },
+                },
+                comments: {
+                    include: {
+                        user: {
+                            select: {
+                                username: true,
+                                image: true,
+                            },
+                        },
+                        replies: true,
+                    },
+                },
+            },
+            orderBy: {
+                time: 'desc',
+            },
+        });
+        if (posts.length == 0) {
+            return {
+                success: true,
+                posts: null,
+            };
+        }
+        return {
+            success: true,
+            posts: posts,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
             success: false,
         };
     }
