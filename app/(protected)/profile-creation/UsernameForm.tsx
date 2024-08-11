@@ -34,6 +34,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
 
 type TUsernameFormProps = {
     email: string | undefined;
@@ -222,7 +223,7 @@ export default function UsernameForm({
                                         <FormItem>
                                             <FormLabel>Description</FormLabel>
                                             <FormControl>
-                                                <Input
+                                                <Textarea
                                                     placeholder="Mask description about you."
                                                     {...field}
                                                     disabled={isPending}
