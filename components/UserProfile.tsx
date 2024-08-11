@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 
 import { TPost, TUserDetails } from '@/types';
 import { Tab, Tabs } from '@nextui-org/react';
+import { Edit3 } from 'lucide-react';
 import Posts from './Posts';
 import { Separator } from './ui/separator';
 
@@ -58,10 +59,12 @@ export const UserHeader = ({
     username,
     image,
     description,
+    selfProfile,
 }: {
     username: string;
     image: string | null;
     description: string;
+    selfProfile: boolean;
 }) => {
     return (
         <>
@@ -75,19 +78,28 @@ export const UserHeader = ({
                             />
                             <AvatarFallback>AC</AvatarFallback>
                         </Avatar>
-                        <div className="w-full flex justify-end items-center gap-2 pt-12">
-                            <Button variant="ghost" size="icon">
-                                <MessageCircleIcon className="" />
-                                <span className="sr-only">Message</span>
-                            </Button>
-                            <Button
-                                variant="default"
-                                size="icon"
-                                className="px-10 bg-blue-600 text-white rounded-full"
-                            >
-                                Follow
-                            </Button>
-                        </div>
+                        {selfProfile ? (
+                            <div className="w-full flex justify-end items-center gap-2 pt-12">
+                                <Button variant="ghost" size="icon">
+                                    <Edit3 className="" />
+                                    <span className="sr-only">Edit</span>
+                                </Button>
+                            </div>
+                        ) : (
+                            <div className="w-full flex justify-end items-center gap-2 pt-12">
+                                <Button variant="ghost" size="icon">
+                                    <MessageCircleIcon className="" />
+                                    <span className="sr-only">Message</span>
+                                </Button>
+                                <Button
+                                    variant="default"
+                                    size="icon"
+                                    className="px-10 bg-blue-600 text-white rounded-full"
+                                >
+                                    Follow
+                                </Button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

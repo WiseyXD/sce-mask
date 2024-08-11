@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 export default async function page({ params }: { params: { userId: string } }) {
     const { userId } = params;
-
+    let isSelfProfile = false;
     const user = await getUserDetails(userId);
     const posts = await getAllPostsByUserId(userId);
 
@@ -21,6 +21,10 @@ export default async function page({ params }: { params: { userId: string } }) {
                 </Link>
             </div>
         );
+    }
+
+    if (userId === user.id) {
+        isSelfProfile = true;
     }
 
     if (!posts.success) {
@@ -45,6 +49,7 @@ export default async function page({ params }: { params: { userId: string } }) {
                         username={user.username!}
                         image={user.image ? user.image : null}
                         description="A Fullsatck developer who can do anything related to javascript."
+                        selfProfile={isSelfProfile}
                     />
                     <UserBody posts={sanitizedPosts} userDetails={user} />
                 </div>
