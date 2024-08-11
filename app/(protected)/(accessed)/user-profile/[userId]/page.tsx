@@ -51,7 +51,7 @@ export default async function page({ params }: { params: { userId: string } }) {
                     <UserHeader
                         username={user.username!}
                         image={user.image ? user.image : null}
-                        description="A Fullsatck developer who can do anything related to javascript."
+                        description={user.description!}
                         selfProfile={isSelfProfile}
                     />
                     <UserBody posts={sanitizedPosts} userDetails={user} />
