@@ -129,6 +129,7 @@ export const getAllPosts = async () => {
                             select: {
                                 username: true,
                                 image: true,
+                                id: true,
                             },
                         },
                         replies: true,
@@ -171,6 +172,7 @@ export const getAllPostsByUserId = async (userId: string) => {
                             select: {
                                 username: true,
                                 image: true,
+                                id: true,
                             },
                         },
                         replies: true,

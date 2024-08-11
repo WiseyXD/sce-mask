@@ -57,7 +57,7 @@ export default function PostCard({
             <div className="flex py-3 px-2">
                 <div>
                     {userDetails?.id ? (
-                        <Link href={`/user-profile/${userDetails.id}`}>
+                        <Link href={`/user-profile/${post?.userId}`}>
                             <NextUser
                                 as="button"
                                 name={null}
@@ -83,7 +83,9 @@ export default function PostCard({
                 <div className="flex flex-col w-full">
                     <Link href={`/${post?.id}`}>
                         <div className="flex items-center gap-x-2">
-                            <p className="font-semibold text-lg">{username}</p>
+                            <p className="font-semibold text-lg">
+                                {post?.user?.username}
+                            </p>
                             <p className="text-muted">
                                 {/* {JSON.stringify(post?.time)} */}
                                 {/* {moment(post?.time).format('MM/DD/YYYY')} */}

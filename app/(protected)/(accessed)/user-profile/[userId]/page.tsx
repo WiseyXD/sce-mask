@@ -1,11 +1,14 @@
 import getUserDetails from '@/actions/getUserDetails';
 import { getAllPostsByUserId } from '@/actions/posts';
+import { validateRequest } from '@/actions/validateRequests';
 import { UserBody, UserHeader } from '@/components/UserProfile';
 
 import { ScrollArea } from '@/components/ui/scroll-area';
 import Link from 'next/link';
 
 export default async function page({ params }: { params: { userId: string } }) {
+    const sessionData = await validateRequest();
+    const signedInUser = sessionData.user;
     const { userId } = params;
     let isSelfProfile = false;
     const user = await getUserDetails(userId);
@@ -23,7 +26,7 @@ export default async function page({ params }: { params: { userId: string } }) {
         );
     }
 
-    if (userId === user.id) {
+    if (userId === signedInUser?.id) {
         isSelfProfile = true;
     }
 
