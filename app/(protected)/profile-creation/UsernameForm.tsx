@@ -13,13 +13,12 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
-import UserImage from '@/public/default-user-img.png';
 
-import { logout } from '@/actions/logout';
 import setUsernameAndDescription from '@/actions/user/usernameCreation';
 import { FormError } from '@/components/form-error';
 import { FormSuccess } from '@/components/form-success';
 import { ToastAction } from '@/components/ui/toast';
+import { avatarArray } from '@/data/avatars';
 import { profileCreationSchema } from '@/lib/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
@@ -27,6 +26,14 @@ import { redirect } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 
 type TUsernameFormProps = {
     email: string | undefined;
@@ -51,6 +58,7 @@ export default function UsernameForm({
         defaultValues: {
             username: '',
             description: '',
+            image: '',
         },
     });
 
@@ -62,7 +70,8 @@ export default function UsernameForm({
                 const resp = await setUsernameAndDescription(
                     values.username,
                     id,
-                    values.description
+                    values.description,
+                    values.image
                 );
                 if (!resp.success) {
                     setError(resp.msg);
@@ -105,16 +114,82 @@ export default function UsernameForm({
                             <div className="md:border-r md:border-b-0 border-b pr-4 flex justify-center items-center">
                                 <div className="space-y-4">
                                     <div className="space-y-2">
-                                        <div className="flex items-center gap-4">
-                                            <div className="h-24 w-24 overflow-hidden">
-                                                <Image
-                                                    src={UserImage}
-                                                    alt="Profile Picture"
-                                                    className="object-cover rounded-full"
-                                                    width={100}
-                                                    height={100}
-                                                />
-                                            </div>
+                                        <div className="flex flex-wrap items-center gap-4">
+                                            {/* {avatarArray.map((avatar) => (
+                                                <div
+                                                    className="h-24 w-24 overflow-hidden"
+                                                    key={avatar.id}
+                                                >
+                                                    <Image
+                                                        src={avatar.link}
+                                                        alt="Profile Picture"
+                                                        className="object-cover rounded-full"
+                                                        width={100}
+                                                        height={100}
+                                                    />
+                                                </div>
+                                            ))} */}
+                                            <FormField
+                                                control={form.control}
+                                                name="image"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>
+                                                            Mask Image
+                                                        </FormLabel>
+                                                        <Select
+                                                            onValueChange={
+                                                                field.onChange
+                                                            }
+                                                            defaultValue={
+                                                                field.value
+                                                            }
+                                                        >
+                                                            <FormControl>
+                                                                <SelectTrigger>
+                                                                    <SelectValue placeholder="Select a mask image to display" />
+                                                                </SelectTrigger>
+                                                            </FormControl>
+                                                            <SelectContent>
+                                                                {avatarArray.map(
+                                                                    (
+                                                                        avatar
+                                                                    ) => (
+                                                                        <SelectItem
+                                                                            value={
+                                                                                avatar.link
+                                                                            }
+                                                                            key={
+                                                                                avatar.id
+                                                                            }
+                                                                            className="text-center"
+                                                                        >
+                                                                            <Image
+                                                                                src={
+                                                                                    avatar.link
+                                                                                }
+                                                                                alt="Profile Picture"
+                                                                                className="text-center object-cover rounded-full"
+                                                                                width={
+                                                                                    100
+                                                                                }
+                                                                                height={
+                                                                                    100
+                                                                                }
+                                                                            />
+                                                                        </SelectItem>
+                                                                    )
+                                                                )}
+                                                            </SelectContent>
+                                                        </Select>
+                                                        <FormDescription>
+                                                            Mask image to mask
+                                                            your identity.
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -216,10 +291,6 @@ export default function UsernameForm({
                         </Button>
                     </form>
                 </Form>
-
-                <form action={logout}>
-                    <Button disabled={isPending}>Logout</Button>
-                </form>
             </div>
         </div>
     );

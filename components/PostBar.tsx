@@ -12,7 +12,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import { postCreationSchema } from '@/lib/schema';
 import { UploadButton } from '@/lib/uploadthing';
-import { imageLink } from '@/lib/utils';
 import { TUserDetails } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button as NextButton, User as NextUser } from '@nextui-org/react';
@@ -136,7 +135,7 @@ export default function PostBar({ userDetails }: TPostBarProps) {
                             description=""
                             className="transition-transform"
                             avatarProps={{
-                                src: imageLink,
+                                src: userDetails.image!,
                             }}
                         />
                     </Link>
@@ -147,7 +146,7 @@ export default function PostBar({ userDetails }: TPostBarProps) {
                         description=""
                         className="transition-transform"
                         avatarProps={{
-                            src: imageLink,
+                            src: userDetails?.image!,
                         }}
                     />
                 )}

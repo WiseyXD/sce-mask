@@ -5,7 +5,8 @@ import db from '../../lib/db';
 export default async function setUsernameAndDescription(
     username: string,
     id: string,
-    description: string
+    description: string,
+    image: string
 ) {
     const usernameExists = await db.user.findFirst({
         where: {
@@ -26,6 +27,7 @@ export default async function setUsernameAndDescription(
         data: {
             username,
             description,
+            image,
         },
     });
     return {

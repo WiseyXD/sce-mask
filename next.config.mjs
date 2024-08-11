@@ -18,6 +18,12 @@ const nextConfig = {
                 port: '',
                 pathname: '/**',
             },
+            {
+                protocol: 'https',
+                hostname: 'ui.shadcn.com',
+                port: '',
+                pathname: '/**',
+            },
         ],
     },
 };

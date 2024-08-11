@@ -54,6 +54,7 @@ export const profileCreationSchema = z.object({
         .max(70, {
             message: 'Description must not be greater than 70 characters',
         }),
+    image: z.string().url({ message: 'Mask image must be selected' }),
 });
 
 const MAX_FILE_SIZE = 5000000;

@@ -1,5 +1,4 @@
 import { Separator } from '@/components/ui/separator';
-import { imageLink } from '@/lib/utils';
 import { TPost, TUserDetails } from '@/types';
 import { User as NextUser } from '@nextui-org/react';
 import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
@@ -64,7 +63,7 @@ export default function PostCard({
                                 description=""
                                 className="transition-transform"
                                 avatarProps={{
-                                    src: imageLink,
+                                    src: userDetails.image!,
                                 }}
                             />
                         </Link>
@@ -75,7 +74,7 @@ export default function PostCard({
                             description=""
                             className="transition-transform"
                             avatarProps={{
-                                src: imageLink,
+                                src: userDetails?.image!,
                             }}
                         />
                     )}
