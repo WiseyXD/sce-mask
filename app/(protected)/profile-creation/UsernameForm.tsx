@@ -16,7 +16,7 @@ import { useToast } from '@/components/ui/use-toast';
 import UserImage from '@/public/default-user-img.png';
 
 import { logout } from '@/actions/logout';
-import setUsernameAndDescription from '@/actions/usernameCreation';
+import setUsernameAndDescription from '@/actions/user/usernameCreation';
 import { FormError } from '@/components/form-error';
 import { FormSuccess } from '@/components/form-success';
 import { ToastAction } from '@/components/ui/toast';

@@ -1,6 +1,6 @@
 import { validateRequest } from '@/actions/validateRequests';
 
-import getUserDetails from '@/actions/getUserDetails';
+import getUserDetails from '@/actions/user/getUserDetails';
 import Extras from '@/components/extras/Extras';
 import Sidebar from '@/components/Sidebar';
 import { Separator } from '@/components/ui/separator';

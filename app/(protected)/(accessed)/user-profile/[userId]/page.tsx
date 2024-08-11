@@ -1,5 +1,5 @@
-import getUserDetails from '@/actions/getUserDetails';
 import { getAllPostsByUserId } from '@/actions/posts';
+import getUserDetails from '@/actions/user/getUserDetails';
 import { validateRequest } from '@/actions/validateRequests';
 import { UserBody, UserHeader } from '@/components/UserProfile';
 
