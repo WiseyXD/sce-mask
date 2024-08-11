@@ -46,6 +46,14 @@ export const profileCreationSchema = z.object({
     username: z.string().min(2, {
         message: 'Username must be at least 2 characters.',
     }),
+    description: z
+        .string()
+        .min(2, {
+            message: 'Description must be at least 2 characters.',
+        })
+        .max(70, {
+            message: 'Description must not be greater than 70 characters',
+        }),
 });
 
 const MAX_FILE_SIZE = 5000000;

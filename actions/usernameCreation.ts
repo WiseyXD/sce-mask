@@ -2,14 +2,18 @@
 
 import db from '../lib/db';
 
-export default async function setUsername(username: string, id: string) {
+export default async function setUsernameAndDescription(
+    username: string,
+    id: string,
+    description: string
+) {
     const usernameExists = await db.user.findFirst({
         where: {
             username,
         },
     });
+
     if (usernameExists) {
-        console.log('Already exists');
         return {
             success: false,
             msg: 'Username already exists in DB.',
@@ -21,10 +25,11 @@ export default async function setUsername(username: string, id: string) {
         },
         data: {
             username,
+            description,
         },
     });
     return {
         success: true,
-        msg: `Username ${setUsername.username} alloted.`,
+        msg: `Username ${setUsername.username} alloted and description added.`,
     };
 }

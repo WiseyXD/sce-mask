@@ -16,7 +16,7 @@ import { useToast } from '@/components/ui/use-toast';
 import UserImage from '@/public/default-user-img.png';
 
 import { logout } from '@/actions/logout';
-import setUsername from '@/actions/usernameCreation';
+import setUsernameAndDescription from '@/actions/usernameCreation';
 import { FormError } from '@/components/form-error';
 import { FormSuccess } from '@/components/form-success';
 import { ToastAction } from '@/components/ui/toast';
@@ -50,6 +50,7 @@ export default function UsernameForm({
         resolver: zodResolver(profileCreationSchema),
         defaultValues: {
             username: '',
+            description: '',
         },
     });
 
@@ -58,7 +59,11 @@ export default function UsernameForm({
             setError('');
             setSuccess('');
             startTransisiton(async () => {
-                const resp = await setUsername(values.username, id);
+                const resp = await setUsernameAndDescription(
+                    values.username,
+                    id,
+                    values.description
+                );
                 if (!resp.success) {
                     setError(resp.msg);
                     return;
@@ -123,7 +128,27 @@ export default function UsernameForm({
                                             <FormLabel>Username</FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="shadcn"
+                                                    placeholder="WiseyXD"
+                                                    {...field}
+                                                    disabled={isPending}
+                                                />
+                                            </FormControl>
+                                            <FormDescription>
+                                                {error}
+                                            </FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="description"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Description</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="Mask description about you."
                                                     {...field}
                                                     disabled={isPending}
                                                 />
