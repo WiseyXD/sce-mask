@@ -22,7 +22,6 @@ export type TPost = {
     user?: {
         image?: string | null;
         username: string | null;
-        id: string | null;
     };
     comments?: TComment[]; // Array
 };
