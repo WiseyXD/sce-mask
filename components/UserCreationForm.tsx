@@ -43,7 +43,7 @@ type TUsernameFormProps = {
     id: string;
 };
 
-export default function UsernameForm({
+export default function UserCreationForm({
     email,
     yearOfAddmission,
     department,

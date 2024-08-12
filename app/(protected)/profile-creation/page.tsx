@@ -3,7 +3,7 @@
 import getUserDetails from '@/actions/user/getUserDetails';
 import { validateRequest } from '@/actions/validateRequests';
 import { redirect } from 'next/navigation';
-import UsernameForm from './UsernameForm';
+import UserCreationForm from '../../../components/UserCreationForm';
 
 export default async function ProfileCreationPage() {
     const { user } = await validateRequest();
@@ -12,7 +12,7 @@ export default async function ProfileCreationPage() {
         return redirect('/home');
     }
     return (
-        <UsernameForm
+        <UserCreationForm
             id={user?.id!}
             email={details?.email}
             department={details?.department}
