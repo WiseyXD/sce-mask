@@ -1,15 +1,35 @@
 'use server';
 import db from '@/lib/db';
-import { TPost } from '@/types';
+import { postSchema } from '@/lib/schema';
 import { revalidatePath } from 'next/cache';
 
-export const createPost = async (postData: TPost) => {
+export const createPost = async ({
+    text,
+    userId,
+    mediaLink,
+}: {
+    text: string;
+    userId: string;
+    mediaLink: string | undefined;
+}) => {
     try {
+        const validInputs = postSchema.safeParse({
+            text,
+            userId,
+            mediaLink,
+        });
+        if (!validInputs.success) {
+            console.log('Invalid post creation inputs' + validInputs.error);
+            return {
+                msg: 'Invalid post creation inputs',
+                success: false,
+            };
+        }
         const post = await db.post.create({
             data: {
-                userId: postData.userId,
-                text: postData.text,
-                ...(postData.mediaLink && { mediaLink: postData.mediaLink }),
+                userId,
+                text,
+                mediaLink: mediaLink ?? '',
             },
         });
         console.log(post);
