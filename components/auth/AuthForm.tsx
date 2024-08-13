@@ -22,7 +22,7 @@ import { Input } from '@/components/ui/input';
 import { FormError } from '../form-error';
 import { FormSuccess } from '../form-success';
 
-import { login } from '@/actions/login';
+import { guestLogin, login } from '@/actions/login';
 import { register } from '@/actions/register';
 import { resendEmailVerificationLink } from '@/actions/resendEmail';
 import { sendLinkInMail } from '@/actions/resetPassword';
@@ -206,6 +206,16 @@ export default function AuthForm({
                                 {submitButton}
                             </Button>
                         </form>
+                        <Button
+                            type="submit"
+                            onClick={async () => {
+                                await guestLogin();
+                            }}
+                            disabled={isPending}
+                            className="bg-blue-600 text-white hover:bg-white hover:text-black hover:ease-in-out hover:duration-300 my-4"
+                        >
+                            Guest Login
+                        </Button>
                         {resendVerificationEmail && (
                             <div className="flex gap-3">
                                 <Button
