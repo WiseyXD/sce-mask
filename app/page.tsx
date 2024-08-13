@@ -11,7 +11,7 @@ export default async function Home() {
         <main className="min-h-[93vh] flex flex-col items-center justify-center p-24 gap-y-10 ">
             Landing will be here.
             <div className="flex flex-col gap-y-[100px] items-center">
-                <Link href={'/register'}>
+                <Link href={'/login'}>
                     <HoverBorderGradient
                         containerClassName="rounded-full"
                         as="button"
