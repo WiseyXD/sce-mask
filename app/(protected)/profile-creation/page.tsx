@@ -1,5 +1,3 @@
-// how to get dept and year of addmission here through server actions
-
 import getUserDetails from '@/actions/user/getUserDetails';
 import { validateRequest } from '@/actions/validateRequests';
 import { redirect } from 'next/navigation';
