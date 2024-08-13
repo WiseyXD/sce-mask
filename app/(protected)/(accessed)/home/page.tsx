@@ -25,12 +25,16 @@ export default async function page() {
     if (!success) {
         return <>Error occured while fetching posts from db.</>;
     }
+
+    if (!userDetails) {
+        return <>No user details found</>;
+    }
     const posts = msg;
     return (
         <div className="flex w-full">
             {userDetails && (
                 <Feed
-                    userDetails={userDetails}
+                    userDetails={userDetails!}
                     // @ts-ignore
                     posts={typeof posts != 'string' ? posts : null}
                 />
