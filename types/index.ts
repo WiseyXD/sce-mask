@@ -4,6 +4,7 @@ export type TUserDetails = {
     username: string | null;
     email: string;
     password: string;
+    description: string;
     isEmailVerified: boolean;
     image: string | null;
     department: string | null;

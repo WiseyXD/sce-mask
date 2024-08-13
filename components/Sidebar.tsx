@@ -123,8 +123,10 @@ export default function Sidebar({ userDetails }: TSidebarProps) {
             <div className="lg:block hidden">
                 <PopoverUserCard
                     username={userDetails?.username!}
+                    image={userDetails?.image!}
                     userId={userDetails?.id!}
                     hasLogoutButton={true}
+                    userDescription={userDetails?.description!}
                 />
             </div>
         </div>

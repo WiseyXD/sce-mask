@@ -1,4 +1,3 @@
-import { imageLink } from '@/lib/utils';
 import {
     User as NextUser,
     Popover,
@@ -10,13 +9,17 @@ import { UserTwitterCard } from './UserTwitterCard';
 type TPopoverUserCard = {
     username: string;
     userId: string;
-    hasLogoutButton : boolean
+    hasLogoutButton: boolean;
+    image: string;
+    userDescription: string;
 };
 
 export default function PopoverUserCard({
     username,
     userId,
     hasLogoutButton,
+    image,
+    userDescription,
 }: TPopoverUserCard) {
     return (
         <Popover showArrow placement="bottom" className="w-full">
@@ -27,7 +30,7 @@ export default function PopoverUserCard({
                     description="Full-Stack Developer"
                     className="transition-transform "
                     avatarProps={{
-                        src: imageLink,
+                        src: image,
 
                         // src: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
                     }}
@@ -35,9 +38,11 @@ export default function PopoverUserCard({
             </PopoverTrigger>
             <PopoverContent className="p-1">
                 <UserTwitterCard
+                    image={image}
                     username={username}
                     userId={userId}
                     logoutButton={hasLogoutButton}
+                    userDescription={userDescription}
                 />
             </PopoverContent>
         </Popover>

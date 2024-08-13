@@ -1,6 +1,5 @@
 'use client';
 import { logout } from '@/actions/logout';
-import { imageLink } from '@/lib/utils';
 import {
     Avatar,
     Button,
@@ -17,6 +16,8 @@ type TUserTwitterCardProps = {
     username: string;
     userId: string;
     logoutButton: boolean;
+    image: string;
+    userDescription: string;
 };
 
 // is followed the change state
@@ -24,6 +25,8 @@ export const UserTwitterCard = ({
     username,
     userId,
     logoutButton,
+    image,
+    userDescription,
 }: TUserTwitterCardProps) => {
     const [isFollowed, setIsFollowed] = React.useState(false);
     return (
@@ -38,7 +41,7 @@ export const UserTwitterCard = ({
                             isBordered
                             radius="full"
                             size="md"
-                            src={imageLink}
+                            src={image}
                         />
                         <div className="flex flex-col items-start justify-center">
                             <h4 className="text-small font-semibold leading-none text-default-600">
@@ -80,7 +83,9 @@ export const UserTwitterCard = ({
             </CardHeader>
             <CardBody className="px-3 py-0">
                 <p className="text-small pl-px text-default-500">
-                    Full-stack developer, @getnextui lover she/her
+                    {userDescription?.length < 30
+                        ? userDescription
+                        : userDescription?.substring(0, 30) + '...'}
                     <span aria-label="confetti" role="img">
                         🎉
                     </span>
