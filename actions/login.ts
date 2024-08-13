@@ -78,7 +78,7 @@ export async function login(values: {
 export async function guestLogin() {
     const email = process.env.GUEST_EMAIL!;
     const password = process.env.GUEST_PASSWORD!;
-    console.log(email);
+
     try {
         const existingUser = await db.user.findUnique({
             where: {
