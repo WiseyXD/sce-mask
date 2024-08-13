@@ -24,17 +24,23 @@ export default function TopFollows() {
                         username={'username'}
                         userId={'null'}
                         logoutButton={false}
+                        userDescription="null"
+                        image="null"
                     />
                     <UserTwitterCard
                         username={'username'}
                         userId={'null'}
                         logoutButton={false}
+                        userDescription="null"
+                        image="null"
                     />
 
                     <UserTwitterCard
                         username={'username'}
                         userId={'null'}
                         logoutButton={false}
+                        userDescription="null"
+                        image="null"
                     />
                 </div>
             </CardContent>

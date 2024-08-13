@@ -1,5 +1,6 @@
 'use client';
 import { logout } from '@/actions/logout';
+import { imageLink } from '@/lib/utils';
 import {
     Avatar,
     Button,
@@ -41,7 +42,7 @@ export const UserTwitterCard = ({
                             isBordered
                             radius="full"
                             size="md"
-                            src={image}
+                            src={image ? image : imageLink}
                         />
                         <div className="flex flex-col items-start justify-center">
                             <h4 className="text-small font-semibold leading-none text-default-600">
