@@ -4,22 +4,11 @@ import { validateRequest } from '@/actions/validateRequests';
 import Feed from '@/components/Feed';
 
 // Add Skeleton
+// work on server and client components
 
 export default async function page() {
     const { user } = await validateRequest();
     const userDetails = await getUserDetails(user?.id);
-
-    // const posts = await db.post.findMany({
-    //     include: {
-    //         user: {
-    //             select: {
-    //                 username: true,
-    //                 image: true,
-    //             },
-    //         },
-    //         comments: true,
-    //     },
-    // });
 
     const { msg, success } = await getAllPosts();
     if (!success) {
