@@ -22,6 +22,7 @@ import { User as NextUser } from '@nextui-org/react';
 
 import { createComment, createReply } from '@/actions/comment';
 import { useToast } from '@/components/ui/use-toast';
+import { commentCreationSchema } from '@/lib/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
@@ -51,17 +52,14 @@ export default function CommentModal({
     const reloadPath = usePathname();
     const { toast } = useToast();
 
-    const formSchema = z.object({
-        comment: z.string().min(2).max(50),
-    });
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<z.infer<typeof commentCreationSchema>>({
+        resolver: zodResolver(commentCreationSchema),
         defaultValues: {
             comment: '',
         },
     });
 
-    async function onSubmit(values: z.infer<typeof formSchema>) {
+    async function onSubmit(values: z.infer<typeof commentCreationSchema>) {
         try {
             setIsPending(true);
             if (isPostComment) {

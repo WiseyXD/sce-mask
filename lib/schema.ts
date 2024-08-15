@@ -81,3 +81,7 @@ export const postSchema = z.object({
 export const postEditSchema = z.object({
     text: z.string().min(1, 'Text is required'),
 });
+
+export const commentCreationSchema = z.object({
+    comment: z.string().min(2).max(50),
+});
