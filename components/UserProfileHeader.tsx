@@ -3,63 +3,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 
-import { TPost, TUserDetails } from '@/types';
-import { Tab, Tabs } from '@nextui-org/react';
 import { Edit3 } from 'lucide-react';
-import Posts from './Posts';
 import { Separator } from './ui/separator';
-
-export const UserBody = ({
-    posts,
-    userDetails,
-}: {
-    posts: TPost[];
-    userDetails: TUserDetails;
-}) => {
-    let tabs = [
-        {
-            id: 'posts',
-            label: 'Posts',
-            content: (
-                <Posts
-                    posts={posts}
-                    userDetails={userDetails}
-                    isPostEditable={true}
-                />
-            ),
-        },
-        {
-            id: 'replies',
-            label: 'Replies',
-            content:
-                'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-        },
-    ];
-    return (
-        <>
-            <div className="">
-                <div className="w-full flex flex-wrap ">
-                    <Tabs
-                        aria-label="Dynamic tabs"
-                        items={tabs}
-                        variant={'underlined'}
-                        className="w-full flex justify-evenly items-center "
-                    >
-                        {(item: any) => (
-                            <Tab
-                                key={item.id}
-                                title={item.label}
-                                className="w-full "
-                            >
-                                {item.content}
-                            </Tab>
-                        )}
-                    </Tabs>
-                </div>
-            </div>
-        </>
-    );
-};
 
 export const UserHeader = ({
     username,

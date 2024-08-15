@@ -1,9 +1,10 @@
 import { getAllPostsByUserId } from '@/actions/posts';
 import getUserDetails from '@/actions/user/getUserDetails';
 import { validateRequest } from '@/actions/validateRequests';
-import { UserBody, UserHeader } from '@/components/UserProfile';
 
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { UserBody } from '@/components/UserProfileBody';
+import { UserHeader } from '@/components/UserProfileHeader';
 import Link from 'next/link';
 
 export default async function page({ params }: { params: { userId: string } }) {
