@@ -20,7 +20,13 @@ export const UserBody = ({
         {
             id: 'posts',
             label: 'Posts',
-            content: <Posts posts={posts} userDetails={userDetails} />,
+            content: (
+                <Posts
+                    posts={posts}
+                    userDetails={userDetails}
+                    isPostEditable={true}
+                />
+            ),
         },
         {
             id: 'replies',

@@ -54,7 +54,11 @@ export default async function page({ params }: { params: { userId: string } }) {
                         description={user.description!}
                         selfProfile={isSelfProfile}
                     />
-                    <UserBody posts={sanitizedPosts} userDetails={user} />
+                    <UserBody
+                        posts={sanitizedPosts}
+                        userDetails={user}
+                        selfProfile={isSelfProfile}
+                    />
                 </div>
             </ScrollArea>
         </div>

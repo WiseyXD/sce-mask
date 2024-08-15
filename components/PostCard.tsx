@@ -1,7 +1,7 @@
 import { Separator } from '@/components/ui/separator';
 import { TPost, TUserDetails } from '@/types';
 import { User as NextUser } from '@nextui-org/react';
-import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
+import { BookmarkPlus, Heart, MessagesSquare, PencilIcon } from 'lucide-react';
 
 import IconSection from '@/components/IconSection';
 import moment from 'moment';
@@ -12,6 +12,7 @@ type TPostCardProps = {
     username: string | null | undefined;
     post: TPost;
     userDetails: TUserDetails;
+    isEditable: boolean;
 };
 
 const postsIcons = [
@@ -49,6 +50,7 @@ export default function PostCard({
     username,
     post,
     userDetails,
+    isEditable,
 }: Partial<TPostCardProps>) {
     console.log(post);
     return (
@@ -81,15 +83,22 @@ export default function PostCard({
                 </div>
                 <div className="flex flex-col w-full">
                     <Link href={`/${post?.id}`}>
-                        <div className="flex items-center gap-x-2">
-                            <p className="font-semibold text-lg">
-                                {post?.user?.username}
-                            </p>
-                            <p className="text-muted">
-                                {/* {JSON.stringify(post?.time)} */}
-                                {/* {moment(post?.time).format('MM/DD/YYYY')} */}
-                                {moment(post?.time).fromNow()}
-                            </p>
+                        <div className="w-full flex justify-between items-center">
+                            <div className="flex justify-start items-center gap-x-2">
+                                <p className="font-semibold text-lg">
+                                    {post?.user?.username}
+                                </p>
+                                <p className="text-muted">
+                                    {/* {JSON.stringify(post?.time)} */}
+                                    {/* {moment(post?.time).format('MM/DD/YYYY')} */}
+                                    {moment(post?.time).fromNow()}
+                                </p>
+                            </div>
+                            {isEditable && (
+                                <div>
+                                    <PencilIcon />
+                                </div>
+                            )}
                         </div>
                         <div className="flex flex-col gap-y-3">
                             {post?.text}

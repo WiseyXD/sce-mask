@@ -45,7 +45,11 @@ export default function Feed({ userDetails, posts }: TFeedProps) {
             <ScrollArea className="flex flex-col h-[95vh]">
                 <PostBar userDetails={userDetails} />
                 <Separator />
-                <Posts posts={posts} userDetails={userDetails} />
+                <Posts
+                    posts={posts}
+                    userDetails={userDetails}
+                    isPostEditable={false}
+                />
             </ScrollArea>
         </div>
     );

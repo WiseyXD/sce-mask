@@ -19,9 +19,14 @@ const postsIcons = [
 type TPostProps = {
     posts: TPost[];
     userDetails: TUserDetails;
+    isPostEditable: boolean;
 };
 
-export default function Posts({ posts, userDetails }: TPostProps) {
+export default function Posts({
+    posts,
+    userDetails,
+    isPostEditable,
+}: TPostProps) {
     if (posts.length === 0) return 'No Posts in DB';
 
     return (
@@ -34,6 +39,7 @@ export default function Posts({ posts, userDetails }: TPostProps) {
                             username={post?.user?.username}
                             post={post}
                             userDetails={userDetails}
+                            isEditable={isPostEditable}
                         />
                     </div>
                 );
