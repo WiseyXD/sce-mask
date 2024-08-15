@@ -1,5 +1,4 @@
 import { AcmeLogo } from '@/components/AcmeLogo';
-import PopoverUserCard from '@/components/PopoverUserCard';
 import PostBar from '@/components/PostBar';
 import {
     Dialog,
@@ -22,6 +21,7 @@ import {
     UserRound,
 } from 'lucide-react';
 import Link from 'next/link';
+import PopoverUserCard from './PopoverUserCard';
 
 type SidebarProps = {
     userDetails: TUserDetails;
@@ -120,7 +120,7 @@ export default function Sidebar({ userDetails }: TSidebarProps) {
                 </DialogContent>
             </Dialog>
 
-            <div className="lg:block hidden">
+            <div className="hidden lg:block">
                 <PopoverUserCard
                     username={userDetails?.username!}
                     image={userDetails?.image!}

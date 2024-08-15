@@ -28,7 +28,7 @@ export default function PopoverUserCard({
                     as="button"
                     name={username}
                     description={userDescription}
-                    className="transition-transform hidden lg:block"
+                    className="transition-transform"
                     avatarProps={{
                         src: image,
 
