@@ -1,12 +1,13 @@
 import { Separator } from '@/components/ui/separator';
 import { TPost, TUserDetails } from '@/types';
 import { User as NextUser } from '@nextui-org/react';
-import { BookmarkPlus, Heart, MessagesSquare, PencilIcon } from 'lucide-react';
+import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
 
 import IconSection from '@/components/IconSection';
 import moment from 'moment';
 import Image from 'next/image';
 import Link from 'next/link';
+import EditPost from './EditPost';
 
 type TPostCardProps = {
     username: string | null | undefined;
@@ -82,8 +83,8 @@ export default function PostCard({
                     )}
                 </div>
                 <div className="flex flex-col w-full">
-                    <Link href={`/${post?.id}`}>
-                        <div className="w-full flex justify-between items-center">
+                    <div className="w-full flex justify-between items-center">
+                        <Link href={`/${post?.id}`}>
                             <div className="flex justify-start items-center gap-x-2">
                                 <p className="font-semibold text-lg">
                                     {post?.user?.username}
@@ -94,12 +95,20 @@ export default function PostCard({
                                     {moment(post?.time).fromNow()}
                                 </p>
                             </div>
-                            {isEditable && (
-                                <div>
-                                    <PencilIcon />
-                                </div>
-                            )}
-                        </div>
+                        </Link>
+                        {isEditable && (
+                            <div
+                                className=""
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <EditPost
+                                    oldText={post?.text!}
+                                    postId={post?.id!}
+                                />
+                            </div>
+                        )}
+                    </div>
+                    <Link href={`/${post?.id}`}>
                         <div className="flex flex-col gap-y-3">
                             {post?.text}
                             {post?.mediaLink && (

@@ -219,6 +219,41 @@ export const getAllPostsByUserId = async (userId: string) => {
     }
 };
 
+export const editPost = async (
+    text: string,
+    postId: string,
+    reloadPath: string
+) => {
+    try {
+        const updatedPost = await db.post.update({
+            where: {
+                id: postId,
+            },
+            data: {
+                text: text,
+            },
+        });
+        if (!updatedPost) {
+            return {
+                success: true,
+                msg: `No post with id ${postId}`,
+            };
+        }
+        revalidatePath(reloadPath);
+
+        return {
+            success: true,
+            msg: `Post updated`,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: true,
+            msg: `Error while updating post !`,
+        };
+    }
+};
+
 export const likePost = async (
     postId: string,
     userId: string,

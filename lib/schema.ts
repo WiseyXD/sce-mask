@@ -77,3 +77,7 @@ export const postSchema = z.object({
     userId: z.string().min(1, 'User ID is required'),
     mediaLink: z.string().optional(), // mediaLink can be undefined or a valid URL
 });
+
+export const postEditSchema = z.object({
+    text: z.string().min(1, 'Text is required'),
+});
