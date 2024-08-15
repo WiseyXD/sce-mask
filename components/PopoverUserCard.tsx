@@ -27,8 +27,8 @@ export default function PopoverUserCard({
                 <NextUser
                     as="button"
                     name={username}
-                    description="Full-Stack Developer"
-                    className="transition-transform "
+                    description={userDescription}
+                    className="transition-transform hidden lg:block"
                     avatarProps={{
                         src: image,
 

@@ -1,20 +1,19 @@
 'use client';
 import { z } from 'zod';
 
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog';
 import { postEditSchema } from '@/lib/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
-import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from '@/components/ui/sheet';
-
-import { editPost } from '@/actions/posts';
+import { deletePost, editPost } from '@/actions/posts';
 import { Button } from '@/components/ui/button';
 import {
     Form,
@@ -25,8 +24,10 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { PencilIcon } from 'lucide-react';
+import { EllipsisVertical } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { useTransition } from 'react';
+import { Separator } from './ui/separator';
 import { useToast } from './ui/use-toast';
 
 export default function EditPost({
@@ -36,6 +37,7 @@ export default function EditPost({
     oldText: string;
     postId: string;
 }) {
+    const [isPending, startTransition] = useTransition();
     const pathname = usePathname();
     const { toast } = useToast();
     const form = useForm<z.infer<typeof postEditSchema>>({
@@ -49,7 +51,33 @@ export default function EditPost({
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         try {
-            const resp = await editPost(values.text, postId, pathname);
+            startTransition(async () => {
+                const resp = await editPost(values.text, postId, pathname);
+                if (!resp.success) {
+                    toast({
+                        title: `${resp.msg}`,
+                        variant: 'destructive',
+                    });
+                    return;
+                }
+                toast({
+                    title: `${resp.msg}`,
+                });
+                return;
+            });
+        } catch (error) {
+            console.log(error);
+            toast({
+                title: `Error while updating post`,
+                variant: 'destructive',
+            });
+            return;
+        }
+    }
+
+    async function deletePostById() {
+        try {
+            const resp = await deletePost(postId, pathname);
             if (!resp.success) {
                 toast({
                     title: `${resp.msg}`,
@@ -72,15 +100,15 @@ export default function EditPost({
     }
 
     return (
-        <Sheet>
-            <SheetTrigger>
-                <PencilIcon />
-            </SheetTrigger>
-            <SheetContent side={'right'}>
-                <SheetHeader>
-                    <SheetTitle>Edit Post</SheetTitle>
-
-                    <SheetDescription>
+        <Dialog>
+            <DialogTrigger>
+                {' '}
+                <EllipsisVertical />
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle className="py-3">Edit Post</DialogTitle>
+                    <DialogDescription>
                         <Form {...form}>
                             <form
                                 onSubmit={form.handleSubmit(onSubmit)}
@@ -96,6 +124,7 @@ export default function EditPost({
                                                 <Input
                                                     placeholder="Write here..."
                                                     {...field}
+                                                    disabled={isPending}
                                                 />
                                             </FormControl>
 
@@ -103,12 +132,25 @@ export default function EditPost({
                                         </FormItem>
                                     )}
                                 />
-                                <Button type="submit">Submit</Button>
+                                <div className="flex gap-2">
+                                    <Button type="submit" disabled={isPending}>
+                                        Submit
+                                    </Button>
+                                </div>
                             </form>
+                            <Separator className="my-3" />
+                            <Button
+                                className="w-full"
+                                variant={'destructive'}
+                                disabled={isPending}
+                                onClick={deletePostById}
+                            >
+                                Delete
+                            </Button>
                         </Form>
-                    </SheetDescription>
-                </SheetHeader>
-            </SheetContent>
-        </Sheet>
+                    </DialogDescription>
+                </DialogHeader>
+            </DialogContent>
+        </Dialog>
     );
 }

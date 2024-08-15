@@ -254,6 +254,33 @@ export const editPost = async (
     }
 };
 
+export const deletePost = async (postId: string, reloadPath: string) => {
+    try {
+        const deletedPost = await db.post.delete({
+            where: {
+                id: postId,
+            },
+        });
+        if (!deletedPost) {
+            return {
+                success: true,
+                msg: `No post with id ${postId} found in DB!`,
+            };
+        }
+        revalidatePath(reloadPath);
+        return {
+            success: true,
+            msg: 'Post deleted successfully.',
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+            msg: 'Error occured while deleting the post!',
+        };
+    }
+};
+
 export const likePost = async (
     postId: string,
     userId: string,

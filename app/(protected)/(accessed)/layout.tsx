@@ -18,9 +18,9 @@ export default async function BaseTemplate({ children }: IBaseTemplate) {
 
     return (
         <div className="min-h-[100vh] flex justify-center items-center">
-            <div className="w-5/6 lg:w-4/6 ">
+            <div className="w-full md:w-5/6 lg:w-4/6 ">
                 <div className="flex lg:grid lg:grid-cols-[0.85fr_3fr_1.15fr] gap-x-3">
-                    <div className="">
+                    <div className="pl-4 md:pl-0">
                         <Sidebar userDetails={userDetails} />
                     </div>
                     <div className="flex w-full">
