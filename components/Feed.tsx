@@ -8,7 +8,7 @@ import PostBar from './PostBar';
 
 // Fetch post of user accrording to selected tab
 
-const feedPageOptins = [
+const feedPageOptions = [
     {
         text: 'For You',
     },
@@ -35,7 +35,7 @@ export default function Feed({ userDetails, posts }: TFeedProps) {
     return (
         <div className="w-full">
             <div className="flex justify-evenly py-4 bg-opacity-50">
-                {feedPageOptins.map((i) => (
+                {feedPageOptions.map((i) => (
                     <p key={i.text} className="font-semibold">
                         {i.text}
                     </p>
