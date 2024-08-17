@@ -25,7 +25,18 @@ export default async function Page({ params }: { params: { postId: string } }) {
     return (
         <div className="min-h-screen w-full">
             <ScrollArea className="w-full h-screen rounded-md ">
-                <PostHero msg={msg} user={user} />
+                <PostHero
+                    msg={msg}
+                    postCreator={
+                        msg?.user?.username
+                            ? {
+                                  username: msg?.user?.username,
+                                  image: msg?.user?.image ?? '',
+                              }
+                            : null
+                    }
+                    signedInUserId={user?.id!}
+                />
                 <Separator />
 
                 <CommentList

@@ -1,22 +1,32 @@
+'use client';
 import { TPost } from '@/types';
-import { User } from 'lucia';
 import moment from 'moment';
 
 import IconSection from '@/components/IconSection';
 import { Separator } from '@/components/ui/separator';
-import { imageLink } from '@/lib/utils';
 import { Avatar, Button, Card, CardHeader } from '@nextui-org/react';
 import { ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 type TPostHeroProps = {
     msg: TPost;
-    user: User | null;
+    postCreator: {
+        username: string;
+        image: string;
+    } | null;
+    signedInUserId: string;
 };
 
-export default function PostHero({ msg, user }: TPostHeroProps) {
-    if (user == null) {
+export default function PostHero({
+    msg,
+    postCreator,
+    signedInUserId,
+}: TPostHeroProps) {
+    const [isFollowed, setIsFollowed] = useState(false);
+
+    if (signedInUserId == null) {
         return <>User not present</>;
     }
     const postCreatorData = msg.user;
@@ -41,7 +51,7 @@ export default function PostHero({ msg, user }: TPostHeroProps) {
                                 isBordered
                                 radius="full"
                                 size="md"
-                                src={imageLink}
+                                src={postCreator?.image}
                             />
                             <div className="flex flex-col items-start justify-center">
                                 <h4 className="text-small font-semibold leading-none text-default-600">
@@ -49,26 +59,22 @@ export default function PostHero({ msg, user }: TPostHeroProps) {
                                 </h4>
                             </div>
                         </div>
-                        {/* <Button
-                                    className={
-                                        isFollowed
-                                            ? 'bg-transparent text-foreground border-default-200'
-                                            : 'bg-blue-600'
-                                    }
-                                    radius="full"
-                                    size="sm"
-                                    variant={isFollowed ? 'bordered' : 'solid'}
-                                    onPress={() => setIsFollowed(!isFollowed)}
-                                >
-                                    {isFollowed ? 'Unfollow' : 'Follow'}
-                                </Button> */}
-                        <Button
-                            className={'bg-blue-600'}
-                            radius="full"
-                            size="sm"
-                        >
-                            Follow
-                        </Button>
+
+                        {msg.userId != signedInUserId && (
+                            <Button
+                                className={
+                                    isFollowed
+                                        ? 'bg-transparent text-foreground border-default-200'
+                                        : 'bg-blue-600'
+                                }
+                                radius="full"
+                                size="sm"
+                                variant={isFollowed ? 'bordered' : 'solid'}
+                                onPress={() => setIsFollowed(!isFollowed)}
+                            >
+                                {isFollowed ? 'Unfollow' : 'Follow'}
+                            </Button>
+                        )}
                     </CardHeader>
                 </Card>
             </div>
@@ -120,7 +126,9 @@ export default function PostHero({ msg, user }: TPostHeroProps) {
                 }
                 postId={msg.id ? msg.id : 'No id'}
                 signedInUserId={
-                    user ? user.id : 'signedin user id not avaialbe'
+                    signedInUserId
+                        ? signedInUserId
+                        : 'signedin user id not avaialbe'
                 }
             />
         </div>
