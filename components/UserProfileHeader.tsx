@@ -3,7 +3,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 
-import { Edit3, MessageCircleIcon } from 'lucide-react';
+import { MessageCircleIcon } from 'lucide-react';
+import EditProfile from './EditProfile';
 import { Separator } from './ui/separator';
 
 export const UserHeader = ({
@@ -11,11 +12,13 @@ export const UserHeader = ({
     image,
     description,
     selfProfile,
+    userId,
 }: {
     username: string;
     image: string | null;
     description: string;
     selfProfile: boolean;
+    userId: string;
 }) => {
     return (
         <>
@@ -34,7 +37,12 @@ export const UserHeader = ({
                         {selfProfile ? (
                             <div className="w-full flex justify-end items-center gap-2 pt-12">
                                 <Button variant="ghost" size="icon">
-                                    <Edit3 className="" />
+                                    <EditProfile
+                                        oldUsername={username}
+                                        oldImage={image!}
+                                        oldDescription={description}
+                                        userId={userId}
+                                    />
                                     <span className="sr-only">Edit</span>
                                 </Button>
                             </div>

@@ -42,10 +42,22 @@ export const resetPasswordSchema = z
         path: ['reEnterPassword'],
     });
 
-export const profileCreationSchema = z.object({
+export const profileSchema = z.object({
     username: z.string().min(2, {
         message: 'Username must be at least 2 characters.',
     }),
+    description: z
+        .string()
+        .min(2, {
+            message: 'Description must be at least 2 characters.',
+        })
+        .max(70, {
+            message: 'Description must not be greater than 70 characters',
+        }),
+    image: z.string().url({ message: 'Mask image must be selected' }),
+});
+
+export const profileUpdateSchema = z.object({
     description: z
         .string()
         .min(2, {

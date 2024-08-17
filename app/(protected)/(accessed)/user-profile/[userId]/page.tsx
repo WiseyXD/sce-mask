@@ -1,5 +1,5 @@
 import { getAllPostsByUserId } from '@/actions/posts';
-import getUserDetails from '@/actions/user/getUserDetails';
+import getUserDetails from '@/actions/user';
 import { validateRequest } from '@/actions/validateRequests';
 
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -54,6 +54,7 @@ export default async function page({ params }: { params: { userId: string } }) {
                         image={user.image ? user.image : null}
                         description={user.description!}
                         selfProfile={isSelfProfile}
+                        userId={userId}
                     />
                     <UserBody
                         posts={sanitizedPosts}

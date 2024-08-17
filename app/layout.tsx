@@ -33,7 +33,7 @@ export default async function RootLayout({
                 <SessionProvider value={sessionData}>
                     <ThemeProvider
                         attribute="class"
-                        defaultTheme="system"
+                        defaultTheme="dark"
                         enableSystem
                         disableTransitionOnChange
                     >

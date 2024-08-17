@@ -1,5 +1,5 @@
 import { getAllPosts } from '@/actions/posts';
-import getUserDetails from '@/actions/user/getUserDetails';
+import getUserDetails from '@/actions/user';
 import { validateRequest } from '@/actions/validateRequests';
 import Feed from '@/components/Feed';
 

@@ -14,19 +14,9 @@ import {
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 
-import setUsernameAndDescription from '@/actions/user/usernameCreation';
+import { createProfile } from '@/actions/user';
 import { FormError } from '@/components/form-error';
 import { FormSuccess } from '@/components/form-success';
-import { ToastAction } from '@/components/ui/toast';
-import { avatarArray } from '@/data/avatars';
-import { profileCreationSchema } from '@/lib/schema';
-import { zodResolver } from '@hookform/resolvers/zod';
-import Image from 'next/image';
-import { redirect } from 'next/navigation';
-import { useState, useTransition } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-
 import {
     Select,
     SelectContent,
@@ -35,6 +25,15 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { ToastAction } from '@/components/ui/toast';
+import { avatarArray } from '@/data/avatars';
+import { profileSchema } from '@/lib/schema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import Image from 'next/image';
+import { redirect } from 'next/navigation';
+import { useState, useTransition } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 type TUsernameFormProps = {
     email: string | undefined;
@@ -54,8 +53,8 @@ export default function UserCreationForm({
     const [success, setSuccess] = useState<string>('');
     const { toast } = useToast();
 
-    const form = useForm<z.infer<typeof profileCreationSchema>>({
-        resolver: zodResolver(profileCreationSchema),
+    const form = useForm<z.infer<typeof profileSchema>>({
+        resolver: zodResolver(profileSchema),
         defaultValues: {
             username: '',
             description: '',
@@ -63,12 +62,12 @@ export default function UserCreationForm({
         },
     });
 
-    async function onSubmit(values: z.infer<typeof profileCreationSchema>) {
+    async function onSubmit(values: z.infer<typeof profileSchema>) {
         try {
             setError('');
             setSuccess('');
             startTransisiton(async () => {
-                const resp = await setUsernameAndDescription(
+                const resp = await createProfile(
                     values.username,
                     id,
                     values.description,

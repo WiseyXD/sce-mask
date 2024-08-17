@@ -1,5 +1,5 @@
 import { logout } from '@/actions/logout';
-import getUserDetails from '@/actions/user/getUserDetails';
+import getUserDetails from '@/actions/user';
 import { validateRequest } from '@/actions/validateRequests';
 import { Button } from '@/components/ui/button';
 import { redirect } from 'next/navigation';

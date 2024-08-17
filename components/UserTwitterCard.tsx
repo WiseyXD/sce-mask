@@ -87,6 +87,7 @@ export const UserTwitterCard = ({
                     {userDescription?.length < 30
                         ? userDescription
                         : userDescription?.substring(0, 30) + '...'}
+
                     <span aria-label="confetti" role="img">
                         🎉
                     </span>

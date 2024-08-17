@@ -1,4 +1,4 @@
-import getUserDetails from '@/actions/user/getUserDetails';
+import getUserDetails from '@/actions/user';
 import { validateRequest } from '@/actions/validateRequests';
 import { redirect } from 'next/navigation';
 import UserCreationForm from '../../../components/UserCreationForm';

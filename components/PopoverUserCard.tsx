@@ -27,7 +27,11 @@ export default function PopoverUserCard({
                 <NextUser
                     as="button"
                     name={username}
-                    description={userDescription}
+                    description={
+                        userDescription.length > 15
+                            ? userDescription.substring(0, 15) + '..'
+                            : userDescription
+                    }
                     className="transition-transform"
                     avatarProps={{
                         src: image,
