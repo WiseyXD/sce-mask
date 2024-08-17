@@ -61,7 +61,7 @@ export default function Sidebar({ userDetails }: TSidebarProps) {
         {
             icon: <BookMarked />,
             text: 'Bookmarks',
-            path: '#',
+            path: '/bookmarks',
         },
         {
             icon: <Book />,

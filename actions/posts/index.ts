@@ -219,6 +219,33 @@ export const getAllPostsByUserId = async (userId: string) => {
     }
 };
 
+export const getAllBookmarksPostByUserId = async (userId: string) => {
+    try {
+        const posts = await db.bookmark.findMany({
+            where: {
+                userId,
+            },
+            include: {
+                post: {
+                    include: {
+                        user: true,
+                    },
+                },
+            },
+        });
+        return {
+            success: true,
+            msg: posts,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+            msg: `Error occured while fetching bookmarks.`,
+        };
+    }
+};
+
 export const editPost = async (
     text: string,
     postId: string,
