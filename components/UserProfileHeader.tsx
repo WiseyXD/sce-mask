@@ -55,7 +55,7 @@ export const UserHeader = ({
                                 <Button
                                     variant="default"
                                     size="icon"
-                                    className="px-10 bg-blue-600 text-white rounded-full"
+                                    className="px-10 bg-blue-600 dark:text-white rounded-full"
                                 >
                                     Follow
                                 </Button>

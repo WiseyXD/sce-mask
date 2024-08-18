@@ -135,7 +135,7 @@ export default function CommentModal({
                                             }}
                                         />
                                     </div>
-                                    <div className="flex flex-col gap-y-3 text-white">
+                                    <div className="flex flex-col gap-y-3 dark: text-white">
                                         {text}
                                     </div>
                                 </div>
@@ -152,7 +152,7 @@ export default function CommentModal({
                                             }}
                                         />
                                     </div>
-                                    <div className="flex flex-col gap-y-3 text-white w-full">
+                                    <div className="flex flex-col gap-y-3 dark:text-white w-full">
                                         <Form {...form}>
                                             <form
                                                 onSubmit={form.handleSubmit(

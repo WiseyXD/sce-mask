@@ -80,7 +80,7 @@ export default function PostHero({
             </div>
             <div className="flex-col">
                 <div>
-                    <h4 className="text-lg leading-none text-white">
+                    <h4 className="text-lg leading-none dark : text-white">
                         {msg.text}
                     </h4>
                 </div>

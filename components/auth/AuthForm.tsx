@@ -212,7 +212,7 @@ export default function AuthForm({
                                 await guestLogin();
                             }}
                             disabled={isPending}
-                            className="bg-blue-600 text-white hover:bg-white hover:text-black hover:ease-in-out hover:duration-300 my-4"
+                            className="bg-blue-600 dark:text-white hover:bg-white hover:text-black hover:ease-in-out hover:duration-300 my-4"
                         >
                             Guest Login
                         </Button>

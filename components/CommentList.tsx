@@ -62,7 +62,7 @@ export default function CommentList({
                             </Card>
                             <div className="flex-col pl-16">
                                 <div>
-                                    <h4 className="text-bs leading-none text-white">
+                                    <h4 className="text-bs leading-none dark:text-white">
                                         {comment.text}
                                     </h4>
                                 </div>

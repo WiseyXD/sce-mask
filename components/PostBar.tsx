@@ -297,7 +297,7 @@ export default function PostBar({ userDetails }: TPostBarProps) {
                                 })}
                             </div>
                             <NextButton
-                                className="bg-blue-600 text-white  rounded-full"
+                                className="bg-blue-600 dark:text-white  rounded-full"
                                 type="submit"
                                 disabled={isPendingPost}
                             >

@@ -107,7 +107,7 @@ export default function Sidebar({ userDetails }: TSidebarProps) {
             </div>
             <Dialog>
                 <DialogTrigger asChild>
-                    <NextButton className="hidden lg:block bg-blue-600 text-white w-full rounded-full ">
+                    <NextButton className="hidden lg:block bg-blue-600 dark:text-white w-full rounded-full ">
                         Post
                     </NextButton>
                 </DialogTrigger>
