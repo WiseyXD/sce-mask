@@ -89,7 +89,7 @@ export default function PostCard({
                                 <p className="font-semibold text-lg">
                                     {post?.user?.username}
                                 </p>
-                                <p className="text-muted">
+                                <p className="dark:text-muted">
                                     {/* {JSON.stringify(post?.time)} */}
                                     {/* {moment(post?.time).format('MM/DD/YYYY')} */}
                                     {moment(post?.time).fromNow()}

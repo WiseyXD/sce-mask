@@ -22,29 +22,37 @@ export default function HotTopicsCard() {
                         />
                         <div className="flex flex-col">
                             <div className="flex gap-x-2">
-                                <p className="text-muted text-sm">
+                                <p className="dark:text-muted text-sm">
                                     Entertainment
                                 </p>
-                                <p className="text-muted text-sm">Trending</p>
+                                <p className="dark:text-muted text-sm">
+                                    Trending
+                                </p>
                             </div>
                             <div>
                                 <p className="text-lg font-semibold">Ronaldo</p>
                             </div>
                             <div>
-                                <p className="text-muted text-sm">272K Posts</p>
+                                <p className="dark:text-muted text-sm">
+                                    272K Posts
+                                </p>
                             </div>
                         </div>
                     </div>
                     <div className="flex flex-col">
                         <div className="flex gap-x-2">
-                            <p className="text-muted text-sm">Entertainment</p>
-                            <p className="text-muted text-sm">Trending</p>
+                            <p className="dark:text-muted text-sm">
+                                Entertainment
+                            </p>
+                            <p className="dark:text-muted text-sm">Trending</p>
                         </div>
                         <div>
                             <p className="text-lg font-semibold">Ronaldo</p>
                         </div>
                         <div>
-                            <p className="text-muted text-sm">272K Posts</p>
+                            <p className="dark:text-muted text-sm">
+                                272K Posts
+                            </p>
                         </div>
                     </div>
                 </div>

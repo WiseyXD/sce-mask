@@ -50,8 +50,8 @@ export default function CommentList({
                                             <h4 className="text-small font-semibold leading-none text-default-600">
                                                 {comment.user?.username}
                                             </h4>
-                                            <p className="text-muted">·</p>
-                                            <p className="text-muted">
+                                            <p className="dark:text-muted">·</p>
+                                            <p className="dark:text-muted">
                                                 {moment(
                                                     comment?.time
                                                 ).fromNow()}

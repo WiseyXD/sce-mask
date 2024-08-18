@@ -70,7 +70,7 @@ export default function ForgotPasswordForm({ email }: { email: string }) {
                                 <h1 className="text-3xl font-bold">
                                     Reset Password
                                 </h1>
-                                <p className="text-balance text-muted-foreground">
+                                <p className="text-balance dark:text-muted-foreground">
                                     Reset forgottend Password
                                 </p>
                             </div>

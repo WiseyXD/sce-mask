@@ -66,7 +66,7 @@ export const UserHeader = ({
             </div>
             <div className="mt-20 flex-col space-y-2 px-4">
                 <h2 className="text-2xl font-bold">{username}</h2>
-                <p className="text-muted-foreground">{description}</p>
+                <p className="dark:text-muted-foreground">{description}</p>
             </div>
             <Separator className="my-4" />
         </>

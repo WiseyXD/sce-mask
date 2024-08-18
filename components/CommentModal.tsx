@@ -135,7 +135,7 @@ export default function CommentModal({
                                             }}
                                         />
                                     </div>
-                                    <div className="flex flex-col gap-y-3 dark: text-white">
+                                    <div className="flex flex-col gap-y-3 dark:text-white">
                                         {text}
                                     </div>
                                 </div>
