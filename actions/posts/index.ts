@@ -295,6 +295,17 @@ export const getAllBookmarksPostByUserId = async (userId: string) => {
                 post: {
                     include: {
                         user: true,
+                        comments: {
+                            include: {
+                                user: {
+                                    select: {
+                                        username: true,
+                                        image: true,
+                                    },
+                                },
+                                replies: true,
+                            },
+                        },
                     },
                 },
             },

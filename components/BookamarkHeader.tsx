@@ -1,5 +1,11 @@
 'use client';
 import { deleteAllBookmarksByUserId } from '@/actions/posts';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { ArrowLeft, EllipsisVertical } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -51,7 +57,20 @@ export default function BookamarkHeader({
                 <p className="text-xl font-semibold">Bookmarks</p>
             </div>
             <div className="pr-2 cursor-pointer">
-                <EllipsisVertical onClick={handleDeleteBookmarks} />
+                <DropdownMenu>
+                    <DropdownMenuTrigger>
+                        {' '}
+                        <EllipsisVertical />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                        <DropdownMenuItem
+                            onClick={handleDeleteBookmarks}
+                            className="hover:bg-destructive"
+                        >
+                            Clear all bookmarks.
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
         </div>
     );

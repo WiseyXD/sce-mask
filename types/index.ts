@@ -51,6 +51,5 @@ export type TBookmark = {
     userId: string;
     postId: string;
     createdAt: Date;
-
     post: TPost;
 };

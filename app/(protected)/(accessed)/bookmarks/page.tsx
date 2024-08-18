@@ -16,16 +16,20 @@ export default async function page() {
     const bookmarks = resp.msg;
     if (bookmarks.length == 0) {
         return (
-            <>
-                No Bookmarks done yet , go to<Link href={'/home'}>home</Link>{' '}
+            <div className="flex-col w-full min-h-screen">
+                No Bookmarks done yet , go to{' '}
+                <Link href={'/home'} className="underline text-blue-600">
+                    home
+                </Link>{' '}
                 and bookmark some relevant posts.
-            </>
+            </div>
         );
     }
     console.log(bookmarks);
     return (
         <div className="flex-col w-full min-h-screen">
             <BookamarkHeader userId={user?.id!} showDeleteButton={true} />
+            {/* @ts-ignore */}
             <BookmarkBody bookmarks={bookmarks} />
         </div>
     );
