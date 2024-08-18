@@ -11,7 +11,8 @@ type TExtrasProps = {
 export default function Extras({ userDetails }: TExtrasProps) {
     return (
         <div className="flex flex-col py-2 gap-y-3">
-            <Search />
+            {/* @ts-ignore */}
+            <Search oldItem={null} setFunction={null} />
             <TopFollows />
             <HotTopicsCard />
         </div>
