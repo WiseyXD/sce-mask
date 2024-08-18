@@ -25,7 +25,7 @@ export default async function page() {
     console.log(bookmarks);
     return (
         <div className="flex-col w-full min-h-screen">
-            <BookamarkHeader />
+            <BookamarkHeader userId={user?.id!} showDeleteButton={true} />
             <BookmarkBody bookmarks={bookmarks} />
         </div>
     );
