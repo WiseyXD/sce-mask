@@ -28,7 +28,7 @@ export default async function RootLayout({
     const sessionData = await validateRequest();
 
     return (
-        <html lang="en" className="dark">
+        <html lang="en">
             <body className={inter.className}>
                 <SessionProvider value={sessionData}>
                     <ThemeProvider

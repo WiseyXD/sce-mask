@@ -1,6 +1,7 @@
 import { logout } from '@/actions/logout';
 import getUserDetails from '@/actions/user';
 import { validateRequest } from '@/actions/validateRequests';
+import { ModeToggle } from '@/components/mode-toggle';
 import { Button } from '@/components/ui/button';
 import { redirect } from 'next/navigation';
 
@@ -13,6 +14,7 @@ export default async function page() {
     return (
         <div className="min-h-[93vh]">
             {JSON.stringify(session)}
+            <ModeToggle />
             <form action={logout}>
                 /<Button>Logout</Button>
             </form>
