@@ -45,3 +45,12 @@ export type TComment = {
     commentLikes?: number; // Optional field for the number of likes
     commentBookmarks?: number; // Optional field for the number of bookmarks
 };
+
+export type TBookmark = {
+    id: string;
+    userId: string;
+    postId: string;
+    createdAt: Date;
+
+    post: TPost;
+};

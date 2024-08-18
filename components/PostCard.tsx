@@ -58,7 +58,7 @@ export default function PostCard({
         <div className="flex flex-col">
             <div className="flex py-3 px-2">
                 <div>
-                    {userDetails?.id ? (
+                    {post?.userId ? (
                         <Link href={`/user-profile/${post?.userId}`}>
                             <NextUser
                                 as="button"
@@ -66,7 +66,7 @@ export default function PostCard({
                                 description=""
                                 className="transition-transform"
                                 avatarProps={{
-                                    src: userDetails.image!,
+                                    src: userDetails?.image!,
                                 }}
                             />
                         </Link>
