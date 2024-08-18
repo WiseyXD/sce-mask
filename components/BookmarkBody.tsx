@@ -3,7 +3,7 @@
 import PostCard from '@/components/PostCard';
 import Search from '@/components/Search';
 import { TBookmark } from '@/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type TBookmarkBodyProps = {
     bookmarks: TBookmark[];
@@ -12,11 +12,11 @@ type TBookmarkBodyProps = {
 export default function BookmarkBody({ bookmarks }: TBookmarkBodyProps) {
     const [filteredBookmarks, setFilteredBookmarks] = useState(bookmarks);
 
-    // useEffect(() => {
-    //     if (filteredBookmarks.length == 0) {
-    //         setFilteredBookmarks(bookmarks);
-    //     }
-    // }, [filteredBookmarks, setFilteredBookmarks]);
+    useEffect(() => {
+        setFilteredBookmarks(bookmarks);
+    }, [bookmarks]);
+
+    // has to work on revalidate the post card page in bookmarks
 
     return (
         <>
