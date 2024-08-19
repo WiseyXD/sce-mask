@@ -8,6 +8,12 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { TUserDetails } from '@/types';
 import { Button as NextButton } from '@nextui-org/react';
 import {
@@ -85,7 +91,17 @@ export default function Sidebar({ userDetails }: TSidebarProps) {
                     return (
                         <Link href={item.path} key={item.text}>
                             <div className="flex gap-x-4 text-2xl justify-center items-center  hover:bg-gray-700 hover:rounded-full hover:cursor-pointer  px-2 py-3 ease-in-out duration-300">
-                                {item.icon}
+                                <TooltipProvider>
+                                    <Tooltip>
+                                        <TooltipTrigger>
+                                            {item.icon}
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            <p>{item.text}</p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
+
                                 <div className="lg:block hidden">
                                     <h2>{item.text}</h2>
                                 </div>
@@ -97,7 +113,17 @@ export default function Sidebar({ userDetails }: TSidebarProps) {
                 <Dialog>
                     <DialogTrigger asChild>
                         <div className="lg:hidden block px-2 py-3  hover:bg-gray-700 hover:rounded-full ease-in-out duration-300 cursor-pointer">
-                            <FeatherIcon className="text-blue-600" />
+                            <TooltipProvider>
+                                <Tooltip>
+                                    <TooltipTrigger>
+                                        {' '}
+                                        <FeatherIcon className="text-blue-600" />
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>Post</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
                         </div>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-lg lg:max-w-3xl">
