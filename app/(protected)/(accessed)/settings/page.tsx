@@ -12,11 +12,11 @@ export default async function page() {
         redirect('/profile-creation');
     }
     return (
-        <div className="min-h-[93vh]">
+        <div className="min-h-screen w-full">
             {JSON.stringify(session)}
             <ModeToggle />
             <form action={logout}>
-                /<Button>Logout</Button>
+                <Button>Logout</Button>
             </form>
         </div>
     );

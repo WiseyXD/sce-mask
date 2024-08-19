@@ -17,6 +17,7 @@ import {
     Home,
     Mail,
     Search,
+    Settings,
     User,
     UserRound,
 } from 'lucide-react';
@@ -67,6 +68,11 @@ export default function Sidebar({ userDetails }: TSidebarProps) {
             icon: <Book />,
             text: 'More',
             path: '#',
+        },
+        {
+            icon: <Settings />,
+            text: 'Settings',
+            path: '/settings',
         },
     ];
     return (
