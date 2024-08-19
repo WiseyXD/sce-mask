@@ -1,6 +1,7 @@
 'use server';
 import db from '@/lib/db';
 import { revalidatePath } from 'next/cache';
+import { validateRequest } from '../validateRequests';
 
 export async function createProfile(
     username: string,
@@ -9,6 +10,13 @@ export async function createProfile(
     image: string
 ) {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         const usernameExists = await db.user.findFirst({
             where: {
                 username,
@@ -58,6 +66,13 @@ export async function updateProfile(
     reloadPath: string
 ) {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         const setUsername = await db.user.update({
             where: {
                 id,
@@ -89,22 +104,37 @@ export async function updateProfile(
 
 export async function getUserByEmail(email: string) {
     try {
-        const user = await db.user.findUnique({
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
+        const requiredUser = await db.user.findUnique({
             where: {
                 email,
             },
         });
-        return user;
+        return requiredUser;
     } catch (error) {
         return null;
     }
 }
 
 export default async function getUserDetails(id: string | undefined) {
-    const user = await db.user.findUnique({
-        where: {
-            id,
-        },
-    });
-    return user;
+    try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return null;
+        }
+        const requiredUser = await db.user.findUnique({
+            where: {
+                id,
+            },
+        });
+        return requiredUser;
+    } catch (error) {
+        return null;
+    }
 }
