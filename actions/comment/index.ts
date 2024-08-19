@@ -2,12 +2,20 @@
 import db from '@/lib/db';
 import { TComment } from '@/types';
 import { revalidatePath } from 'next/cache';
+import { validateRequest } from '../validateRequests';
 
 export const createComment = async (
     commentData: TComment,
     reloadPath: string
 ) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         const comment = await db.comment.create({
             data: {
                 postId: commentData.postId,
@@ -39,6 +47,13 @@ export const createReply = async (
     reloadPath: string
 ) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         const reply = await db.comment.create({
             data: {
                 parentCommentId,
@@ -64,6 +79,13 @@ export const likeComment = async (
     reloadPath: string
 ) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         const commentToBeLiked = await db.comment.update({
             where: {
                 id: commentId,
@@ -99,6 +121,13 @@ export const dislikeComment = async (
     reloadPath: string
 ) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         const commentToBeDisliked = await db.comment.update({
             where: {
                 id: commentId,
@@ -131,6 +160,13 @@ export const isCommentLikedByTheUser = async (
     commentId: string
 ) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         const isLiked = await db.commentLike.findFirst({
             where: {
                 userId: userId,
@@ -163,6 +199,13 @@ export const bookmarkComment = async (
     reloadPath: string
 ) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         await db.comment.update({
             where: {
                 id: commentId,
@@ -199,6 +242,13 @@ export const unbookmarkComment = async (
     reloadPath: string
 ) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         await db.comment.update({
             where: {
                 id: commentId,
@@ -233,6 +283,13 @@ export const isCommentBookmarked = async (
     userId: string
 ) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         const bookmarkedComment = await db.commentBookmark.findFirst({
             where: {
                 commentId,

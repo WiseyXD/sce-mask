@@ -2,6 +2,7 @@
 import db from '@/lib/db';
 import { postSchema } from '@/lib/schema';
 import { revalidatePath } from 'next/cache';
+import { validateRequest } from '../validateRequests';
 
 // CRUD POSTS
 
@@ -15,6 +16,13 @@ export const createPost = async ({
     mediaLink: string | undefined;
 }) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         const validInputs = postSchema.safeParse({
             text,
             userId,
@@ -51,6 +59,13 @@ export const createPost = async ({
 
 export const getPostbyId = async (id: string) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         const post = await db.post.findUnique({
             where: {
                 id,
@@ -137,6 +152,13 @@ export const getPostbyId = async (id: string) => {
 
 export const getAllPosts = async () => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         const post = await db.post.findMany({
             include: {
                 user: {
@@ -176,6 +198,13 @@ export const getAllPosts = async () => {
 
 export const getAllPostsByUserId = async (userId: string) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         const posts = await db.post.findMany({
             where: {
                 userId: userId,
@@ -227,6 +256,13 @@ export const editPost = async (
     reloadPath: string
 ) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         const updatedPost = await db.post.update({
             where: {
                 id: postId,
@@ -258,6 +294,13 @@ export const editPost = async (
 
 export const deletePost = async (postId: string, reloadPath: string) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         const deletedPost = await db.post.delete({
             where: {
                 id: postId,
@@ -287,6 +330,13 @@ export const deletePost = async (postId: string, reloadPath: string) => {
 
 export const getAllBookmarksPostByUserId = async (userId: string) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         const posts = await db.bookmark.findMany({
             where: {
                 userId,
@@ -328,6 +378,13 @@ export const deleteAllBookmarksByUserId = async (
     reloadPath: string
 ) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         const bookmarkedPosts = await db.bookmark.findMany({
             where: {
                 userId,
@@ -380,6 +437,13 @@ export const unbookmarkPost = async (
     reloadPath: string
 ) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         await db.post.update({
             where: {
                 id: postId,
@@ -411,6 +475,13 @@ export const unbookmarkPost = async (
 
 export const isPostBookmarked = async (postId: string, userId: string) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         const bookmarkedPost = await db.bookmark.findFirst({
             where: {
                 postId,
@@ -442,6 +513,13 @@ export const bookmarkPost = async (
     reloadPath: string
 ) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         await db.post.update({
             where: {
                 id: postId,
@@ -480,6 +558,13 @@ export const likePost = async (
     reloadPath: string
 ) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         const likedPost = await db.post.update({
             where: {
                 id: postId,
@@ -514,6 +599,13 @@ export const dislikePost = async (
     reloadPath: string
 ) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         const likedPost = await db.post.update({
             where: {
                 id: postId,
@@ -543,6 +635,13 @@ export const dislikePost = async (
 
 export const isPostLikedByUser = async (userId: string, postId: string) => {
     try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
         const like = await db.like.findFirst({
             where: {
                 userId: userId,
