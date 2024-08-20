@@ -141,6 +141,93 @@ export default async function getUserDetails(id: string | undefined) {
 
 // follow and unfollow user
 
+export const isUserFollowed = async (followingId: string) => {
+    try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
+        const followExists = await db.follow.findUnique({
+            where: {
+                followerId_followingId: {
+                    followerId: user.id,
+                    followingId,
+                },
+            },
+        });
+        if (!followExists) {
+            return {
+                success: true,
+                msg: 'Not-Followed',
+            };
+        }
+        return {
+            success: true,
+            msg: 'Followed',
+        };
+    } catch (error) {
+        return {
+            success: false,
+            msg: 'Error while fetching user followed or not.',
+        };
+    }
+};
+
+export const getAllFollowers = async () => {
+    try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: `Forbidden Request.`,
+            };
+        }
+        const allFollowers = await db.follow.findMany({
+            where: {
+                followingId: user.id,
+            },
+            include: {
+                follower: true,
+            },
+        });
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+            msg: 'Error while fetching all the followers.',
+        };
+    }
+};
+
+export const getAllFollowing = async () => {
+    try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden Request.',
+            };
+        }
+        const allFollowing = await db.follow.findMany({
+            where: {
+                followingId: user.id,
+            },
+            include: {
+                following: true,
+            },
+        });
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+            msg: 'Error while fetching all the following.',
+        };
+    }
+};
+
 export const followUser = async (followingId: string, reloadPath: string) => {
     try {
         const { user } = await validateRequest();
