@@ -138,3 +138,77 @@ export default async function getUserDetails(id: string | undefined) {
         return null;
     }
 }
+
+// follow and unfollow user
+
+export const followUser = async (followingId: string, reloadPath: string) => {
+    try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
+        const followExists = await db.follow.findUnique({
+            where: {
+                followerId_followingId: {
+                    followerId: user.id,
+                    followingId,
+                },
+            },
+        });
+        if (followExists) {
+            return {
+                success: true,
+                msg: 'User already followed.',
+            };
+        }
+        const newFollow = await db.follow.create({
+            data: {
+                followerId: user.id,
+                followingId,
+            },
+        });
+        revalidatePath(reloadPath);
+        return {
+            success: true,
+            msg: 'User followed.',
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+            msg: 'Error occured while following the user.',
+        };
+    }
+};
+
+export const unfollowUser = async (followingId: string, reloadPath: string) => {
+    try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
+        const deleteFollow = await db.follow.deleteMany({
+            where: {
+                followerId: user.id,
+                followingId,
+            },
+        });
+        revalidatePath(reloadPath);
+        return {
+            success: true,
+            msg: 'Unfollowed the user.',
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+            msg: 'Error occured while unfollowing user.',
+        };
+    }
+};
