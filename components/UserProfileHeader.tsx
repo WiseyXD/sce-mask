@@ -2,11 +2,16 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { Button as NextButton } from '@nextui-org/button';
 
-import { TFollowers, TFollowing } from '@/types';
+import { followUser, isUserFollowed, unfollowUser } from '@/actions/user';
+import { TFollower, TFollowing } from '@/types';
 import { MessageCircleIcon } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import EditProfile from './EditProfile';
 import { Separator } from './ui/separator';
+import { useToast } from './ui/use-toast';
 
 export const UserHeader = ({
     username,
@@ -22,9 +27,43 @@ export const UserHeader = ({
     description: string;
     selfProfile: boolean;
     userId: string;
-    followers: TFollowers[];
+    followers: TFollower[];
     following: TFollowing[];
 }) => {
+    const router = useRouter();
+    const pathname = usePathname();
+    const [isFollowed, setIsfollowed] = useState(false);
+
+    const { toast } = useToast();
+
+    useEffect(() => {
+        const checkUserFollowed = async () => {
+            const resp = await isUserFollowed(userId);
+            if (!resp.success) {
+                toast({
+                    title: `Error occured while checking if user is followed or not.`,
+                    variant: 'destructive',
+                });
+                return;
+            }
+            if (resp.msg === 'Not-Followed') {
+                setIsfollowed(false);
+                return;
+            }
+            setIsfollowed(true);
+            return;
+        };
+        checkUserFollowed();
+    }, [followers.length]);
+
+    async function handleFollow() {
+        console.log('Click follow');
+        await followUser(userId, pathname);
+    }
+
+    async function handleUnfollow() {
+        await unfollowUser(userId, pathname);
+    }
     return (
         <>
             <div className="relative w-full h-40 bg-[#00b894]">
@@ -57,13 +96,23 @@ export const UserHeader = ({
                                     <MessageCircleIcon className="" />
                                     <span className="sr-only">Message</span>
                                 </Button>
-                                <Button
-                                    variant="default"
-                                    size="icon"
-                                    className="px-10 bg-blue-600 dark:text-white rounded-full"
+                                <NextButton
+                                    className={
+                                        isFollowed
+                                            ? 'bg-transparent text-foreground border-default-200'
+                                            : 'bg-blue-600'
+                                    }
+                                    radius="full"
+                                    size="sm"
+                                    variant={isFollowed ? 'bordered' : 'solid'}
+                                    onClick={
+                                        isFollowed
+                                            ? handleUnfollow
+                                            : handleFollow
+                                    }
                                 >
-                                    Follow
-                                </Button>
+                                    {isFollowed ? 'Unfollow' : 'Follow'}
+                                </NextButton>
                             </div>
                         )}
                     </div>
@@ -73,13 +122,23 @@ export const UserHeader = ({
                 <div className="flex justify-between">
                     <h2 className="text-2xl font-bold">{username}</h2>
                     <div className="flex gap-x-2">
-                        <h2 className="flex gap-1">
+                        <h2
+                            className="flex gap-1 cursor-pointer"
+                            onClick={() =>
+                                router.push(`/user-profile/${userId}/following`)
+                            }
+                        >
                             <span className="underline">
                                 {followers.length}
                             </span>{' '}
                             <span className="">Followers</span>
                         </h2>
-                        <h2 className="flex gap-1">
+                        <h2
+                            className="flex gap-1 cursor-pointer"
+                            onClick={() =>
+                                router.push(`/user-profile/${userId}/following`)
+                            }
+                        >
                             <span className="underline">
                                 {following.length}
                             </span>{' '}

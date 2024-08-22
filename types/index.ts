@@ -10,12 +10,17 @@ export type TUserDetails = {
     department: string | null;
     yearOfAddmission: string | null;
     role: UserRole;
-    followers: TFollowers[];
+    followers: TFollower[];
     following: TFollowing[];
 } | null;
 
-export type TFollowers = {
+export type TFollower = {
     id: string;
+    follower: {
+        userId: string;
+        username: string;
+        image: string;
+    };
     followerId: string;
     followingId: string;
     createdAt: Date;
@@ -23,6 +28,11 @@ export type TFollowers = {
 
 export type TFollowing = {
     id: string;
+    following: {
+        userId: string;
+        username: string;
+        image: string;
+    };
     followerId: string;
     followingId: string;
     createdAt: Date;

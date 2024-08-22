@@ -129,12 +129,30 @@ export default async function getUserDetails(id: string | undefined) {
             return null;
         }
         const requiredUser = await db.user.findUnique({
-            where: {
-                id,
-            },
+            where: { id },
             include: {
-                followers: true,
-                following: true,
+                followers: {
+                    include: {
+                        follower: {
+                            select: {
+                                id: true,
+                                username: true,
+                                image: true,
+                            },
+                        },
+                    },
+                },
+                following: {
+                    include: {
+                        following: {
+                            select: {
+                                id: true,
+                                username: true,
+                                image: true,
+                            },
+                        },
+                    },
+                },
             },
         });
         return requiredUser;
