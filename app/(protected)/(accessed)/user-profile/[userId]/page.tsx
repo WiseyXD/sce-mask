@@ -15,8 +15,6 @@ export default async function page({ params }: { params: { userId: string } }) {
     const user = await getUserDetails(userId);
     const posts = await getAllPostsByUserId(userId);
 
-    // null day
-
     if (!user) {
         return (
             <div className="min-h-screen w-full">
