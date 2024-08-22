@@ -53,7 +53,6 @@ export default function PostCard({
     userDetails,
     isEditable,
 }: Partial<TPostCardProps>) {
-    console.log(post);
     return (
         <div className="flex flex-col">
             <div className="flex py-3 px-2">
@@ -139,6 +138,8 @@ export default function PostCard({
                                 ? userDetails.id
                                 : 'signedin user id not avaialbe'
                         }
+                        userImage={userDetails?.image!}
+                        postCreatorImage={post?.user?.image!}
                     />
                 </div>
             </div>

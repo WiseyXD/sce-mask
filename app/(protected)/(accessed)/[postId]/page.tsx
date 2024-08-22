@@ -1,4 +1,5 @@
 import { getPostbyId } from '@/actions/posts';
+import getUserDetails from '@/actions/user';
 import { validateRequest } from '@/actions/validateRequests';
 import CommentList from '@/components/CommentList';
 import PostHero from '@/components/PostHero';
@@ -6,11 +7,24 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { TPost } from '@/types';
 import moment from 'moment';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 export default async function Page({ params }: { params: { postId: string } }) {
     const { session, user } = await validateRequest();
     const { postId } = params;
+    const userData = await getUserDetails(user?.id);
+    if (!userData) {
+        return (
+            <div className="w-full min-h-screen">
+                No user with id {user?.id} found , returun{' '}
+                <Link href={'/home'} className="text-blue-600">
+                    home
+                </Link>{' '}
+                .
+            </div>
+        );
+    }
     // @ts-ignore
     const { success, msg }: { success: boolean | string; msg: TPost } =
         await getPostbyId(postId);
@@ -36,6 +50,7 @@ export default async function Page({ params }: { params: { postId: string } }) {
                             : null
                     }
                     signedInUserId={user?.id!}
+                    userImage={userData?.image!}
                 />
                 <Separator />
 
@@ -44,6 +59,7 @@ export default async function Page({ params }: { params: { postId: string } }) {
                     signedInUserId={
                         user?.id ? user?.id : 'no id of singedin user'
                     }
+                    userImage={userData?.image!}
                 />
             </ScrollArea>
         </div>

@@ -17,12 +17,14 @@ type TPostHeroProps = {
         image: string;
     } | null;
     signedInUserId: string;
+    userImage: string;
 };
 
 export default function PostHero({
     msg,
     postCreator,
     signedInUserId,
+    userImage,
 }: TPostHeroProps) {
     const [isFollowed, setIsFollowed] = useState(false);
 
@@ -130,6 +132,8 @@ export default function PostHero({
                         ? signedInUserId
                         : 'signedin user id not avaialbe'
                 }
+                userImage={userImage}
+                postCreatorImage={postCreatorData?.image!}
             />
         </div>
     );

@@ -30,6 +30,8 @@ type TIconSectionProps = {
     postCreatorUsername: string;
     postId: string;
     signedInUserId: string;
+    userImage: string;
+    postCreatorImage: string;
 };
 
 export default function IconSection(params: TIconSectionProps) {
@@ -302,6 +304,8 @@ export default function IconSection(params: TIconSectionProps) {
                                         : 'no post id recieved'
                                 }
                                 signedInUserId={params.signedInUserId}
+                                userImage={params.userImage!}
+                                postCreatorImage={params.postCreatorImage!}
                                 isPostComment={params.isPostComment}
                             />
                         ) : (

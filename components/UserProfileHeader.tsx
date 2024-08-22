@@ -57,7 +57,6 @@ export const UserHeader = ({
     }, [followers.length]);
 
     async function handleFollow() {
-        console.log('Click follow');
         await followUser(userId, pathname);
     }
 

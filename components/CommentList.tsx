@@ -9,20 +9,19 @@ import IconSection from './IconSection';
 type TCommentListProps = {
     comments: TComment[] | null;
     signedInUserId: string;
+    userImage: string;
     depth: number;
 };
 
 export default function CommentList({
     comments,
     signedInUserId,
+    userImage,
     depth = 0,
 }: Partial<TCommentListProps>) {
-    console.log(comments);
     if (comments == null || comments.length === 0) {
         return <>No Comments yet!</>;
     }
-
-    console.log(`Rendering depth ${depth}:`, comments);
 
     return (
         <div className={`flex flex-col gap-y-4 ${depth > 0 ? 'pl-8' : ''}`}>
@@ -94,6 +93,8 @@ export default function CommentList({
                             commentCount={comment.replies?.length || 0}
                             originalText={comment?.text!}
                             postCreatorUsername={comment.user?.username!}
+                            userImage={userImage!}
+                            postCreatorImage={comment.user?.image!}
                         />
 
                         <Separator className="mt-2" />
@@ -103,6 +104,7 @@ export default function CommentList({
                                 comments={comment.replies}
                                 signedInUserId={signedInUserId}
                                 depth={depth + 1} // Increase depth for nested replies
+                                userImage={userImage}
                             />
                         )}
                     </div>

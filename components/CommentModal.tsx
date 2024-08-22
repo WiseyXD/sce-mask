@@ -17,7 +17,6 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
-import { imageLink } from '@/lib/utils';
 import { User as NextUser } from '@nextui-org/react';
 
 import { createComment, createReply } from '@/actions/comment';
@@ -36,6 +35,8 @@ interface CommentModalProps {
     postCreatorUsername: string | null | undefined;
     postId: string;
     signedInUserId: string | undefined;
+    userImage: string;
+    postCreatorImage: string;
     isPostComment: boolean;
 }
 
@@ -46,6 +47,8 @@ export default function CommentModal({
     postCreatorUsername,
     postId,
     signedInUserId,
+    userImage,
+    postCreatorImage,
     isPostComment,
 }: CommentModalProps) {
     const [isPending, setIsPending] = useState(false);
@@ -131,7 +134,7 @@ export default function CommentModal({
                                             description=""
                                             className="transition-transform"
                                             avatarProps={{
-                                                src: imageLink,
+                                                src: postCreatorImage,
                                             }}
                                         />
                                     </div>
@@ -148,7 +151,7 @@ export default function CommentModal({
                                             description=""
                                             className="transition-transform"
                                             avatarProps={{
-                                                src: imageLink,
+                                                src: userImage,
                                             }}
                                         />
                                     </div>

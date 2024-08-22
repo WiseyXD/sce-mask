@@ -32,6 +32,7 @@ export default function Feed({ userDetails, posts }: TFeedProps) {
     if (posts == null) {
         return <>Error while fetching all post from DB.</>;
     }
+    console.log(userDetails);
     return (
         <div className="w-full">
             <div className="flex justify-evenly py-4 bg-opacity-50">

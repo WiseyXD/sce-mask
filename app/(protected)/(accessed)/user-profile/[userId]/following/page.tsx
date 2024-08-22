@@ -30,9 +30,7 @@ export default async function page({ params }: { params: { userId: string } }) {
                 />
                 <Separator />
                 <FollowerFollowingBody
-                    // @ts-ignore
                     followers={user.followers}
-                    // @ts-ignore
                     followings={user.following}
                 />
             </ScrollArea>

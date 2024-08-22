@@ -1,25 +1,60 @@
 export type UserRole = 'ADMIN' | 'USER';
+// export type TUserDetails = {
+//     id: string;
+//     username: string | null;
+//     email: string;
+//     password: string;
+//     description: string | null;
+//     isEmailVerified: boolean;
+//     image: string | null;
+//     department: string | null;
+//     yearOfAddmission: string | null;
+//     role: UserRole;
+//     followers: TFollower[];
+//     following: TFollowing[];
+// } | null;
+
 export type TUserDetails = {
     id: string;
     username: string | null;
+    description: string | null;
     email: string;
     password: string;
-    description: string | null;
     isEmailVerified: boolean;
     image: string | null;
     department: string | null;
     yearOfAddmission: string | null;
-    role: UserRole;
-    followers: TFollower[];
-    following: TFollowing[];
-} | null;
+    role: 'USER' | 'ADMIN'; // Assuming 'role' can be either 'USER' or 'ADMIN'
+    followers: {
+        id: string;
+        followerId: string;
+        followingId: string;
+        createdAt: Date;
+        follower: {
+            id: string;
+            username: string | null;
+            image: string | null;
+        };
+    }[];
+    following: {
+        id: string;
+        followerId: string;
+        followingId: string;
+        createdAt: Date;
+        following: {
+            id: string;
+            username: string | null;
+            image: string | null;
+        };
+    }[];
+};
 
 export type TFollower = {
     id: string;
     follower: {
-        userId: string;
-        username: string;
-        image: string;
+        id: string;
+        username: string | null;
+        image: string | null;
     };
     followerId: string;
     followingId: string;
@@ -29,9 +64,9 @@ export type TFollower = {
 export type TFollowing = {
     id: string;
     following: {
-        userId: string;
-        username: string;
-        image: string;
+        id: string;
+        username: string | null;
+        image: string | null;
     };
     followerId: string;
     followingId: string;
