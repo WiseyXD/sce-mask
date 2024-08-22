@@ -65,7 +65,19 @@ export const UserHeader = ({
                 </div>
             </div>
             <div className="mt-20 flex-col space-y-2 px-4">
-                <h2 className="text-2xl font-bold">{username}</h2>
+                <div className="flex justify-between">
+                    <h2 className="text-2xl font-bold">{username}</h2>
+                    <div className="flex gap-x-2">
+                        <h2 className="flex gap-1">
+                            <span className="underline">97</span>{' '}
+                            <span className="text-muted">Followers</span>
+                        </h2>
+                        <h2 className="flex gap-1">
+                            <span className="underline">97</span>{' '}
+                            <span className="text-muted">Following</span>
+                        </h2>
+                    </div>
+                </div>
                 <p className="dark:text-muted-foreground">{description}</p>
             </div>
             <Separator className="my-4" />
