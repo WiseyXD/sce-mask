@@ -51,6 +51,7 @@ export default function PopoverUserCard({
                     followingCount={0}
                     showCount={false}
                     showDescription={true}
+                    shortLength={true}
                 />
             </PopoverContent>
         </Popover>

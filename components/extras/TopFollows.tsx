@@ -30,6 +30,7 @@ export default function TopFollows() {
                         followingCount={0}
                         showCount={true}
                         showDescription={true}
+                        shortLength={true}
                     />
                     <UserTwitterCard
                         username={'username'}
@@ -41,6 +42,7 @@ export default function TopFollows() {
                         followingCount={0}
                         showCount={true}
                         showDescription={true}
+                        shortLength={true}
                     />
 
                     <UserTwitterCard
@@ -53,6 +55,7 @@ export default function TopFollows() {
                         followingCount={0}
                         showCount={true}
                         showDescription={true}
+                        shortLength={true}
                     />
                 </div>
             </CardContent>

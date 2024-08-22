@@ -1,5 +1,6 @@
 'use client';
 
+import { Separator } from './ui/separator';
 import { UserTwitterCard } from './UserTwitterCard';
 
 export default function UserList({
@@ -28,12 +29,14 @@ export default function UserList({
                             showCount={false}
                             followerCount={0}
                             followingCount={0}
+                            shortLength={false}
                         />
+                        <Separator />
                     </div>
                 ))}
             {!areFollowers &&
                 users.map((user) => (
-                    <div key={user.following.id}>
+                    <div key={user.following.id} className="w-full">
                         <UserTwitterCard
                             image={user.following.image}
                             logoutButton={false}
@@ -44,7 +47,9 @@ export default function UserList({
                             showCount={false}
                             followerCount={0}
                             followingCount={0}
+                            shortLength={false}
                         />
+                        <Separator />
                     </div>
                 ))}
         </div>

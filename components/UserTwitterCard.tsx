@@ -23,6 +23,7 @@ type TUserTwitterCardProps = {
     showCount: boolean;
     followerCount: number;
     followingCount: number;
+    shortLength: boolean;
 };
 
 // is followed the change state
@@ -36,13 +37,11 @@ export const UserTwitterCard = ({
     showCount = true,
     followerCount = 0,
     followingCount = 0,
+    shortLength,
 }: TUserTwitterCardProps) => {
     const [isFollowed, setIsFollowed] = React.useState(false);
     return (
-        <Card
-            shadow="none"
-            className="max-w-[300px] border-none bg-transparent"
-        >
+        <Card shadow="none" className={'w-full border-none bg-transparent'}>
             <CardHeader className="justify-between">
                 <Link href={`/user-profile/${userId}`}>
                     <div className="flex gap-3">
