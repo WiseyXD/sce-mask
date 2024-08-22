@@ -10,7 +10,23 @@ export type TUserDetails = {
     department: string | null;
     yearOfAddmission: string | null;
     role: UserRole;
+    followers: TFollowers[];
+    following: TFollowing[];
 } | null;
+
+export type TFollowers = {
+    id: string;
+    followerId: string;
+    followingId: string;
+    createdAt: Date;
+};
+
+export type TFollowing = {
+    id: string;
+    followerId: string;
+    followingId: string;
+    createdAt: Date;
+};
 
 export type TPost = {
     id?: string;

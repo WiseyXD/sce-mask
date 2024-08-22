@@ -55,6 +55,8 @@ export default async function page({ params }: { params: { userId: string } }) {
                         description={user.description!}
                         selfProfile={isSelfProfile}
                         userId={userId}
+                        followers={user.followers}
+                        following={user.following}
                     />
                     <UserBody
                         posts={sanitizedPosts}

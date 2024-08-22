@@ -3,6 +3,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 
+import { TFollowers, TFollowing } from '@/types';
 import { MessageCircleIcon } from 'lucide-react';
 import EditProfile from './EditProfile';
 import { Separator } from './ui/separator';
@@ -13,12 +14,16 @@ export const UserHeader = ({
     description,
     selfProfile,
     userId,
+    followers,
+    following,
 }: {
     username: string;
     image: string | null;
     description: string;
     selfProfile: boolean;
     userId: string;
+    followers: TFollowers[];
+    following: TFollowing[];
 }) => {
     return (
         <>
@@ -69,12 +74,16 @@ export const UserHeader = ({
                     <h2 className="text-2xl font-bold">{username}</h2>
                     <div className="flex gap-x-2">
                         <h2 className="flex gap-1">
-                            <span className="underline">97</span>{' '}
-                            <span className="text-muted">Followers</span>
+                            <span className="underline">
+                                {followers.length}
+                            </span>{' '}
+                            <span className="">Followers</span>
                         </h2>
                         <h2 className="flex gap-1">
-                            <span className="underline">97</span>{' '}
-                            <span className="text-muted">Following</span>
+                            <span className="underline">
+                                {following.length}
+                            </span>{' '}
+                            <span className="">Following</span>
                         </h2>
                     </div>
                 </div>

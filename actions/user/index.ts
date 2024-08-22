@@ -132,6 +132,10 @@ export default async function getUserDetails(id: string | undefined) {
             where: {
                 id,
             },
+            include: {
+                followers: true,
+                following: true,
+            },
         });
         return requiredUser;
     } catch (error) {
