@@ -47,6 +47,10 @@ export default function PopoverUserCard({
                     userId={userId}
                     logoutButton={hasLogoutButton}
                     userDescription={userDescription}
+                    followerCount={0}
+                    followingCount={0}
+                    showCount={false}
+                    showDescription={true}
                 />
             </PopoverContent>
         </Popover>

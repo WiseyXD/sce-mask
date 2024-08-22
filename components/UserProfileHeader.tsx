@@ -121,28 +121,32 @@ export const UserHeader = ({
                 <div className="flex justify-between">
                     <h2 className="text-2xl font-bold">{username}</h2>
                     <div className="flex gap-x-2">
-                        <h2
+                        <div
                             className="flex gap-1 cursor-pointer"
                             onClick={() =>
                                 router.push(`/user-profile/${userId}/following`)
                             }
                         >
-                            <span className="underline">
+                            <p className="font-semibold text-default-600 text-small">
                                 {followers.length}
-                            </span>{' '}
-                            <span className="">Followers</span>
-                        </h2>
-                        <h2
+                            </p>
+                            <p className=" text-default-500 text-small">
+                                Follower
+                            </p>
+                        </div>
+                        <div
                             className="flex gap-1 cursor-pointer"
                             onClick={() =>
                                 router.push(`/user-profile/${userId}/following`)
                             }
                         >
-                            <span className="underline">
+                            <p className="font-semibold text-default-600 text-small">
                                 {following.length}
-                            </span>{' '}
-                            <span className="">Following</span>
-                        </h2>
+                            </p>
+                            <p className=" text-default-500 text-small">
+                                Following
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <p className="dark:text-muted-foreground">{description}</p>

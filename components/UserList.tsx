@@ -1,4 +1,7 @@
 'use client';
+
+import { UserTwitterCard } from './UserTwitterCard';
+
 export default function UserList({
     users,
     areFollowers,
@@ -12,15 +15,38 @@ export default function UserList({
     }
     return (
         <div className="w-full flex-col gap-2">
-            {users.map((user: any) => {
-                return (
-                    <div key={user.id}>
-                        {areFollowers
-                            ? user.follower.username
-                            : user.following.username}
+            {areFollowers &&
+                users.map((user) => (
+                    <div key={user.follower.id}>
+                        <UserTwitterCard
+                            image={user.follower.image}
+                            logoutButton={false}
+                            userDescription={'null'}
+                            userId={user.follower.id}
+                            username={user.follower.username}
+                            showDescription={false}
+                            showCount={false}
+                            followerCount={0}
+                            followingCount={0}
+                        />
                     </div>
-                );
-            })}
+                ))}
+            {!areFollowers &&
+                users.map((user) => (
+                    <div key={user.following.id}>
+                        <UserTwitterCard
+                            image={user.following.image}
+                            logoutButton={false}
+                            userDescription={'null'}
+                            userId={user.following.id}
+                            username={user.following.username}
+                            showDescription={false}
+                            showCount={false}
+                            followerCount={0}
+                            followingCount={0}
+                        />
+                    </div>
+                ))}
         </div>
     );
 }

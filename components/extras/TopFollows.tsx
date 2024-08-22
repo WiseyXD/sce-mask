@@ -26,6 +26,10 @@ export default function TopFollows() {
                         logoutButton={false}
                         userDescription="null"
                         image="null"
+                        followerCount={0}
+                        followingCount={0}
+                        showCount={true}
+                        showDescription={true}
                     />
                     <UserTwitterCard
                         username={'username'}
@@ -33,6 +37,10 @@ export default function TopFollows() {
                         logoutButton={false}
                         userDescription="null"
                         image="null"
+                        followerCount={0}
+                        followingCount={0}
+                        showCount={true}
+                        showDescription={true}
                     />
 
                     <UserTwitterCard
@@ -41,6 +49,10 @@ export default function TopFollows() {
                         logoutButton={false}
                         userDescription="null"
                         image="null"
+                        followerCount={0}
+                        followingCount={0}
+                        showCount={true}
+                        showDescription={true}
                     />
                 </div>
             </CardContent>
