@@ -65,7 +65,7 @@ export default function PostCard({
                                 description=""
                                 className="transition-transform"
                                 avatarProps={{
-                                    src: userDetails?.image!,
+                                    src: post?.user?.image!,
                                 }}
                             />
                         </Link>
