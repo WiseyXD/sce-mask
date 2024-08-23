@@ -10,10 +10,12 @@ const FollowButton = ({
     pathname,
     userId,
     followers,
+    following,
 }: {
     pathname: string;
     userId: string;
     followers: any;
+    following: any;
 }) => {
     const [isFollowed, setIsfollowed] = useState(false);
     const { toast } = useToast();
@@ -35,7 +37,7 @@ const FollowButton = ({
             return;
         };
         checkUserFollowed();
-    }, [followers.length]);
+    }, [followers, following]);
 
     async function handleFollow() {
         await followUser(userId, pathname);

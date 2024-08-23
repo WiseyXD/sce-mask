@@ -14,12 +14,26 @@ export default function FollowerFollowingBody({
         {
             id: 'followers',
             label: 'Followers',
-            content: <UserList users={followers} areFollowers={true} />,
+            content: (
+                <UserList
+                    users={followers}
+                    followerCount={followers.length}
+                    followingCount={followings.length}
+                    areFollowers={true}
+                />
+            ),
         },
         {
             id: 'following',
             label: 'Following',
-            content: <UserList users={followings} areFollowers={false} />,
+            content: (
+                <UserList
+                    users={followings}
+                    followerCount={followers.length}
+                    followingCount={followings.length}
+                    areFollowers={false}
+                />
+            ),
         },
     ];
 

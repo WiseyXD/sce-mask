@@ -66,7 +66,8 @@ export const UserHeader = ({
                                 <FollowButton
                                     userId={userId}
                                     pathname={pathname}
-                                    followers={followers}
+                                    followers={followers.length}
+                                    following={following.length}
                                 />
                             </div>
                         )}

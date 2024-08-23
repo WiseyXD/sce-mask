@@ -6,14 +6,18 @@ import { UserTwitterCard } from './UserTwitterCard';
 export default function UserList({
     users,
     areFollowers,
+    followerCount,
+    followingCount,
 }: {
     users: any[];
     areFollowers: boolean;
+    followerCount: number;
+    followingCount: number;
 }) {
-    console.log(users);
     if (users.length == 0) {
         return <div>No {areFollowers ? 'followers' : 'followings'} yet.</div>;
     }
+    console.log(followerCount, followingCount);
     return (
         <div className="w-full flex-col gap-2">
             {areFollowers &&
@@ -27,8 +31,8 @@ export default function UserList({
                             username={user.follower.username}
                             showDescription={false}
                             showCount={false}
-                            followerCount={0}
-                            followingCount={0}
+                            followerCount={followerCount}
+                            followingCount={followingCount}
                             shortLength={false}
                         />
                         <Separator />
@@ -45,8 +49,8 @@ export default function UserList({
                             username={user.following.username}
                             showDescription={false}
                             showCount={false}
-                            followerCount={0}
-                            followingCount={0}
+                            followerCount={followerCount}
+                            followingCount={followingCount}
                             shortLength={false}
                         />
                         <Separator />

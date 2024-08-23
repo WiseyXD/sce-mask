@@ -10,8 +10,9 @@ import {
     CardHeader,
 } from '@nextui-org/react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
-import React from 'react';
+import FollowButton from './FollowButton';
 
 type TUserTwitterCardProps = {
     username: string;
@@ -26,7 +27,6 @@ type TUserTwitterCardProps = {
     shortLength: boolean;
 };
 
-// is followed the change state
 export const UserTwitterCard = ({
     username,
     userId,
@@ -34,12 +34,13 @@ export const UserTwitterCard = ({
     image,
     userDescription,
     showDescription,
-    showCount = true,
-    followerCount = 0,
-    followingCount = 0,
+    showCount,
+    followerCount,
+    followingCount,
     shortLength,
 }: TUserTwitterCardProps) => {
-    const [isFollowed, setIsFollowed] = React.useState(false);
+    const pathname = usePathname();
+
     return (
         <Card shadow="none" className={'w-full border-none bg-transparent'}>
             <CardHeader className="justify-between">
@@ -71,19 +72,12 @@ export const UserTwitterCard = ({
                         Logout
                     </Button>
                 ) : (
-                    <Button
-                        className={
-                            isFollowed
-                                ? 'bg-transparent text-foreground border-default-200'
-                                : 'bg-blue-600'
-                        }
-                        radius="full"
-                        size="sm"
-                        variant={isFollowed ? 'bordered' : 'solid'}
-                        onPress={() => setIsFollowed(!isFollowed)}
-                    >
-                        {isFollowed ? 'Unfollow' : 'Follow'}
-                    </Button>
+                    <FollowButton
+                        userId={userId}
+                        pathname={pathname}
+                        followers={followerCount}
+                        following={followerCount}
+                    />
                 )}
             </CardHeader>
             <CardBody className="px-3 py-0">
