@@ -1,9 +1,8 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import { MessageSquare, Users } from 'lucide-react';
 import { useState } from 'react';
 
-export default function CommunityBody() {
+export default function CommunityPosts() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [communities, setCommunities] = useState([
         {
@@ -33,21 +32,8 @@ export default function CommunityBody() {
         },
     ]);
 
-    const [discoveredCommunities] = useState([
-        {
-            id: 3,
-            name: 'Python Coders',
-            description: 'For Python programming discussions',
-        },
-        {
-            id: 4,
-            name: 'Data Science Hub',
-            description: 'Explore the world of data science',
-        },
-    ]);
-
     return (
-        <div className="container mx-auto p-4 max-w-4xl">
+        <div className="px-2">
             <div className="space-y-12">
                 <section>
                     <h2 className="text-2xl font-semibold mb-4">
@@ -81,33 +67,6 @@ export default function CommunityBody() {
                                 </div>
                             );
                         })}
-                    </div>
-                </section>
-
-                <section>
-                    <h2 className="text-2xl font-semibold mb-4">
-                        Discover Communities
-                    </h2>
-                    <div className="space-y-4">
-                        {discoveredCommunities.map((community) => (
-                            <div
-                                key={community.id}
-                                className="flex items-center space-x-4 bg-card rounded-lg p-4 shadow-sm"
-                            >
-                                <Users className="h-6 w-6 text-muted-foreground flex-shrink-0" />
-                                <div className="flex-grow">
-                                    <h3 className="font-semibold">
-                                        {community.name}
-                                    </h3>
-                                    <p className="text-sm text-muted-foreground">
-                                        {community.description}
-                                    </p>
-                                </div>
-                                <Button variant="outline" size="sm">
-                                    Join
-                                </Button>
-                            </div>
-                        ))}
                     </div>
                 </section>
             </div>

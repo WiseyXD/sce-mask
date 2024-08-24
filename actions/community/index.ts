@@ -29,6 +29,43 @@ export const createCommunity = async (name: string, description: string) => {
     }
 };
 
+export const getAllCommunitiesNotFollowedOrCreatedByUser = async () => {
+    try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: `Forbidden Request.`,
+            };
+        }
+        const communities = await db.community.findMany({
+            where: {
+                AND: [
+                    { creatorId: { not: user.id } }, // Exclude communities created by the user
+                    {
+                        members: {
+                            none: {
+                                userId: user.id, // Exclude communities joined by the user
+                            },
+                        },
+                    },
+                ],
+            },
+        });
+        console.log(communities);
+        return {
+            success: true,
+            msg: communities,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+            msg: `Error occured while fetching all the communities.`,
+        };
+    }
+};
+
 export const followCommunity = async (communityId: string) => {
     try {
         const { user } = await validateRequest();
