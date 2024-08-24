@@ -97,3 +97,8 @@ export const postEditSchema = z.object({
 export const commentCreationSchema = z.object({
     comment: z.string().min(2).max(50),
 });
+
+export const communitySchema = z.object({
+    name: z.string().min(3, 'Name is required.'),
+    description: z.string().min(10, 'Descripiton required for the community.'),
+});

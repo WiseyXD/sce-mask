@@ -58,7 +58,7 @@ export default function Sidebar({ userDetails }: TSidebarProps) {
         {
             icon: <UserRound />,
             text: 'Communities',
-            path: '#',
+            path: '/communities',
         },
         {
             icon: <User />,

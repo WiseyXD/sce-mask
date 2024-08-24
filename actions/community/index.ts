@@ -3,11 +3,7 @@
 import db from '@/lib/db';
 import { validateRequest } from '../validateRequests';
 
-export const createCommunity = async (
-    creatorId: string,
-    name: string,
-    description: string
-) => {
+export const createCommunity = async (name: string, description: string) => {
     try {
         const { user } = await validateRequest();
         if (!user) {
@@ -15,7 +11,7 @@ export const createCommunity = async (
         }
         const community = await db.community.create({
             data: {
-                creatorId,
+                creatorId: user?.id,
                 name,
                 description,
             },
