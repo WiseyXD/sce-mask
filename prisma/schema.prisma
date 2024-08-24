@@ -57,6 +57,8 @@ model User {
   comments           Comment[]
   commentLikes       CommentLike[]
   commentBookmarks   CommentBookmark[]
+  createdCommunities Community[] @relation("CreatedCommunities")
+  joinedCommunities  CommunityMember[]
   followers          Follow[] @relation("followings")
   following          Follow[] @relation("follows")
 }
@@ -80,6 +82,8 @@ model Post {
   id          String     @id @default(cuid())
   userId      String
   user        User       @relation(references: [id], fields: [userId], onDelete: Cascade)
+  communityId String?    // Posts can belong to a community
+  community   Community? @relation(fields: [communityId], references: [id], onDelete: Cascade)
   text        String
   mediaLink   String?
   time        DateTime   @default(now())
@@ -89,6 +93,30 @@ model Post {
   bookmarksBy Bookmark[]
   comments    Comment[]
 }
+
+model Community {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  description String
+  creatorId   String
+  creator     User       @relation("CreatedCommunities", fields: [creatorId], references: [id])
+  posts       Post[]
+  members     CommunityMember[]
+  createdAt   DateTime   @default(now())
+}
+
+
+model CommunityMember {
+  id           String   @id @default(cuid())
+  communityId  String
+  community    Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  joinedAt     DateTime  @default(now())
+  
+  @@unique([communityId, userId])
+}
+
 
 model Comment {
   id               String            @id @default(cuid())
