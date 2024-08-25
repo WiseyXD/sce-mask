@@ -73,7 +73,7 @@ export default function DiscoverCommunities({
             <h2 className="text-xl md:text-2xl font-semibold mb-4 pl-2">
                 Discover Communities
             </h2>
-            <ScrollArea className="h-[34rem]">
+            <ScrollArea className="h-[84vh]">
                 <div className="space-y-4">
                     {communities.map((community) => (
                         <CommunityCard
