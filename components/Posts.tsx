@@ -1,20 +1,5 @@
 import PostCard from '@/components/PostCard';
 import { TPost, TUserDetails } from '@/types';
-import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
-const postsIcons = [
-    {
-        text: 'Comment',
-        icon: <MessagesSquare />,
-    },
-    {
-        text: 'Like',
-        icon: <Heart />,
-    },
-    {
-        text: 'Bookmark',
-        icon: <BookmarkPlus />,
-    },
-];
 
 type TPostProps = {
     posts: TPost[];

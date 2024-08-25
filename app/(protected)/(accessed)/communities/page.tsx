@@ -32,17 +32,26 @@ const posts = [
     },
 ];
 import { getAllCommunitiesNotFollowedOrCreatedByUser } from '@/actions/community';
+import { getAllPosts } from '@/actions/posts';
+import getUserDetails from '@/actions/user';
 import { validateRequest } from '@/actions/validateRequests';
+import CommunityBody from '@/components/CommunityBody';
 import CommunityHeader from '@/components/CommunityHeader';
-import DiscoverCommunities from '@/components/DiscoverCommunities';
-import PostsFromCommunities from '@/components/PostFromYourCommunities';
 import { Separator } from '@/components/ui/separator';
 
 export default async function page() {
     const { user } = await validateRequest();
     const allDiscoverableCommunities =
         await getAllCommunitiesNotFollowedOrCreatedByUser();
-    if (typeof allDiscoverableCommunities.msg == 'string') {
+
+    const yourCommunitiesPost = await getAllPosts();
+
+    const userDetails = await getUserDetails(user?.id);
+
+    if (
+        typeof allDiscoverableCommunities.msg == 'string' ||
+        typeof yourCommunitiesPost.msg == 'string'
+    ) {
         return <>Nothing to show on this page</>;
     }
 
@@ -50,19 +59,14 @@ export default async function page() {
         <div className="w-full min-h-screen">
             <CommunityHeader userId={user?.id!} />
             <Separator />
-            <main className="container mx-auto px-4 space-y-12">
-                <DiscoverCommunities
-                    communities={allDiscoverableCommunities.msg}
+            <main className="">
+                <CommunityBody
+                    allDiscoverableCommunities={allDiscoverableCommunities.msg}
+                    userDetails={userDetails!}
+                    // @ts-ignore
+                    yourCommunitiesPost={yourCommunitiesPost.msg}
                 />
-                <Separator />
-
-                <PostsFromCommunities posts={posts} />
             </main>
         </div>
-        // {/* <CommunityHeader userId={user?.id!} />
-        // <Separator />
-        // <CommunityPosts />
-        // <Separator />
-        // <DiscoverCommunities communities={allDiscoverableCommunities.msg} /> */}
     );
 }

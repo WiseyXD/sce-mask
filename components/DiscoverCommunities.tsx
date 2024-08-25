@@ -54,7 +54,6 @@
 
 import CommunityCard from './CommunityCard';
 import { ScrollArea } from './ui/scroll-area';
-import { Separator } from './ui/separator';
 
 type TDiscoverCommunitiesProps = {
     communities: {
@@ -71,22 +70,19 @@ export default function DiscoverCommunities({
 }: TDiscoverCommunitiesProps) {
     return (
         <section>
-            <h2 className="text-2xl font-semibold mb-4">
+            <h2 className="text-xl md:text-2xl font-semibold mb-4 pl-2">
                 Discover Communities
             </h2>
-            <div className="space-y-4">
-                <ScrollArea className="h-[34rem]">
+            <ScrollArea className="h-[34rem]">
+                <div className="space-y-4">
                     {communities.map((community) => (
-                        <div
+                        <CommunityCard
                             key={community.id}
-                            className="flex-col gap-2 w-full"
-                        >
-                            <CommunityCard {...community} />
-                            <Separator />
-                        </div>
+                            community={community}
+                        />
                     ))}
-                </ScrollArea>
-            </div>
+                </div>
+            </ScrollArea>
         </section>
     );
 }
