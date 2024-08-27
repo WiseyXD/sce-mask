@@ -131,6 +131,12 @@ export default async function getUserDetails(id: string | undefined) {
         const requiredUser = await db.user.findUnique({
             where: { id },
             include: {
+                createdCommunities: true,
+                joinedCommunities: true,
+
+                // bookmarkedPosts: true,
+                // posts: true,
+                // comments: true,
                 followers: {
                     include: {
                         follower: {

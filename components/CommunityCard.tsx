@@ -1,7 +1,11 @@
 'use client';
 
+import { followCommunity, unfollowCommunity } from '@/actions/community';
 import { Button } from '@/components/ui/button';
+import { TUserDetails } from '@/types';
 import { Users } from 'lucide-react';
+import { useState } from 'react';
+import { useToast } from './ui/use-toast';
 
 type TCommunityCardProps = {
     community: {
@@ -9,9 +13,53 @@ type TCommunityCardProps = {
         name: string;
         description: string;
     };
+    userDetails: TUserDetails;
 };
 
-export default function CommunityCard({ community }: TCommunityCardProps) {
+export default function CommunityCard({
+    community,
+    userDetails,
+}: TCommunityCardProps) {
+    const [communityFollowed, setCommunityFollowed] = useState<boolean>(false);
+    const { toast } = useToast();
+    const handleJoin = async () => {
+        try {
+            const resp = await followCommunity(community.id);
+            if (!resp.success) {
+                throw new Error(resp.msg);
+            }
+            toast({
+                title: resp.msg,
+            });
+            setCommunityFollowed(true);
+        } catch (error) {
+            console.log(error);
+            toast({
+                title: 'Error occured while joining a community.',
+                variant: 'destructive',
+            });
+        }
+    };
+
+    const handleLeave = async () => {
+        try {
+            const resp = await unfollowCommunity(community.id);
+            if (!resp.success) {
+                throw new Error(resp.msg);
+            }
+            toast({
+                title: resp.msg,
+            });
+            setCommunityFollowed(false);
+        } catch (error) {
+            console.log(error);
+            toast({
+                title: 'Error occured while leaving a community.',
+                variant: 'destructive',
+            });
+        }
+    };
+
     return (
         <div className="flex flex-col md:flex-row md:items-center gap-4 bg-card rounded-lg p-4 shadow-sm">
             <Users className="h-6 w-6 text-muted-foreground" />
@@ -27,8 +75,9 @@ export default function CommunityCard({ community }: TCommunityCardProps) {
                 variant="outline"
                 size="sm"
                 className="self-start md:self-center"
+                onClick={!communityFollowed ? handleJoin : handleLeave}
             >
-                Join
+                {!communityFollowed ? 'Join' : 'Leave'}
             </Button>
         </div>
     );

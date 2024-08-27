@@ -39,7 +39,10 @@ export default function CommunityBody({
             id: 'discover',
             label: 'Discover Communities',
             content: (
-                <DiscoverCommunities communities={allDiscoverableCommunities} />
+                <DiscoverCommunities
+                    communities={allDiscoverableCommunities}
+                    userDetails={userDetails!}
+                />
             ),
         },
     ];

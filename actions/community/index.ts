@@ -91,7 +91,7 @@ export const followCommunity = async (communityId: string) => {
     }
 };
 
-export const unfollowCommunity = async (communityMemberId: string) => {
+export const unfollowCommunity = async (communityId: string) => {
     try {
         const { user } = await validateRequest();
         if (!user) {
@@ -99,7 +99,10 @@ export const unfollowCommunity = async (communityMemberId: string) => {
         }
         const deleteMember = await db.communityMember.delete({
             where: {
-                id: communityMemberId,
+                communityId_userId: {
+                    communityId: communityId,
+                    userId: user.id,
+                },
             },
         });
         return {
