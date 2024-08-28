@@ -132,7 +132,11 @@ export default async function getUserDetails(id: string | undefined) {
             where: { id },
             include: {
                 createdCommunities: true,
-                joinedCommunities: true,
+                joinedCommunities: {
+                    include: {
+                        community: true,
+                    },
+                },
 
                 // bookmarkedPosts: true,
                 // posts: true,

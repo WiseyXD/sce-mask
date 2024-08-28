@@ -10,10 +10,12 @@ export const createPost = async ({
     text,
     userId,
     mediaLink,
+    communityId,
 }: {
     text: string;
     userId: string;
     mediaLink: string | undefined;
+    communityId: string | undefined;
 }) => {
     try {
         const { user } = await validateRequest();
@@ -27,6 +29,7 @@ export const createPost = async ({
             text,
             userId,
             mediaLink,
+            communityId,
         });
         if (!validInputs.success) {
             console.log('Invalid post creation inputs' + validInputs.error);
@@ -40,6 +43,7 @@ export const createPost = async ({
                 userId,
                 text,
                 mediaLink: mediaLink ?? '',
+                ...(communityId && { communityId }),
             },
         });
         console.log(post);

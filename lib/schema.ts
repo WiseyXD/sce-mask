@@ -87,6 +87,7 @@ export const postCreationSchema = z.object({
 export const postSchema = z.object({
     text: z.string().min(1, 'Text is required'),
     userId: z.string().min(1, 'User ID is required'),
+    communityId: z.string().optional(),
     mediaLink: z.string().optional(), // mediaLink can be undefined or a valid URL
 });
 

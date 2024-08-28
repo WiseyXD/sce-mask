@@ -3,10 +3,20 @@ import { createPost } from '@/actions/posts';
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
+    FormLabel,
     FormMessage,
 } from '@/components/ui/form';
+
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
@@ -55,11 +65,12 @@ export default function PostBar({ userDetails }: TPostBarProps) {
     // const [file, setFile] = useState<File | null>(null);
     const [fileUrl, setFileUrl] = useState<string | undefined>(undefined);
     const fileInputRef = useRef<HTMLInputElement>(null);
-
+    console.log(userDetails);
     const form = useForm<z.infer<typeof postCreationSchema>>({
         resolver: zodResolver(postCreationSchema),
         defaultValues: {
             text: '',
+            communityId: '',
         },
     });
 
@@ -79,10 +90,9 @@ export default function PostBar({ userDetails }: TPostBarProps) {
     //     }
     // };
 
-    async function onSubmit(values: z.infer<typeof postCreationSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
+    const community = 'ary';
 
+    async function onSubmit(values: z.infer<typeof postCreationSchema>) {
         if (!userDetails) {
             return;
         }
@@ -93,6 +103,7 @@ export default function PostBar({ userDetails }: TPostBarProps) {
                 text: values.text,
                 userId: userDetails.id,
                 mediaLink: fileUrl ? fileUrl : '',
+                communityId: values?.communityId,
             });
             if (resp.success) {
                 form.reset();
@@ -175,7 +186,56 @@ export default function PostBar({ userDetails }: TPostBarProps) {
                             )}
                         />
                         <Separator />
-
+                        <FormField
+                            control={form.control}
+                            name="communityId"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Community</FormLabel>
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                    >
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select a verified email to display" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {/* <SelectItem value="" key={1}>
+                                                Everyone
+                                            </SelectItem> */}
+                                            {userDetails?.joinedCommunities?.map(
+                                                (community: any) => {
+                                                    return (
+                                                        <SelectItem
+                                                            value={
+                                                                community.communityId
+                                                            }
+                                                            key={community.id}
+                                                        >
+                                                            {
+                                                                community
+                                                                    .community
+                                                                    .name
+                                                            }
+                                                        </SelectItem>
+                                                    );
+                                                }
+                                            )}
+                                        </SelectContent>
+                                    </Select>
+                                    <FormDescription>
+                                        You can manage email addresses in your{' '}
+                                        <Link href="/examples/forms">
+                                            email settings
+                                        </Link>
+                                        .
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                         {/* File preview */}
 
                         {/* {fileUrl && file && (
