@@ -38,15 +38,17 @@ export const createPost = async ({
                 success: false,
             };
         }
+
         const post = await db.post.create({
             data: {
                 userId,
                 text,
                 mediaLink: mediaLink ?? '',
-                ...(communityId && { communityId }),
+                // ...(communityId && { communityId }),
+                communityId,
             },
         });
-        console.log(post);
+        // console.log(post);
         revalidatePath('/home');
         return {
             success: true,

@@ -82,6 +82,7 @@ const ACCEPTED_IMAGE_TYPES = [
 
 export const postCreationSchema = z.object({
     text: z.string().min(1, 'Text is required'),
+    communityId: z.string().optional(),
 });
 
 export const postSchema = z.object({

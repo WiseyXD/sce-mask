@@ -98,12 +98,13 @@ export default function PostBar({ userDetails }: TPostBarProps) {
         }
         try {
             setIsPendingPost(true);
-            setIsPendingPost(true);
+            console.log(values.communityId);
+
             const resp = await createPost({
                 text: values.text,
                 userId: userDetails.id,
                 mediaLink: fileUrl ? fileUrl : '',
-                communityId: values?.communityId,
+                communityId: values.communityId,
             });
             if (resp.success) {
                 form.reset();
@@ -198,19 +199,18 @@ export default function PostBar({ userDetails }: TPostBarProps) {
                                     >
                                         <FormControl>
                                             <SelectTrigger>
-                                                <SelectValue placeholder="Select a verified email to display" />
+                                                <SelectValue placeholder="Select a community" />
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
-                                            {/* <SelectItem value="" key={1}>
-                                                Everyone
-                                            </SelectItem> */}
                                             {userDetails?.joinedCommunities?.map(
                                                 (community: any) => {
                                                     return (
                                                         <SelectItem
                                                             value={
-                                                                community.communityId
+                                                                community
+                                                                    .community
+                                                                    .id
                                                             }
                                                             key={community.id}
                                                         >
