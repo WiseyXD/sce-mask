@@ -203,6 +203,7 @@ export default function PostBar({ userDetails }: TPostBarProps) {
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
+                                            {/* @ts-ignore */}
                                             {userDetails?.joinedCommunities?.map(
                                                 (community: any) => {
                                                     return (
