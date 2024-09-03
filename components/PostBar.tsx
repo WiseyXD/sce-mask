@@ -108,7 +108,7 @@ export default function PostBar({ userDetails }: TPostBarProps) {
             });
             if (resp.success) {
                 form.reset();
-                // setFile(null);
+
                 setFileUrl(undefined);
                 if (fileInputRef.current) {
                     fileInputRef.current.value = ''; // Clear the file input
@@ -127,12 +127,12 @@ export default function PostBar({ userDetails }: TPostBarProps) {
                 console.log(resp.msg);
             }
         } catch (error) {
+            setIsPendingPost(false);
+            setIsPendingUpload(false);
             toast({
                 title: 'Error occured while post creation.',
                 variant: 'destructive',
             });
-            setIsPendingPost(false);
-            setIsPendingUpload(false);
         }
     }
 
@@ -203,6 +203,12 @@ export default function PostBar({ userDetails }: TPostBarProps) {
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
+                                            <SelectItem
+                                                value="everyone"
+                                                key={1}
+                                            >
+                                                Everyone
+                                            </SelectItem>
                                             {/* @ts-ignore */}
                                             {userDetails?.joinedCommunities?.map(
                                                 (community: any) => {

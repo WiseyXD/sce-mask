@@ -25,11 +25,17 @@ export const createPost = async ({
                 msg: 'Forbidden request.',
             };
         }
+        let sanitisedCommunityId;
+        if (!communityId || communityId === 'everyone') {
+            sanitisedCommunityId = '';
+        } else {
+            sanitisedCommunityId = communityId;
+        }
         const validInputs = postSchema.safeParse({
             text,
             userId,
             mediaLink,
-            communityId,
+            communityId: sanitisedCommunityId,
         });
         if (!validInputs.success) {
             console.log('Invalid post creation inputs' + validInputs.error);
@@ -45,7 +51,10 @@ export const createPost = async ({
                 text,
                 mediaLink: mediaLink ?? '',
                 // ...(communityId && { communityId }),
-                communityId,
+                // communityId,
+                ...(sanitisedCommunityId && {
+                    communityId: sanitisedCommunityId,
+                }),
             },
         });
         // console.log(post);
