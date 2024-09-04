@@ -182,6 +182,7 @@ export const getAllPosts = async () => {
                         image: true,
                     },
                 },
+                community: true,
                 comments: {
                     include: {
                         user: {
@@ -607,7 +608,6 @@ export const likePost = async (
         };
     }
 };
-
 export const dislikePost = async (
     postId: string,
     likeId: string,

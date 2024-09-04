@@ -53,6 +53,7 @@ export default function PostCard({
     userDetails,
     isEditable,
 }: Partial<TPostCardProps>) {
+    console.log(post);
     return (
         <div className="flex flex-col">
             <div className="flex py-3 px-2">
@@ -92,6 +93,11 @@ export default function PostCard({
                                     {/* {JSON.stringify(post?.time)} */}
                                     {/* {moment(post?.time).format('MM/DD/YYYY')} */}
                                     {moment(post?.time).fromNow()}
+                                </p>
+                                <p className="dark:text-muted">
+                                    {/* {JSON.stringify(post?.time)} */}
+                                    {/* {moment(post?.time).format('MM/DD/YYYY')} */}
+                                    {post?.community?.name}
                                 </p>
                             </div>
                         </Link>
