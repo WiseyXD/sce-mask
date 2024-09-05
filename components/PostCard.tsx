@@ -16,6 +16,8 @@ type TPostCardProps = {
     isEditable: boolean;
 };
 
+// not present
+
 const postsIcons = [
     {
         text: 'Comment',
