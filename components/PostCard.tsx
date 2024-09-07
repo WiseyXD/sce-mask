@@ -16,6 +16,8 @@ type TPostCardProps = {
     isEditable: boolean;
 };
 
+// gnapati day
+
 const postsIcons = [
     {
         text: 'Comment',
