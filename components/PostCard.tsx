@@ -16,7 +16,8 @@ type TPostCardProps = {
     isEditable: boolean;
 };
 
-// gnapati day 3
+// gnapati day 4
+
 
 const postsIcons = [
     {
