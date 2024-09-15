@@ -1,5 +1,5 @@
 import { getAllCommunitiesNotFollowedOrCreatedByUser } from '@/actions/community';
-import { getAllPosts } from '@/actions/posts';
+import { getAllPostsfromFollowedCommunities } from '@/actions/posts';
 import getUserDetails from '@/actions/user';
 import { validateRequest } from '@/actions/validateRequests';
 import CommunityBody from '@/components/CommunityBody';
@@ -11,7 +11,7 @@ export default async function page() {
     const allDiscoverableCommunities =
         await getAllCommunitiesNotFollowedOrCreatedByUser();
 
-    const yourCommunitiesPost = await getAllPosts();
+    const yourCommunitiesPost = await getAllPostsfromFollowedCommunities();
 
     const userDetails = await getUserDetails(user?.id);
 

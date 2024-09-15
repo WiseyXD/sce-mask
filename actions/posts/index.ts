@@ -212,6 +212,49 @@ export const getAllPosts = async () => {
     }
 };
 
+export const getAllPostsfromFollowedCommunities = async () => {
+    try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request',
+            };
+        }
+
+        // Find all posts from the communities the user has joined
+        const posts = await db.post.findMany({
+            where: {
+                communityId: {
+                    in: (
+                        await db.communityMember.findMany({
+                            where: { userId: user.id },
+                            select: { communityId: true },
+                        })
+                    ).map((member) => member.communityId),
+                },
+            },
+            include: {
+                user: true, // Include user details for each post
+                community: true, // Include community details if needed
+                likes: true, // Include likes if needed
+                bookmarksBy: true, // Include bookmarks if needed
+                comments: true, // Include comments if needed
+            },
+        });
+
+        return {
+            success: true,
+            msg: posts,
+        };
+    } catch (error) {
+        return {
+            success: false,
+            msg: 'Something went wrong',
+        };
+    }
+};
+
 export const getAllPostsByUserId = async (userId: string) => {
     try {
         const { user } = await validateRequest();
