@@ -223,7 +223,7 @@ export const getAllPostsfromFollowedCommunities = async () => {
         }
 
         // Find all posts from the communities the user has joined
-        const posts = await db.post.findMany({
+        let posts = await db.post.findMany({
             where: {
                 communityId: {
                     in: (
@@ -242,7 +242,9 @@ export const getAllPostsfromFollowedCommunities = async () => {
                 comments: true, // Include comments if needed
             },
         });
-
+        if (!posts) {
+            posts = [];
+        }
         return {
             success: true,
             msg: posts,

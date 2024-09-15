@@ -18,6 +18,7 @@ import {
 import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Spinner from './Loader';
 import CommentModal from './CommentModal';
 import { useToast } from './ui/use-toast';
 
@@ -40,8 +41,11 @@ export default function IconSection(params: TIconSectionProps) {
     const [likeId, setLikeId] = useState<string | null>(null);
     const [isBookmarked, setIsBookmarked] = useState(false);
     const [bookmarkId, setBookmarkId] = useState<string | null>(null);
+    const [isLiking, setIsLiking] = useState(false); // Loading state for like
+    const [isBookmarking, setIsBookmarking] = useState(false); // Loading state for bookmark
     const { toast } = useToast();
 
+    // Checking bookmark and like status with useEffect
     useEffect(() => {
         params.isPostComment ? checkIsLiked() : checkIsCommentLiked();
     }, [params.likeCount, params.signedInUserId]);
@@ -50,21 +54,16 @@ export default function IconSection(params: TIconSectionProps) {
         params.isPostComment ? checkIsBookmarked() : checkIsCommentBookmarked();
     }, [params.signedInUserId, params.bookmarks]);
 
+    // Check whether the post/comment is bookmarked or liked
     const checkIsCommentBookmarked = async () => {
         const resp = await isCommentBookmarked(
             params.postId,
             params.signedInUserId
         );
-        if (resp.success) {
-            if (typeof resp.msg == 'boolean') {
-                setIsBookmarked(resp.msg);
-                if (resp.bookmarkId) {
-                    setBookmarkId(resp.bookmarkId);
-                }
-            }
-            return;
+        if (resp.success && typeof resp.msg === 'boolean') {
+            setIsBookmarked(resp.msg);
+            setBookmarkId(resp.bookmarkId || null);
         }
-        return;
     };
 
     const checkIsBookmarked = async () => {
@@ -72,16 +71,10 @@ export default function IconSection(params: TIconSectionProps) {
             params.postId,
             params.signedInUserId
         );
-        if (resp.success) {
-            if (typeof resp.msg == 'boolean') {
-                setIsBookmarked(resp.msg);
-                if (resp.bookmarkId) {
-                    setBookmarkId(resp.bookmarkId);
-                }
-            }
-            return;
+        if (resp.success && typeof resp.msg === 'boolean') {
+            setIsBookmarked(resp.msg);
+            setBookmarkId(resp.bookmarkId || null);
         }
-        return;
     };
 
     const checkIsLiked = async () => {
@@ -89,16 +82,10 @@ export default function IconSection(params: TIconSectionProps) {
             params.signedInUserId,
             params.postId
         );
-        if (resp.success) {
-            if (typeof resp.msg == 'boolean') {
-                setIsLiked(resp.msg);
-                if (resp.likeId) {
-                    setLikeId(resp.likeId);
-                }
-            }
-            return;
+        if (resp.success && typeof resp.msg === 'boolean') {
+            setIsLiked(resp.msg);
+            setLikeId(resp.likeId || null);
         }
-        return;
     };
 
     const checkIsCommentLiked = async () => {
@@ -106,30 +93,24 @@ export default function IconSection(params: TIconSectionProps) {
             params.signedInUserId,
             params.postId
         );
-        if (resp.success) {
-            if (typeof resp.msg == 'boolean') {
-                setIsLiked(resp.msg);
-                if (resp.likeId) {
-                    setLikeId(resp.likeId);
-                }
-            }
-            return;
+        if (resp.success && typeof resp.msg === 'boolean') {
+            setIsLiked(resp.msg);
+            setLikeId(resp.likeId || null);
         }
-        return;
     };
 
+    // Handle Like/Dislike actions
     const handlePostLikeClick = async () => {
+        setIsLiking(true); // Start loading
         if (likeId) {
             const resp = await dislikePost(params.postId, likeId, reloadPath);
             if (!resp.success) {
                 toast({
-                    title: 'Error occured while disliking the post.',
+                    title: 'Error occurred while disliking the post.',
                     variant: 'destructive',
                 });
-                return;
             }
             setLikeId(null);
-            return;
         } else {
             const resp = await likePost(
                 params.postId,
@@ -138,15 +119,46 @@ export default function IconSection(params: TIconSectionProps) {
             );
             if (!resp.success) {
                 toast({
-                    title: 'Error occured while liking the post.',
+                    title: 'Error occurred while liking the post.',
                     variant: 'destructive',
                 });
-                return;
             }
-            return;
         }
+        setIsLiking(false); // Stop loading
     };
 
+    const handlePostBookmarkClick = async () => {
+        setIsBookmarking(true); // Start loading
+        if (bookmarkId) {
+            const resp = await unbookmarkPost(
+                bookmarkId,
+                params.postId,
+                reloadPath
+            );
+            if (!resp.success) {
+                toast({
+                    title: 'Error occurred while unbookmarking the post.',
+                    variant: 'destructive',
+                });
+            }
+            setBookmarkId(null);
+        } else {
+            const resp = await bookmarkPost(
+                params.postId,
+                params.signedInUserId,
+                reloadPath
+            );
+            if (!resp.success) {
+                toast({
+                    title: 'Error occurred while bookmarking the post.',
+                    variant: 'destructive',
+                });
+            }
+        }
+        setIsBookmarking(false); // Stop loading
+    };
+
+    // Handle like action for comments
     const handleCommentLikeClick = async () => {
         if (likeId) {
             const resp = await dislikeComment(
@@ -156,13 +168,12 @@ export default function IconSection(params: TIconSectionProps) {
             );
             if (!resp.success) {
                 toast({
-                    title: 'Error occured while disliking the post.',
+                    title: 'Error disliking the comment.',
                     variant: 'destructive',
                 });
-                return;
+            } else {
+                setLikeId(null);
             }
-            setLikeId(null);
-            return;
         } else {
             const resp = await likeComment(
                 params.postId,
@@ -171,49 +182,14 @@ export default function IconSection(params: TIconSectionProps) {
             );
             if (!resp.success) {
                 toast({
-                    title: 'Error occured while liking the post.',
+                    title: 'Error liking the comment.',
                     variant: 'destructive',
                 });
-                return;
             }
-            return;
         }
     };
-
-    const handlePostBookmarkCLick = async () => {
-        if (bookmarkId) {
-            const resp = await unbookmarkPost(
-                bookmarkId,
-                params.postId,
-                reloadPath
-            );
-            if (!resp.success) {
-                toast({
-                    title: 'Error occured while unbookmarking the post.',
-                    variant: 'destructive',
-                });
-                return;
-            }
-            setBookmarkId(null);
-            return;
-        } else {
-            const resp = await bookmarkPost(
-                params.postId,
-                params.signedInUserId,
-                reloadPath
-            );
-            if (!resp.success) {
-                toast({
-                    title: 'Error occured while liking the post.',
-                    variant: 'destructive',
-                });
-                return;
-            }
-            return;
-        }
-    };
-
-    const handleCommentBookmarkCLick = async () => {
+    // Handle bookmark action for comments
+    const handleCommentBookmarkClick = async () => {
         if (bookmarkId) {
             const resp = await unbookmarkComment(
                 bookmarkId,
@@ -222,13 +198,12 @@ export default function IconSection(params: TIconSectionProps) {
             );
             if (!resp.success) {
                 toast({
-                    title: 'Error occured while unbookmarking the comment.',
+                    title: 'Error unbookmarking the comment.',
                     variant: 'destructive',
                 });
-                return;
+            } else {
+                setBookmarkId(null);
             }
-            setBookmarkId(null);
-            return;
         } else {
             const resp = await bookmarkComment(
                 params.postId,
@@ -237,12 +212,10 @@ export default function IconSection(params: TIconSectionProps) {
             );
             if (!resp.success) {
                 toast({
-                    title: 'Error occured while liking the post.',
+                    title: 'Error bookmarking the comment.',
                     variant: 'destructive',
                 });
-                return;
             }
-            return;
         }
     };
 
@@ -258,7 +231,9 @@ export default function IconSection(params: TIconSectionProps) {
         },
         {
             text: 'Like',
-            icon: (
+            icon: isLiking ? (
+                <Spinner />
+            ) : (
                 <Heart className="hover:border border-red-600 rounded-md duration-150 ease-in-out" />
             ),
             isModal: false,
@@ -270,13 +245,15 @@ export default function IconSection(params: TIconSectionProps) {
         },
         {
             text: 'Bookmark',
-            icon: (
+            icon: isBookmarking ? (
+                <Spinner />
+            ) : (
                 <BookmarkPlus className="hover:border border-blue-400 rounded-md duration-150 ease-in-out" />
             ),
             isModal: false,
             onClickFunction: params.isPostComment
-                ? handlePostBookmarkCLick
-                : handleCommentBookmarkCLick,
+                ? handlePostBookmarkClick
+                : handleCommentBookmarkClick,
             count: params.bookmarks,
             additionalClassName: isBookmarked ? 'bg-blue-400' : '',
         },
@@ -284,47 +261,37 @@ export default function IconSection(params: TIconSectionProps) {
 
     return (
         <div className="flex justify-evenly gap-x-3 pt-2 ">
-            {postsIcons.map((item) => {
-                return (
-                    <div key={item.text}>
-                        {item.isModal ? (
-                            <CommentModal
-                                key={item.text}
-                                text={
-                                    params.originalText
-                                        ? params?.originalText
-                                        : 'No text'
-                                }
-                                icon={item.icon}
-                                commentCount={params.commentCount}
-                                postCreatorUsername={params.postCreatorUsername}
-                                postId={
-                                    params.postId
-                                        ? params.postId
-                                        : 'no post id recieved'
-                                }
-                                signedInUserId={params.signedInUserId}
-                                userImage={params.userImage!}
-                                postCreatorImage={params.postCreatorImage!}
-                                isPostComment={params.isPostComment}
-                            />
-                        ) : (
-                            <div
-                                key={item.text}
-                                className="cursor-pointer"
-                                onClick={item.onClickFunction}
-                            >
-                                <div className="flex gap-x-2 justify-center">
-                                    <div className={item.additionalClassName}>
-                                        {item.icon}
-                                    </div>
-                                    {item.count}
+            {postsIcons.map((item) => (
+                <div key={item.text}>
+                    {item.isModal ? (
+                        <CommentModal
+                            key={item.text}
+                            text={params.originalText || 'No text'}
+                            icon={item.icon}
+                            commentCount={params.commentCount}
+                            postCreatorUsername={params.postCreatorUsername}
+                            postId={params.postId || 'no post id received'}
+                            signedInUserId={params.signedInUserId}
+                            userImage={params.userImage!}
+                            postCreatorImage={params.postCreatorImage!}
+                            isPostComment={params.isPostComment}
+                        />
+                    ) : (
+                        <div
+                            key={item.text}
+                            className="cursor-pointer"
+                            onClick={item.onClickFunction}
+                        >
+                            <div className="flex gap-x-2 justify-center">
+                                <div className={item.additionalClassName}>
+                                    {item.icon}
                                 </div>
+                                {item.count}
                             </div>
-                        )}
-                    </div>
-                );
-            })}
+                        </div>
+                    )}
+                </div>
+            ))}
         </div>
     );
 }
