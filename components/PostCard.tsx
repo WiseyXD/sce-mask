@@ -1,7 +1,6 @@
 import { Separator } from '@/components/ui/separator';
 import { TPost, TUserDetails } from '@/types';
 import { User as NextUser } from '@nextui-org/react';
-import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
 
 import IconSection from '@/components/IconSection';
 import moment from 'moment';
@@ -15,39 +14,6 @@ type TPostCardProps = {
     userDetails: TUserDetails;
     isEditable: boolean;
 };
-
-// gnapati day 6
-
-const postsIcons = [
-    {
-        text: 'Comment',
-        icon: (
-            <MessagesSquare className="hover:border border-blue-400 rounded-md duration-150 ease-in-out" />
-        ),
-        isModal: true,
-        onClickFunction: () => {},
-    },
-    {
-        text: 'Like',
-        icon: (
-            <Heart className="hover:border border-red-600 rounded-md duration-150 ease-in-out" />
-        ),
-        isModal: false,
-        onClickFunction: () => {
-            console.log('Like');
-        },
-    },
-    {
-        text: 'Bookmark',
-        icon: (
-            <BookmarkPlus className="hover:border border-blue-400 rounded-md duration-150 ease-in-out" />
-        ),
-        isModal: false,
-        onClickFunction: () => {
-            console.log('Bookmark');
-        },
-    },
-];
 
 export default function PostCard({
     username,
