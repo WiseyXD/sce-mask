@@ -6,12 +6,11 @@ import PostHero from '@/components/PostHero';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { TPost } from '@/types';
-import moment from 'moment';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 export default async function Page({ params }: { params: { postId: string } }) {
-    const { session, user } = await validateRequest();
+    const { user } = await validateRequest();
     const { postId } = params;
     const userData = await getUserDetails(user?.id);
     if (!userData) {
@@ -33,9 +32,6 @@ export default async function Page({ params }: { params: { postId: string } }) {
         return redirect('/home');
     }
 
-    const postCreatorData = msg.user;
-    const parsedDate = moment(msg.time);
-    const formattedDate = parsedDate.format('h:mm A · MMM D, YYYY');
     return (
         <div className="min-h-screen w-full">
             <ScrollArea className="w-full h-screen rounded-md ">
@@ -44,9 +40,9 @@ export default async function Page({ params }: { params: { postId: string } }) {
                     postCreator={
                         msg?.user?.username
                             ? {
-                                  username: msg?.user?.username,
-                                  image: msg?.user?.image ?? '',
-                              }
+                                username: msg?.user?.username,
+                                image: msg?.user?.image ?? '',
+                            }
                             : null
                     }
                     signedInUserId={user?.id!}
