@@ -27,7 +27,7 @@ export default function PostHero({
     userImage,
 }: TPostHeroProps) {
     const [isFollowed, setIsFollowed] = useState(false);
-
+    // comment to fill the day
     if (signedInUserId == null) {
         return <>User not present</>;
     }
