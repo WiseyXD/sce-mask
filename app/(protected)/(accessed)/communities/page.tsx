@@ -6,6 +6,8 @@ import CommunityBody from '@/components/CommunityBody';
 import CommunityHeader from '@/components/CommunityHeader';
 import { Separator } from '@/components/ui/separator';
 
+// comment added
+
 export default async function page() {
     const { user } = await validateRequest();
     const allDiscoverableCommunities =
