@@ -106,6 +106,7 @@ export const likeComment = async (
         revalidatePath(reloadPath);
         return {
             success: true,
+            likeId: newlikeComment.id,
         };
     } catch (error) {
         console.log(error);

@@ -645,6 +645,7 @@ export const likePost = async (
         revalidatePath(reloadPath);
         return {
             success: true,
+            likeId: newLike.id,
         };
     } catch (error) {
         console.log(error);

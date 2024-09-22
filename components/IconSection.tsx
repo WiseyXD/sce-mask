@@ -18,7 +18,6 @@ import {
 import { BookmarkPlus, Heart, MessagesSquare } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import Spinner from './Loader';
 import CommentModal from './CommentModal';
 import { useToast } from './ui/use-toast';
 
@@ -41,11 +40,10 @@ export default function IconSection(params: TIconSectionProps) {
     const [likeId, setLikeId] = useState<string | null>(null);
     const [isBookmarked, setIsBookmarked] = useState(false);
     const [bookmarkId, setBookmarkId] = useState<string | null>(null);
-    const [isLiking, setIsLiking] = useState(false); // Loading state for like
-    const [isBookmarking, setIsBookmarking] = useState(false); // Loading state for bookmark
+    const [likeCount, setLikeCount] = useState(params.likeCount);
+    const [bookmarkCount, setBookmarkCount] = useState(params.bookmarks);
     const { toast } = useToast();
 
-    // Checking bookmark and like status with useEffect
     useEffect(() => {
         params.isPostComment ? checkIsLiked() : checkIsCommentLiked();
     }, [params.likeCount, params.signedInUserId]);
@@ -99,18 +97,27 @@ export default function IconSection(params: TIconSectionProps) {
         }
     };
 
-    // Handle Like/Dislike actions
     const handlePostLikeClick = async () => {
-        setIsLiking(true); // Start loading
+        const prevLiked = isLiked;
+        const prevLikeId = likeId;
+        setIsLiked(!prevLiked); // Optimistically update UI
+        setLikeCount(prevLiked ? likeCount - 1 : likeCount + 1); // Optimistically update like count
         if (likeId) {
-            const resp = await dislikePost(params.postId, likeId, reloadPath);
+            setLikeId(null);
+            const resp = await dislikePost(
+                params.postId,
+                prevLikeId!,
+                reloadPath
+            );
             if (!resp.success) {
                 toast({
                     title: 'Error occurred while disliking the post.',
                     variant: 'destructive',
                 });
+                setIsLiked(prevLiked); // Revert on error
+                setLikeCount(likeCount); // Revert like count
+                setLikeId(prevLikeId);
             }
-            setLikeId(null);
         } else {
             const resp = await likePost(
                 params.postId,
@@ -122,16 +129,25 @@ export default function IconSection(params: TIconSectionProps) {
                     title: 'Error occurred while liking the post.',
                     variant: 'destructive',
                 });
+                setIsLiked(prevLiked); // Revert on error
+                setLikeCount(likeCount); // Revert like count
+            } else {
+                setLikeId(resp.likeId || null);
             }
         }
-        setIsLiking(false); // Stop loading
     };
 
     const handlePostBookmarkClick = async () => {
-        setIsBookmarking(true); // Start loading
+        const prevBookmarked = isBookmarked;
+        const prevBookmarkId = bookmarkId;
+        setIsBookmarked(!prevBookmarked); // Optimistically update UI
+        setBookmarkCount(
+            prevBookmarked ? bookmarkCount - 1 : bookmarkCount + 1
+        ); // Optimistically update bookmark count
         if (bookmarkId) {
+            setBookmarkId(null);
             const resp = await unbookmarkPost(
-                bookmarkId,
+                prevBookmarkId!,
                 params.postId,
                 reloadPath
             );
@@ -140,8 +156,10 @@ export default function IconSection(params: TIconSectionProps) {
                     title: 'Error occurred while unbookmarking the post.',
                     variant: 'destructive',
                 });
+                setIsBookmarked(prevBookmarked); // Revert on error
+                setBookmarkCount(bookmarkCount); // Revert bookmark count
+                setBookmarkId(prevBookmarkId);
             }
-            setBookmarkId(null);
         } else {
             const resp = await bookmarkPost(
                 params.postId,
@@ -153,17 +171,24 @@ export default function IconSection(params: TIconSectionProps) {
                     title: 'Error occurred while bookmarking the post.',
                     variant: 'destructive',
                 });
+                setIsBookmarked(prevBookmarked); // Revert on error
+                setBookmarkCount(bookmarkCount); // Revert bookmark count
+            } else {
+                setBookmarkId(resp.msg || null);
             }
         }
-        setIsBookmarking(false); // Stop loading
     };
 
-    // Handle like action for comments
     const handleCommentLikeClick = async () => {
+        const prevLiked = isLiked;
+        const prevLikeId = likeId;
+        setIsLiked(!prevLiked); // Optimistically update UI
+        setLikeCount(prevLiked ? likeCount - 1 : likeCount + 1); // Optimistically update like count
         if (likeId) {
+            setLikeId(null);
             const resp = await dislikeComment(
                 params.postId,
-                likeId,
+                prevLikeId!,
                 reloadPath
             );
             if (!resp.success) {
@@ -171,8 +196,9 @@ export default function IconSection(params: TIconSectionProps) {
                     title: 'Error disliking the comment.',
                     variant: 'destructive',
                 });
-            } else {
-                setLikeId(null);
+                setIsLiked(prevLiked); // Revert on error
+                setLikeCount(likeCount); // Revert like count
+                setLikeId(prevLikeId);
             }
         } else {
             const resp = await likeComment(
@@ -185,14 +211,25 @@ export default function IconSection(params: TIconSectionProps) {
                     title: 'Error liking the comment.',
                     variant: 'destructive',
                 });
+                setIsLiked(prevLiked); // Revert on error
+                setLikeCount(likeCount); // Revert like count
+            } else {
+                setLikeId(resp.likeId || null);
             }
         }
     };
-    // Handle bookmark action for comments
+
     const handleCommentBookmarkClick = async () => {
+        const prevBookmarked = isBookmarked;
+        const prevBookmarkId = bookmarkId;
+        setIsBookmarked(!prevBookmarked); // Optimistically update UI
+        setBookmarkCount(
+            prevBookmarked ? bookmarkCount - 1 : bookmarkCount + 1
+        ); // Optimistically update bookmark count
         if (bookmarkId) {
+            setBookmarkId(null);
             const resp = await unbookmarkComment(
-                bookmarkId,
+                prevBookmarkId!,
                 params.postId,
                 reloadPath
             );
@@ -201,8 +238,9 @@ export default function IconSection(params: TIconSectionProps) {
                     title: 'Error unbookmarking the comment.',
                     variant: 'destructive',
                 });
-            } else {
-                setBookmarkId(null);
+                setIsBookmarked(prevBookmarked); // Revert on error
+                setBookmarkCount(bookmarkCount); // Revert bookmark count
+                setBookmarkId(prevBookmarkId);
             }
         } else {
             const resp = await bookmarkComment(
@@ -215,10 +253,13 @@ export default function IconSection(params: TIconSectionProps) {
                     title: 'Error bookmarking the comment.',
                     variant: 'destructive',
                 });
+                setIsBookmarked(prevBookmarked); // Revert on error
+                setBookmarkCount(bookmarkCount); // Revert bookmark count
+            } else {
+                setBookmarkId(resp.msg || null);
             }
         }
     };
-
     const postsIcons = [
         {
             text: 'Comment',
@@ -231,36 +272,37 @@ export default function IconSection(params: TIconSectionProps) {
         },
         {
             text: 'Like',
-            icon: isLiking ? (
-                <Spinner />
-            ) : (
+            icon: isLiked ? (
                 <Heart className="hover:border border-red-600 rounded-md duration-150 ease-in-out" />
+            ) : (
+                <Heart className="" />
             ),
             isModal: false,
             onClickFunction: params.isPostComment
                 ? handlePostLikeClick
                 : handleCommentLikeClick,
-            count: params.likeCount,
+            count: likeCount,
             additionalClassName: isLiked ? 'bg-red-500' : '',
         },
         {
             text: 'Bookmark',
-            icon: isBookmarking ? (
-                <Spinner />
-            ) : (
+            icon: isBookmarked ? (
                 <BookmarkPlus className="hover:border border-blue-400 rounded-md duration-150 ease-in-out" />
+            ) : (
+                <BookmarkPlus className="" />
             ),
             isModal: false,
             onClickFunction: params.isPostComment
                 ? handlePostBookmarkClick
                 : handleCommentBookmarkClick,
-            count: params.bookmarks,
+            count: bookmarkCount,
             additionalClassName: isBookmarked ? 'bg-blue-400' : '',
         },
     ];
 
     return (
         <div className="flex justify-evenly gap-x-3 pt-2 ">
+            {' '}
             {postsIcons.map((item) => (
                 <div key={item.text}>
                     {item.isModal ? (
