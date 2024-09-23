@@ -129,16 +129,26 @@ export const dislikeComment = async (
                 msg: 'Forbidden request.',
             };
         }
-        const commentToBeDisliked = await db.comment.update({
+        const comment = await db.comment.findFirst({
             where: {
                 id: commentId,
             },
-            data: {
-                likeCount: {
-                    decrement: 1,
-                },
+            select: {
+                likeCount: true,
             },
         });
+        if (comment?.likeCount && comment?.likeCount > 0) {
+            const commentToBeDisliked = await db.comment.update({
+                where: {
+                    id: commentId,
+                },
+                data: {
+                    likeCount: {
+                        decrement: 1,
+                    },
+                },
+            });
+        }
         const likeComment = await db.commentLike.delete({
             where: {
                 id: commentLikeId,
@@ -250,16 +260,26 @@ export const unbookmarkComment = async (
                 msg: 'Forbidden request.',
             };
         }
-        await db.comment.update({
+        const comment = await db.comment.findFirst({
             where: {
                 id: commentId,
             },
-            data: {
-                bookmarks: {
-                    decrement: 1,
-                },
+            select: {
+                bookmarks: true,
             },
         });
+        if (comment?.bookmarks && comment?.bookmarks > 0) {
+            await db.comment.update({
+                where: {
+                    id: commentId,
+                },
+                data: {
+                    bookmarks: {
+                        decrement: 1,
+                    },
+                },
+            });
+        }
 
         const bookmark = await db.commentBookmark.delete({
             where: {

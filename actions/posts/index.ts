@@ -50,14 +50,11 @@ export const createPost = async ({
                 userId,
                 text,
                 mediaLink: mediaLink ?? '',
-                // ...(communityId && { communityId }),
-                // communityId,
                 ...(sanitisedCommunityId && {
                     communityId: sanitisedCommunityId,
                 }),
             },
         });
-        // console.log(post);
         revalidatePath('/home');
         return {
             success: true,
@@ -493,48 +490,6 @@ export const deleteAllBookmarksByUserId = async (
     }
 };
 
-export const unbookmarkPost = async (
-    bookmarkId: string,
-    postId: string,
-    reloadPath: string
-) => {
-    try {
-        const { user } = await validateRequest();
-        if (!user) {
-            return {
-                success: false,
-                msg: 'Forbidden request.',
-            };
-        }
-        await db.post.update({
-            where: {
-                id: postId,
-            },
-            data: {
-                bookmarks: {
-                    decrement: 1,
-                },
-            },
-        });
-
-        const bookmark = await db.bookmark.delete({
-            where: {
-                id: bookmarkId,
-            },
-        });
-        revalidatePath(reloadPath);
-        return {
-            success: true,
-            msg: bookmark.id,
-        };
-    } catch (error) {
-        console.log(error);
-        return {
-            success: false,
-        };
-    }
-};
-
 export const isPostBookmarked = async (postId: string, userId: string) => {
     try {
         const { user } = await validateRequest();
@@ -612,6 +567,57 @@ export const bookmarkPost = async (
     }
 };
 
+export const unbookmarkPost = async (
+    bookmarkId: string,
+    postId: string,
+    reloadPath: string
+) => {
+    try {
+        const { user } = await validateRequest();
+        if (!user) {
+            return {
+                success: false,
+                msg: 'Forbidden request.',
+            };
+        }
+        const post = await db.post.findFirst({
+            where: {
+                id: postId,
+            },
+            select: {
+                bookmarks: true,
+            },
+        });
+        if (post?.bookmarks && post?.bookmarks > 0) {
+            await db.post.update({
+                where: {
+                    id: postId,
+                },
+                data: {
+                    bookmarks: {
+                        decrement: 1,
+                    },
+                },
+            });
+        }
+        const bookmark = await db.bookmark.delete({
+            where: {
+                id: bookmarkId,
+            },
+        });
+        revalidatePath(reloadPath);
+        return {
+            success: true,
+            msg: bookmark.id,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+        };
+    }
+};
+
 // LIKE AND DISLIKE POST
 
 export const likePost = async (
@@ -662,22 +668,36 @@ export const dislikePost = async (
 ) => {
     try {
         const { user } = await validateRequest();
+
         if (!user) {
             return {
                 success: false,
                 msg: 'Forbidden request.',
             };
         }
-        const likedPost = await db.post.update({
+
+        const post = await db.post.findFirst({
             where: {
                 id: postId,
             },
-            data: {
-                likeCount: {
-                    decrement: 1,
-                },
+            select: {
+                likeCount: true,
             },
         });
+
+        if (post?.likeCount && post?.likeCount > 0) {
+            const likedPost = await db.post.update({
+                where: {
+                    id: postId,
+                },
+                data: {
+                    likeCount: {
+                        decrement: 1,
+                    },
+                },
+            });
+        }
+
         const deleteLike = await db.like.delete({
             where: {
                 id: likeId,
