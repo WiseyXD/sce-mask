@@ -74,24 +74,6 @@ export default function PostBar({ userDetails }: TPostBarProps) {
         },
     });
 
-    // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     const selectedFile = e.target.files?.[0] ?? null;
-    //     setFile(selectedFile);
-
-    //     if (fileUrl) {
-    //         URL.revokeObjectURL(fileUrl);
-    //     }
-
-    //     if (selectedFile) {
-    //         const url = URL.createObjectURL(selectedFile);
-    //         setFileUrl(url);
-    //     } else {
-    //         setFileUrl(undefined);
-    //     }
-    // };
-
-    const community = 'ary';
-
     async function onSubmit(values: z.infer<typeof postCreationSchema>) {
         if (!userDetails) {
             return;
@@ -111,7 +93,7 @@ export default function PostBar({ userDetails }: TPostBarProps) {
 
                 setFileUrl(undefined);
                 if (fileInputRef.current) {
-                    fileInputRef.current.value = ''; // Clear the file input
+                    fileInputRef.current.value = '';
                 }
                 toast({
                     title: 'Post created succesfully.',
@@ -209,6 +191,19 @@ export default function PostBar({ userDetails }: TPostBarProps) {
                                             >
                                                 Everyone
                                             </SelectItem>
+                                            {/* @ts-ignore */}
+                                            {userDetails?.createdCommunities?.map(
+                                                (community: any) => {
+                                                    return (
+                                                        <SelectItem
+                                                            value={community.id}
+                                                            key={community.id}
+                                                        >
+                                                            {community.name}
+                                                        </SelectItem>
+                                                    );
+                                                }
+                                            )}
                                             {/* @ts-ignore */}
                                             {userDetails?.joinedCommunities?.map(
                                                 (community: any) => {

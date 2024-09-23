@@ -137,10 +137,6 @@ export default async function getUserDetails(id: string | undefined) {
                         community: true,
                     },
                 },
-
-                // bookmarkedPosts: true,
-                // posts: true,
-                // comments: true,
                 followers: {
                     include: {
                         follower: {

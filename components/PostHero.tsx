@@ -27,7 +27,6 @@ export default function PostHero({
     userImage,
 }: TPostHeroProps) {
     const [isFollowed, setIsFollowed] = useState(false);
-    // comment to fill the day
     if (signedInUserId == null) {
         return <>User not present</>;
     }
@@ -77,6 +76,13 @@ export default function PostHero({
                                 {isFollowed ? 'Unfollow' : 'Follow'}
                             </Button>
                         )}
+                        {/* @ts-ignore */}
+                        {msg?.community?.name && (
+                            <p className="dark:text-muted text-small">
+                                {/* @ts-ignore */}
+                                {msg?.community?.name}
+                            </p>
+                        )}
                     </CardHeader>
                 </Card>
             </div>
@@ -88,13 +94,6 @@ export default function PostHero({
                 </div>
                 {msg.mediaLink && (
                     <div className=" flex justify-center mt-3 mb-2">
-                        {/* <Image
-                                src={msg?.mediaLink}
-                                alt="Media"
-                                className="rounded-lg"
-                                width={600}
-                                height={500}
-                            /> */}
                         <Image
                             src={msg?.mediaLink}
                             alt="Media"

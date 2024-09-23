@@ -92,6 +92,7 @@ export const getPostbyId = async (id: string) => {
                         image: true,
                     },
                 },
+                community: true,
                 comments: {
                     include: {
                         user: {
