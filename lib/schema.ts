@@ -101,6 +101,9 @@ export const commentCreationSchema = z.object({
 });
 
 export const communitySchema = z.object({
-    name: z.string().min(3, 'Name is required.'),
+    name: z
+        .string()
+        .min(3, 'Name is required.')
+        .max(20, 'Name can only be 20 characters long.'),
     description: z.string().min(10, 'Descripiton required for the community.'),
 });

@@ -51,19 +51,18 @@ export default function PostCard({
                 </div>
                 <div className="flex flex-col w-full">
                     <div className="w-full flex justify-between items-center">
-                        <Link href={`/${post?.id}`}>
-                            <div className="flex justify-start items-center gap-x-2">
-                                <p className="font-semibold text-lg">
-                                    {post?.user?.username}
-                                </p>
+                        <Link href={`/${post?.id}`} className=" w-full ">
+                            <div className="w-full flex justify-between items-center gap-x-2">
+                                <div className="flex gap-x-2">
+                                    <p className="font-semibold text-lg">
+                                        {post?.user?.username}
+                                    </p>
+                                    <p className="dark:text-muted">
+                                        {/* {moment(post?.time).format('MM/DD/YYYY')} */}
+                                        {moment(post?.time).fromNow()}
+                                    </p>
+                                </div>
                                 <p className="dark:text-muted">
-                                    {/* {JSON.stringify(post?.time)} */}
-                                    {/* {moment(post?.time).format('MM/DD/YYYY')} */}
-                                    {moment(post?.time).fromNow()}
-                                </p>
-                                <p className="dark:text-muted">
-                                    {/* {JSON.stringify(post?.time)} */}
-                                    {/* {moment(post?.time).format('MM/DD/YYYY')} */}
                                     {/* @ts-ignore */}
                                     {post?.community?.name}
                                 </p>
