@@ -2,8 +2,13 @@
 
 import db from '@/lib/db';
 import { validateRequest } from '../validateRequests';
+import { revalidatePath } from 'next/cache';
 
-export const createCommunity = async (name: string, description: string) => {
+export const createCommunity = async (
+    name: string,
+    description: string,
+    reloadPath: string
+) => {
     try {
         const { user } = await validateRequest();
         if (!user) {
@@ -16,6 +21,7 @@ export const createCommunity = async (name: string, description: string) => {
                 description,
             },
         });
+        revalidatePath(reloadPath);
         return {
             success: true,
             msg: 'Community created.',

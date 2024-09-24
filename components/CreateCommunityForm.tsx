@@ -1,5 +1,6 @@
 'use client';
-import { createCommunity } from '@/actions/community';
+import { usePathname } from 'next/navigation';
+import { createCommunity } from '@/actions/community/index';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -29,6 +30,7 @@ import { z } from 'zod';
 import { useToast } from './ui/use-toast';
 
 export default function CreateCommunityForm({ userId }: { userId: string }) {
+    const path = usePathname();
     const { toast } = useToast();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const form = useForm<z.infer<typeof communitySchema>>({
@@ -42,7 +44,11 @@ export default function CreateCommunityForm({ userId }: { userId: string }) {
     const onSubmit = async (values: z.infer<typeof communitySchema>) => {
         try {
             console.log('submitted');
-            const resp = await createCommunity(values.name, values.description);
+            const resp = await createCommunity(
+                values.name,
+                values.description,
+                path
+            );
             if (!resp.success) {
                 toast({
                     title: `${resp.msg}`,
