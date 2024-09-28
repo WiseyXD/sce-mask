@@ -3,13 +3,10 @@ import getUserDetails from '@/actions/user';
 import { validateRequest } from '@/actions/validateRequests';
 import Feed from '@/components/Feed';
 
-// Add Skeleton
-// work on server and client components
-
 export default async function page() {
     const { user } = await validateRequest();
     const userDetails = await getUserDetails(user?.id);
-
+    // null day
     const { msg, success } = await getAllPosts();
     if (!success) {
         return <>Error occured while fetching posts from db.</>;
