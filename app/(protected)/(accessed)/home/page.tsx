@@ -6,7 +6,6 @@ import Feed from '@/components/Feed';
 export default async function page() {
     const { user } = await validateRequest();
     const userDetails = await getUserDetails(user?.id);
-    // null day
     const { msg, success } = await getAllPosts();
     if (!success) {
         return <>Error occured while fetching posts from db.</>;
