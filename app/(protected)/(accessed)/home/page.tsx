@@ -7,6 +7,7 @@ export default async function page() {
     const { user } = await validateRequest();
     const userDetails = await getUserDetails(user?.id);
     const { msg, success } = await getAllPosts();
+    // null day
     if (!success) {
         return <>Error occured while fetching posts from db.</>;
     }
