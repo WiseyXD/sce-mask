@@ -3,6 +3,8 @@ import getUserDetails from '@/actions/user';
 import { validateRequest } from '@/actions/validateRequests';
 import Feed from '@/components/Feed';
 
+// null day
+
 export default async function page() {
     const { user } = await validateRequest();
     const userDetails = await getUserDetails(user?.id);
