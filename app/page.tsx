@@ -3,7 +3,7 @@ import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
 import { Button } from '@nextui-org/button';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-
+// noob day
 export default async function Home() {
     const sessionData = await validateRequest();
     if (sessionData.user) redirect('/home');
